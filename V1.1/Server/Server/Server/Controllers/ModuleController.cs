@@ -24,18 +24,18 @@ namespace Server.Controllers
     {
         [HttpPost()]
         [Route("DataSeed")]
-        public ActionResult DataSeed()
+        public async Task<ActionResult> DataSeed()
         {
             IList<ActionResult> lstResult = new List<ActionResult>();
 
-            lstResult.Add(InitAgency());
-            lstResult.Add(InitTienTe());
-            lstResult.Add(InitTinhThanh());
-            lstResult.Add(InitDonViTinh());
+            lstResult.Add(await InitAgency());
+            lstResult.Add(await InitTienTe());
+            lstResult.Add(await InitTinhThanh());
+            lstResult.Add(await InitDonViTinh());
 
             return Ok(lstResult);
         }
-        ActionResult InitAgency()
+        async Task<ActionResult> InitAgency()
         {
             aModel db = new aModel();
 
@@ -44,7 +44,7 @@ namespace Server.Controllers
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_xAgency.sql");
-                    db.Database.ExecuteSqlCommand(Query, new SqlParameter[] { });
+                    await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                     return Ok($"Init data {(typeof(xAgency).Name)} success.");
                 }
                 catch (Exception ex) { return BadRequest($"Init data {(typeof(xAgency).Name)} fail: {ex}"); }
@@ -52,7 +52,7 @@ namespace Server.Controllers
 
             return Ok($"No init {(typeof(xAgency).Name)} data");
         }
-        ActionResult InitTienTe()
+        async Task<ActionResult> InitTienTe()
         {
             aModel db = new aModel();
 
@@ -61,14 +61,14 @@ namespace Server.Controllers
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eTienTe.sql");
-                    db.Database.ExecuteSqlCommand(Query, new SqlParameter[] { });
+                    await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                     return Ok($"Init data {(typeof(eTienTe).Name)} success.");
                 }
                 catch (Exception ex) { return BadRequest($"Init data {(typeof(eTienTe).Name)} fail: {ex}"); }
             }
             return Ok($"No init {(typeof(eTienTe).Name)} data");
         }
-        ActionResult InitTinhThanh()
+        async Task<ActionResult> InitTinhThanh()
         {
             aModel db = new aModel();
 
@@ -77,14 +77,14 @@ namespace Server.Controllers
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eTinhThanh.sql");
-                    db.Database.ExecuteSqlCommand(Query, new SqlParameter[] { });
+                    await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                     return Ok($"Init data {(typeof(eTinhThanh).Name)} success.");
                 }
                 catch (Exception ex) { return BadRequest($"Init data {(typeof(eTinhThanh).Name)} fail: {ex}"); }
             }
             return Ok($"No init {(typeof(eTinhThanh).Name)} data");
         }
-        ActionResult InitDonViTinh()
+        async Task<ActionResult> InitDonViTinh()
         {
             aModel db = new aModel();
 
@@ -93,7 +93,7 @@ namespace Server.Controllers
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eDonViTinh.sql");
-                    db.Database.ExecuteSqlCommand(Query, new SqlParameter[] { });
+                    await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                     return Ok($"Init data {(typeof(eDonViTinh).Name)} success.");
                 }
                 catch (Exception ex) { return BadRequest($"Init data {(typeof(eDonViTinh).Name)} fail: {ex}"); }
@@ -103,15 +103,16 @@ namespace Server.Controllers
 
         [HttpGet()]
         [Route("TimeServer")]
-        public ActionResult TimeServer()
+        public async Task<ActionResult> TimeServer()
         {
-            return Ok(DateTime.Now);
+            try { return await Task.Factory.StartNew(() => { return Ok(DateTime.Now); }); }
+            catch { return Ok(DateTime.Now); }
 
         }
 
         [HttpPost()]
         [Route("InitUser")]
-        public ActionResult InitUser()
+        public async Task<ActionResult> InitUser()
         {
             aModel db = new aModel();
             DateTime time = DateTime.Now;
@@ -128,7 +129,7 @@ namespace Server.Controllers
                     NgayTao = time
                 };
                 db.xPermission.Add(permission);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 xPersonnel personnel = new xPersonnel()
                 {
@@ -138,7 +139,7 @@ namespace Server.Controllers
                     NgayTao = time
                 };
                 db.xPersonnel.Add(personnel);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 xAccount account = new xAccount()
                 {
@@ -151,9 +152,9 @@ namespace Server.Controllers
                     PermissionName = permission.Ten
                 };
                 db.xAccount.Add(account);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
-                List<xFeature> features = db.xFeature.ToList();
+                List<xFeature> features = await db.xFeature.ToListAsync();
                 List<xUserFeature> userFeatures = new List<xUserFeature>();
                 foreach (xFeature f in features)
                 {
@@ -172,7 +173,7 @@ namespace Server.Controllers
                     });
                 }
                 db.xUserFeature.AddRange(userFeatures.ToArray());
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 db.CommitTransaction();
                 return Ok(userFeatures);
@@ -187,7 +188,7 @@ namespace Server.Controllers
 
         [HttpPost()]
         [Route("GetController")]
-        public ActionResult GetController()
+        public async Task<ActionResult> GetController()
         {
             List<xFeature> lstFeatures = new List<xFeature>();
 
@@ -266,18 +267,18 @@ namespace Server.Controllers
                 lstFeatures.AddRange(lstTemps);
             }
 
-            return SaveData(lstFeatures.ToArray());
+            return await SaveData(lstFeatures.ToArray());
         }
-        ActionResult SaveData(xFeature[] features)
+        async Task<ActionResult> SaveData(xFeature[] features)
         {
             aModel db = new aModel();
             try
             {
                 db.BeginTransaction();
-                IEnumerable<xFeature> lstRemoves = db.xFeature.ToList();
+                IEnumerable<xFeature> lstRemoves = await db.xFeature.ToListAsync();
                 db.xFeature.RemoveRange(lstRemoves.ToArray());
                 db.xFeature.AddRange(features.ToArray());
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 db.CommitTransaction();
                 return Ok(features);
             }
@@ -291,7 +292,7 @@ namespace Server.Controllers
 
         [HttpGet()]
         [Route("Login")]
-        public ActionResult Login()
+        public async Task<ActionResult> Login()
         {
             aModel db = new aModel();
             try
@@ -302,11 +303,11 @@ namespace Server.Controllers
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                     throw new Exception("Username hoặc Password không hợp lệ");
 
-                xAccount account = db.xAccount.FirstOrDefault(x => x.UserName.ToLower().Equals(Username.ToLower()) && x.Password.ToLower().Equals(Password.ToLower()));
+                xAccount account = await db.xAccount.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(Username.ToLower()) && x.Password.ToLower().Equals(Password.ToLower()));
                 if (account == null)
                     throw new Exception("Tài khoản không tồn tại");
 
-                xPersonnel personnel = db.xPersonnel.Find(account.KeyID);
+                xPersonnel personnel = await db.xPersonnel.FindAsync(account.KeyID);
                 if (personnel == null)
                     throw new Exception("Nhân viên không tồn tại");
 

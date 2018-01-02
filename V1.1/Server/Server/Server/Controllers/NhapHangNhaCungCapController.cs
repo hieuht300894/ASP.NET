@@ -12,21 +12,21 @@ namespace Server.Controllers
 {
     public class NhapHangNhaCungCapController : BaseController<eNhapHangNhaCungCap>
     {
-        public override ActionResult GetAll()
+        public async override Task<ActionResult> GetAll()
         {
-            return Ok(clsNhapHangNhaCungCap.Instance.GetAll());
+            return Ok(await clsNhapHangNhaCungCap.Instance.GetAll());
         }
 
-        public override ActionResult GetByID(Int32 id)
+        public async override Task<ActionResult> GetByID(Int32 id)
         {
-            return Ok(clsNhapHangNhaCungCap.Instance.GetByID(id));
+            return Ok(await clsNhapHangNhaCungCap.Instance.GetByID(id));
         }
 
         [HttpGet()]
         [Route("CongNoHienTai/{IDMaster}/{IDNhaCungCap}/{NgayHienTai}")]
-        public ActionResult CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
+        public async Task<ActionResult> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
         {
-            return Ok(clsCongNoNhaCungCap.Instance.CongNoHienTai(IDMaster, IDNhaCungCap, NgayHienTai));
+            return Ok(await clsCongNoNhaCungCap.Instance.CongNoHienTai(IDMaster, IDNhaCungCap, NgayHienTai));
         }
     }
 }

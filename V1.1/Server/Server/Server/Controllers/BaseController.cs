@@ -17,29 +17,32 @@ namespace Server.Controllers
     {
         [HttpGet()]
         [Route("GetCode/{Prefix}")]
-        public virtual ActionResult GetCode(String Prefix)
+        public virtual async Task<ActionResult> GetCode(String Prefix)
         {
-            return Ok(clsFunction<T>.Instance.GetCode(Prefix));
+            String Code = await clsFunction<T>.Instance.GetCode(Prefix);
+            return Ok(Code);
         }
 
         [HttpGet()]
         [Route("GetAll")]
-        public virtual ActionResult GetAll()
+        public virtual async Task<ActionResult> GetAll()
         {
-            return Ok(clsFunction<T>.Instance.GetAll());
+            IEnumerable<T> Items = await clsFunction<T>.Instance.GetAll();
+            return Ok(Items);
         }
 
         [HttpGet()]
         [Route("GetByID/{id}")]
-        public virtual ActionResult GetByID(Int32 id)
+        public virtual async Task<ActionResult> GetByID(Int32 id)
         {
-            return Ok(clsFunction<T>.Instance.GetByID(id));
+            T Item = await clsFunction<T>.Instance.GetByID(id);
+            return Ok(Item);
         }
 
-        [HttpPost()]
-        public virtual ActionResult AddEntries(T[] Items)
+        [HttpPost()]   
+        public virtual async Task<ActionResult> AddEntries(T[] Items)
         {
-            Exception ex = clsFunction<T>.Instance.AddEntries(Items);
+            Exception ex = await clsFunction<T>.Instance.AddEntries(Items);
 
             if (ex == null)
             {
@@ -53,9 +56,9 @@ namespace Server.Controllers
         }
 
         [HttpPut()]
-        public virtual ActionResult UpdateEntries(T[] Items)
+        public virtual async Task<ActionResult> UpdateEntries(T[] Items)
         {
-            Exception ex = clsFunction<T>.Instance.UpdateEntries(Items);
+            Exception ex = await clsFunction<T>.Instance.UpdateEntries(Items);
 
             if (ex == null)
             {
@@ -69,9 +72,9 @@ namespace Server.Controllers
         }
 
         [HttpDelete()]
-        public virtual ActionResult DeleteEntries(T[] Items)
+        public virtual async Task<ActionResult> DeleteEntries(T[] Items)
         {
-            Exception ex = clsFunction<T>.Instance.DeleteEntries(Items);
+            Exception ex = await clsFunction<T>.Instance.DeleteEntries(Items);
 
             if (ex == null)
             {
