@@ -78,8 +78,9 @@
     <Compile Include="DataModel\xPermission.cs" />
     <Compile Include="DataModel\xPersonnel.cs" />
     <Compile Include="DataModel\xUserFeature.cs" />
+    <Compile Include="Model\UrlSetting.cs" />
     <Compile Include="Model\UserInfo.cs" />
-    <Compile Include="Model\UserSetting.cs" />
+    <Compile Include="Model\LoginSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
