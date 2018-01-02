@@ -39,13 +39,13 @@ namespace Client.GUI.DanhMuc
 
         async void LoadRepository()
         {
-            IList<eDonViTinh> lstDVT = await clsFunction.GetItemsAsync<eDonViTinh>("donvitinh");
+            IList<eDonViTinh> lstDVT = await clsFunction.GetItemsAsync<eDonViTinh>("donvitinh/getall");
             await RunMethodAsync(() => { rlokDVT.DataSource = lstDVT; });
         }
         public override void LoadDataForm()
         {
             lstEdited = new BindingList<eSanPham>();
-            lstEntries = new BindingList<eSanPham>(clsFunction.GetItems<eSanPham>("sanpham"));
+            lstEntries = new BindingList<eSanPham>(clsFunction.GetItems<eSanPham>("sanpham/getall"));
             //     lstEntries.ToList().ForEach(x => { x.Color = Color.FromArgb(x.ColorHex); });
 
             gctDanhSach.DataSource = lstEntries;

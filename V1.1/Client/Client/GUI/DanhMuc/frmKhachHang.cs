@@ -41,13 +41,13 @@ namespace Client.GUI.DanhMuc
         {
             rlokGioiTinh.DataSource = Loai.LoaiGioiTinh();
 
-            IList<eTinhThanh> lstTinhThanh = new List<eTinhThanh>( clsFunction.GetItems<eTinhThanh>("tinhthanh"));
+            IList<eTinhThanh> lstTinhThanh = new List<eTinhThanh>( clsFunction.GetItems<eTinhThanh>("tinhthanh/getall"));
            rlokTinhThanh.DataSource = lstTinhThanh; 
         }
         public  override void LoadDataForm()
         {
             lstEdited = new BindingList<eKhachHang>();
-            lstEntries = new BindingList<eKhachHang>( clsFunction.GetItems<eKhachHang>("khachhang"));
+            lstEntries = new BindingList<eKhachHang>( clsFunction.GetItems<eKhachHang>("khachhang/getall"));
             gctDanhSach.DataSource = lstEntries;
         }
         public override bool ValidationForm()

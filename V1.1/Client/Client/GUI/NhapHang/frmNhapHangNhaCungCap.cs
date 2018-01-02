@@ -57,10 +57,10 @@ namespace Client.GUI.NhapHang
 
         void LoadRepository()
         {
-            lstNhomSanPham = clsFunction.GetItems<eNhomSanPham>("NhomSanPham");
-            lstSanPham = clsFunction.GetItems<eSanPham>("SanPham");
-            lstKho = clsFunction.GetItems<eKho>("Kho");
-            lstTonKho = clsFunction.GetItems<eTonKho>("TonKho");
+            lstNhomSanPham = clsFunction.GetItems<eNhomSanPham>("NhomSanPham/getall");
+            lstSanPham = clsFunction.GetItems<eSanPham>("SanPham/getall");
+            lstKho = clsFunction.GetItems<eKho>("Kho/getall");
+            lstTonKho = clsFunction.GetItems<eTonKho>("TonKho/getall");
 
             dteNgayNhap.DateTime = DateTime.Now.ServerNow();
             slokNhomSanPham.Properties.DataSource = lstNhomSanPham;
@@ -78,7 +78,7 @@ namespace Client.GUI.NhapHang
         }
         void LoadNhaCungCap(object KeyID)
         {
-            lstNhaCungCap = clsFunction.GetItems<eNhaCungCap>("NhaCungCap");
+            lstNhaCungCap = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/getall");
             if (Convert.ToInt32(KeyID) > 0)
                 slokNhaCungCap.EditValue = KeyID;
         }

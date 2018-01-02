@@ -38,7 +38,7 @@ namespace Client.GUI.NhapHang
 
         public override void LoadData(object KeyID)
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eNhapHangNhaCungCap>("NhapHangNhaCungCap");
+            gctDanhSach.DataSource = clsFunction.GetItems<eNhapHangNhaCungCap>("NhapHangNhaCungCap/getall");
             gctChiTiet.DataSource = ((eNhapHangNhaCungCap)grvDanhSach.GetFocusedRow() ?? new eNhapHangNhaCungCap()).eNhapHangNhaCungCapChiTiet.ToList();
         }
         public override void InsertEntry()

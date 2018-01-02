@@ -37,7 +37,7 @@ namespace Client.GUI.DanhMuc
         public override void LoadDataForm()
         {
             lstEdited = new BindingList<eNhomDonViTinh>();
-            lstEntries = new BindingList<eNhomDonViTinh>(clsFunction.GetItems<eNhomDonViTinh>("nhomdonvitinh"));
+            lstEntries = new BindingList<eNhomDonViTinh>(clsFunction.GetItems<eNhomDonViTinh>("nhomdonvitinh/getall"));
             gctDanhSach.DataSource = lstEntries;
         }
         public override bool ValidationForm()

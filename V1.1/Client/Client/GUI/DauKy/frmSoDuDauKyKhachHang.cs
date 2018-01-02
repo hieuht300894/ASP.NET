@@ -38,13 +38,13 @@ namespace Client.GUI.DauKy
 
         public void LoadRepository()
         {
-            IList<eKhachHang> lstKhachHang = clsFunction.GetItems<eKhachHang>("khachhang");
+            IList<eKhachHang> lstKhachHang = clsFunction.GetItems<eKhachHang>("khachhang/getall");
             rlokKhachHang.DataSource = lstKhachHang;
         }
         public override void LoadDataForm()
         {
             lstEdited = new BindingList<eSoDuDauKyKhachHang>();
-            lstEntries = new BindingList<eSoDuDauKyKhachHang>(clsFunction.GetItems<eSoDuDauKyKhachHang>("sodudaukykhachhang"));
+            lstEntries = new BindingList<eSoDuDauKyKhachHang>(clsFunction.GetItems<eSoDuDauKyKhachHang>("sodudaukykhachhang/getall"));
             gctDanhSach.DataSource = lstEntries;
         }
         public override bool ValidationForm()
