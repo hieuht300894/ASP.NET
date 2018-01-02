@@ -1,14 +1,17 @@
-﻿using Client.Module;
+﻿using Client.BLL.Common;
+using Client.Module;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraBars.Ribbon.Internal;
 using DevExpress.XtraEditors;
+using EntityModel.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,60 +47,12 @@ namespace Client.GUI.Common
 
                 clsGeneral.CloseWaitForm();
 
-                ShowLogin();
-
+                if (CheckConnect())
+                    ShowLogin();
             });
         }
         void AddDocument(string bbiName)
         {
-            //FormItem fi = clsCallForm.FindForm(bbiName);
-            //if (fi != null)
-            //{
-            //    XtraForm _xtraForm = fi.xForm;
-            //    BaseDocument document = tbvMain.Documents.FirstOrDefault(x => x.Control.Name.Equals(_xtraForm.Name));
-
-            //    if (document != null)
-            //        tbvMain.Controller.Activate(document);
-            //    else
-            //    {
-            //        Action<XtraForm, XtraForm> act1 = async (f1, f2) =>
-            //        {
-            //            Action<XtraForm, XtraForm> act2 = (f3, f4) =>
-            //            {
-            //                try
-            //                {
-            //                    Action<XtraForm, XtraForm> act3 = (f5, f6) =>
-            //                    {
-            //                        clsGeneral.CallWaitForm(f5);
-            //                        f6.MdiParent = f5;
-            //                        f6.Show();
-            //                        clsGeneral.CloseWaitForm();
-            //                    };
-            //                    f3.Invoke(act3, f3, f4);
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    clsGeneral.CloseWaitForm();
-            //                    clsGeneral.showErrorException(ex);
-            //                }
-            //            };
-            //            await Task.Factory.StartNew(() => act2(f1, f2));
-            //        };
-            //        Invoke(new Action(() => act1(this, _xtraForm)));
-            //    }
-            //}
-
-
-            //BaseDocument document = tbvMain.Documents.FirstOrDefault(x => x.Control.Name.Equals(_xtrForm.Name));
-
-            //if (document != null)
-            //    tbvMain.Controller.Activate(document);
-            //else
-            //{
-            //    _xtrForm.MdiParent = this;
-            //    _xtrForm.Show();
-            //}
-
             clsGeneral.CallWaitForm(this);
             FormItem fi = clsCallForm.FindForm(bbiName);
             if (fi != null)
@@ -171,6 +126,50 @@ namespace Client.GUI.Common
             else if (!IsLogin)
             {
                 Application.Exit();
+            }
+        }
+        bool CheckConnect()
+        {
+            try
+            {
+                string dir = @"Config";
+                string path = $@"{dir}\UrlSetting.xml";
+                if (File.Exists(path))
+                {
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        string text = sr.ReadToEnd();
+                        UrlSetting info = text.DeserializeXMLToObject<UrlSetting>() ?? new UrlSetting();
+
+                        if (clsFunction.CheckConnect(info.Url))
+                        {
+                            ModuleHelper.Domain = info.Domain;
+                            ModuleHelper.Port = info.Port;
+                            ModuleHelper.Path = info.Path;
+                            ModuleHelper.Url = info.Url;
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception();
+                }
+
+                return true;
+            }
+            catch
+            {
+                ModuleHelper.Domain = string.Empty;
+                ModuleHelper.Port = string.Empty;
+                ModuleHelper.Path = string.Empty;
+                ModuleHelper.Url = string.Empty;
+
+                frmServer frm = new frmServer();
+                return frm.ShowDialog() == DialogResult.OK;
             }
         }
         #endregion

@@ -109,6 +109,12 @@
     <Compile Include="GUI\Common\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Common\frmServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Common\frmServer.Designer.cs">
+      <DependentUpon>frmServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Common\frmWaiting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Common\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Common\frmServer.resx">
+      <DependentUpon>frmServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Common\frmWaiting.resx">
       <DependentUpon>frmWaiting.cs</DependentUpon>

@@ -3,15 +3,7 @@ using Client.Module;
 using DevExpress.XtraEditors;
 using EntityModel.Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Client.GUI.Common
@@ -40,7 +32,7 @@ namespace Client.GUI.Common
                     using (StreamReader sr = new StreamReader(path))
                     {
                         string text = sr.ReadToEnd();
-                        UserSetting info = text.DeserializeXMLToObject<UserSetting>() ?? new UserSetting();
+                        LoginSetting info = text.DeserializeXMLToObject<LoginSetting>() ?? new LoginSetting();
 
                         if (info.IsRemember)
                         {
@@ -113,14 +105,10 @@ namespace Client.GUI.Common
                 if (!File.Exists(path))
                     File.Create(path).Close();
 
-                UserSetting info = new UserSetting();
+                LoginSetting info = new LoginSetting();
                 info.Username = txtUsername.Text.Trim();
                 info.Password = txtPassword.Text.Trim();
                 info.IsRemember = chkRemember.Checked;
-                info.Domain = ModuleHelper.Domain;
-                info.Port = ModuleHelper.Port;
-                info.Template = ModuleHelper.Template;
-                info.Url = ModuleHelper.Url;
 
                 StreamWriter sw = new StreamWriter(path);
                 sw.Write(info.SerializeObjectToXML());

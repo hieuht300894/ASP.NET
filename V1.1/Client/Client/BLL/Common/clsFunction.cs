@@ -11,6 +11,24 @@ namespace Client.BLL.Common
 {
     public class clsFunction
     {
+        #region Connection
+        public static bool CheckConnect(String Url)
+        {
+            try
+            {
+                IRestClient client = new RestClient(String.Join("/", Url + "Module/TimeServer"));
+                IRestRequest request = new RestRequest();
+                request.Method = Method.GET;
+
+                IRestResponse response = client.Execute(request);
+                DateTime Item = response.Content.DeserializeJsonToObject<DateTime>();
+                return Item != null && Item != DateTime.MinValue;
+            }
+            catch { return false; }
+
+        }
+        #endregion
+
         #region Login
         public static Tuple<bool, T> Login<T>(String api, string Username, string Password)
         {
