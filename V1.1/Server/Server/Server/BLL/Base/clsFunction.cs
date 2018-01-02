@@ -26,7 +26,7 @@ namespace Server.BLL
         #endregion
 
         #region Method
-        public async Task<String> GetCode(String Prefix)
+        public virtual async Task<String> GetCode(String Prefix)
         {
             String bRe = Prefix + DateTime.Now.ToString("yyyyMMdd");
 
@@ -57,7 +57,7 @@ namespace Server.BLL
             catch { return bRe += "0001"; }
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Server.BLL
             catch { return new List<T>(); }
         }
 
-        public async Task<T> GetByID(Object id)
+        public virtual async Task<T> GetByID(Object id)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace Server.BLL
             catch { return new T(); }
         }
 
-        public async Task<Exception> AddEntry(T Item)
+        public virtual async Task<Exception> AddEntry(T Item)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> AddEntries(T[] Items)
+        public virtual async Task<Exception> AddEntries(T[] Items)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> UpdateEntry(T Item)
+        public virtual async Task<Exception> UpdateEntry(T Item)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> UpdateEntries(T[] Items)
+        public virtual async Task<Exception> UpdateEntries(T[] Items)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> DeleteEntry(Object id)
+        public virtual async Task<Exception> DeleteEntry(Object id)
         {
             try
             {
@@ -175,7 +175,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> DeleteEntry(T Item)
+        public virtual async Task<Exception> DeleteEntry(T Item)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> DeleteEntries(Object[] ids)
+        public virtual async Task<Exception> DeleteEntries(Object[] ids)
         {
             try
             {
@@ -217,7 +217,7 @@ namespace Server.BLL
             }
         }
 
-        public async Task<Exception> DeleteEntries(T[] Items)
+        public virtual async Task<Exception> DeleteEntries(T[] Items)
         {
             try
             {

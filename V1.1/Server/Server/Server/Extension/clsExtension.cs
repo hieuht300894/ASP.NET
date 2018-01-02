@@ -105,8 +105,15 @@ namespace Server.Extension
 
     public class CustomController : Controller
     {
+        protected JsonResult Ok(String message) { return new Ok(message); }
+        protected JsonResult BadRequest(String message) { return new BadRequest(message); }
+
+        protected JsonResult Ok() { return new Ok(); }
+        protected JsonResult BadRequest() { return new BadRequest(); }
+
         protected JsonResult Ok(Object obj) { return new Ok(obj); }
         protected JsonResult BadRequest(Object obj) { return new BadRequest(obj); }
+
         protected JsonResult NoContent() { return new NoContent(); }
     }
 

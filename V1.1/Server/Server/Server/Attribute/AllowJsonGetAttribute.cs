@@ -14,7 +14,9 @@ namespace Server.Attribute
 
             if (jsonResult == null)
                 throw new ArgumentException("Action does not return a JsonResult, attribute AllowJsonGet is not allowed");
-    
+
+            jsonResult.MaxJsonLength = Int32.MaxValue;
+            jsonResult.ContentType = "application/json";
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             base.OnResultExecuting(filterContext);
         }

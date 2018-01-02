@@ -22,7 +22,7 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class ModuleController : CustomController
     {
-        [HttpPost]
+        [HttpPost()]
         [Route("DataSeed")]
         public async Task<ActionResult> DataSeed()
         {
@@ -101,7 +101,7 @@ namespace Server.Controllers
             return Ok($"No init {(typeof(eDonViTinh).Name)} data");
         }
 
-        [HttpGet]
+        [HttpGet()]
         [Route("TimeServer")]
         public async Task<ActionResult> TimeServer()
         {
@@ -110,7 +110,7 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost()]
         [Route("InitUser")]
         public async Task<ActionResult> InitUser()
         {
@@ -186,7 +186,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost()]
         [Route("GetController")]
         public async Task<ActionResult> GetController()
         {
@@ -290,7 +290,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet()]
         [Route("Login")]
         public async Task<ActionResult> Login()
         {
