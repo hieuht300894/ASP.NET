@@ -19,7 +19,7 @@ namespace Server.Model
             .ToList());
             var lstObjs = AutoLog(entries);
             int res = base.SaveChanges();
-            SaveLog(lstObjs);
+            //SaveLog(lstObjs);
             return res;
         }
         private List<ObjectBinding> AutoLog(List<DbEntityEntry> lstEntries)
@@ -62,7 +62,7 @@ namespace Server.Model
               .ToList());
             List<ObjectBinding> lstObjs = await AutoLogAsync(entries);
             var res = await base.SaveChangesAsync();
-            SaveLog(lstObjs);
+            //SaveLog(lstObjs);
             return res;
         }
         private async Task<List<ObjectBinding>> AutoLogAsync(List<DbEntityEntry> lstEntries)

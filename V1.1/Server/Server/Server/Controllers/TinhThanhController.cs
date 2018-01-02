@@ -11,11 +11,11 @@ namespace Server.Controllers
 {
     public class TinhThanhController : BaseController<eTinhThanh>
     {
-        [HttpGet()]
+        [HttpGet]
         [Route("DanhSach63TinhThanh")]
-        public async Task<ActionResult> DanhSach63TinhThanh()
+        public ActionResult DanhSach63TinhThanh()
         {
-            return Ok(await clsTinhThanh.Instance.DanhSach63TinhThanh());
+            return Ok(clsTinhThanh.Instance.DanhSach63TinhThanh());
         }
     }
 }

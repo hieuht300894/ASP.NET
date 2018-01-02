@@ -20,13 +20,13 @@ namespace Server.BLL
         }
         #endregion
 
-        public override async Task<IEnumerable<eNhapHangNhaCungCap>> GetAll()
+        public override List<eNhapHangNhaCungCap> GetAll()
         {
             try
             {
                 db = new Model.aModel();
-                IEnumerable<eNhapHangNhaCungCap> lstMaster = await db.eNhapHangNhaCungCap.ToListAsync();
-                IEnumerable<eNhapHangNhaCungCapChiTiet> lstDetail = await db.eNhapHangNhaCungCapChiTiet.ToListAsync();
+                IEnumerable<eNhapHangNhaCungCap> lstMaster = db.eNhapHangNhaCungCap.ToList();
+                IEnumerable<eNhapHangNhaCungCapChiTiet> lstDetail = db.eNhapHangNhaCungCapChiTiet.ToList();
 
                 var q1 =
                     from a in lstDetail
@@ -54,20 +54,20 @@ namespace Server.BLL
             catch { return new List<eNhapHangNhaCungCap>(); }
         }
 
-        public async override Task<eNhapHangNhaCungCap> GetByID(Object id)
+        public override eNhapHangNhaCungCap GetByID(Object id)
         {
             try
             {
                 db = new Model.aModel();
-                eNhapHangNhaCungCap Item = await db.eNhapHangNhaCungCap.FindAsync(id);
-                IEnumerable<eNhapHangNhaCungCapChiTiet> lstItemDetail = await db.eNhapHangNhaCungCapChiTiet.Where(x => x.IDNhapHangNhaCungCap == Item.KeyID).ToListAsync();
+                eNhapHangNhaCungCap Item = db.eNhapHangNhaCungCap.Find(id);
+                IEnumerable<eNhapHangNhaCungCapChiTiet> lstItemDetail = db.eNhapHangNhaCungCapChiTiet.Where(x => x.IDNhapHangNhaCungCap == Item.KeyID).ToList();
                 lstItemDetail.ToList().ForEach(x => Item.eNhapHangNhaCungCapChiTiet.Add(x));
                 return Item;
             }
             catch { return new eNhapHangNhaCungCap(); }
         }
 
-        public async override Task<Exception> AddEntries(eNhapHangNhaCungCap[] Items)
+        public override Exception AddEntries(eNhapHangNhaCungCap[] Items)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Server.BLL
                 Items = Items ?? new eNhapHangNhaCungCap[] { };
 
                 db.eNhapHangNhaCungCap.AddRange(Items);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
 
                 Items.ToList().ForEach(x =>
                {
@@ -88,9 +88,9 @@ namespace Server.BLL
                    db.eNhapHangNhaCungCapChiTiet.AddRange(x.eNhapHangNhaCungCapChiTiet.ToArray());
                });
 
-                await CapNhatCongNo(Items);
+                CapNhatCongNo(Items);
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
 
                 return null;
@@ -102,7 +102,7 @@ namespace Server.BLL
             }
         }
 
-        public async override Task<Exception> UpdateEntries(eNhapHangNhaCungCap[] Items)
+        public override Exception UpdateEntries(eNhapHangNhaCungCap[] Items)
         {
             try
             {
@@ -111,31 +111,31 @@ namespace Server.BLL
 
                 db.eNhapHangNhaCungCap.AddOrUpdate(Items);
 
-                Items.ToList().ForEach(async x =>
-                {
-                    IEnumerable<eNhapHangNhaCungCapChiTiet> lstDetail = await db.eNhapHangNhaCungCapChiTiet.Where(y => y.IDNhapHangNhaCungCap == x.KeyID).ToListAsync();
-                    lstDetail.ToList().ForEach(y =>
-                    {
-                        eNhapHangNhaCungCapChiTiet obj = x.eNhapHangNhaCungCapChiTiet.FirstOrDefault(z => z.KeyID == y.KeyID);
-                        if (obj == null)
-                            db.eNhapHangNhaCungCapChiTiet.Remove(y);
-                        else
-                            db.Entry(y).CurrentValues.SetValues(obj);
+                Items.ToList().ForEach(x =>
+               {
+                   IEnumerable<eNhapHangNhaCungCapChiTiet> lstDetail = db.eNhapHangNhaCungCapChiTiet.Where(y => y.IDNhapHangNhaCungCap == x.KeyID).ToList();
+                   lstDetail.ToList().ForEach(y =>
+                   {
+                       eNhapHangNhaCungCapChiTiet obj = x.eNhapHangNhaCungCapChiTiet.FirstOrDefault(z => z.KeyID == y.KeyID);
+                       if (obj == null)
+                           db.eNhapHangNhaCungCapChiTiet.Remove(y);
+                       else
+                           db.Entry(y).CurrentValues.SetValues(obj);
 
-                    });
-                    x.eNhapHangNhaCungCapChiTiet.ToList().ForEach(y =>
-                    {
-                        if (y.KeyID <= 0)
-                        {
-                            y.IDNhapHangNhaCungCap = x.KeyID;
-                            db.eNhapHangNhaCungCapChiTiet.Add(y);
-                        }
-                    });
-                });
+                   });
+                   x.eNhapHangNhaCungCapChiTiet.ToList().ForEach(y =>
+                   {
+                       if (y.KeyID <= 0)
+                       {
+                           y.IDNhapHangNhaCungCap = x.KeyID;
+                           db.eNhapHangNhaCungCapChiTiet.Add(y);
+                       }
+                   });
+               });
 
-                await CapNhatCongNo(Items);
+                CapNhatCongNo(Items);
 
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
 
                 return null;
@@ -147,11 +147,11 @@ namespace Server.BLL
             }
         }
 
-        async Task CapNhatCongNo(eNhapHangNhaCungCap[] Items)
+        void CapNhatCongNo(eNhapHangNhaCungCap[] Items)
         {
             foreach (eNhapHangNhaCungCap item in Items)
             {
-                eCongNoNhaCungCap congNo = await db.eCongNoNhaCungCap.FirstOrDefaultAsync(x => x.IsNhapHang && x.IDMaster == item.KeyID);
+                eCongNoNhaCungCap congNo = db.eCongNoNhaCungCap.FirstOrDefault(x => x.IsNhapHang && x.IDMaster == item.KeyID);
                 if (congNo == null)
                 {
                     congNo = new eCongNoNhaCungCap();

@@ -26,7 +26,7 @@ namespace Server.BLL
         #endregion
 
         #region Method
-        public virtual async Task<String> GetCode(String Prefix)
+        public virtual String GetCode(String Prefix)
         {
             String bRe = Prefix + DateTime.Now.ToString("yyyyMMdd");
 
@@ -34,7 +34,7 @@ namespace Server.BLL
             {
                 DateTime time = DateTime.Now;
 
-                IEnumerable<T> lstTemp = await db.Set<T>().ToListAsync();
+                IEnumerable<T> lstTemp = db.Set<T>().ToList();
                 T Item = lstTemp.OrderByDescending<T, T>("KeyID").FirstOrDefault();
                 if (Item == null)
                 {
@@ -57,39 +57,39 @@ namespace Server.BLL
             catch { return bRe += "0001"; }
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll()
+        public virtual List<T> GetAll()
         {
             try
             {
                 db = new aModel();
-                IEnumerable<T> lstTemp = await db.Set<T>().ToListAsync();
+                IEnumerable<T> lstTemp = db.Set<T>().ToList();
                 //IList<T> lstResult = lstTemp.OrderBy<T, String>("Ten").ToList();
-                IList<T> lstResult = lstTemp.ToList();
+                List<T> lstResult = lstTemp.ToList();
                 return lstResult;
             }
             catch { return new List<T>(); }
         }
 
-        public virtual async Task<T> GetByID(Object id)
+        public virtual T GetByID(Object id)
         {
             try
             {
                 db = new aModel();
-                //T item = await db.Set<T>().FindAsync(id.ConvertType<T>());
-                T Item = await db.Set<T>().FindAsync(id);
+                //T item =  db.Set<T>().Find(id.ConvertType<T>());
+                T Item = db.Set<T>().Find(id);
                 return Item ?? new T();
             }
             catch { return new T(); }
         }
 
-        public virtual async Task<Exception> AddEntry(T Item)
+        public virtual Exception AddEntry(T Item)
         {
             try
             {
                 db = new aModel();
                 db.BeginTransaction();
                 db.Set<T>().Add(Item);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -100,7 +100,7 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> AddEntries(T[] Items)
+        public virtual Exception AddEntries(T[] Items)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace Server.BLL
                 Items = Items ?? new T[] { };
                 db.BeginTransaction();
                 db.Set<T>().AddRange(Items);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -119,14 +119,14 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> UpdateEntry(T Item)
+        public virtual Exception UpdateEntry(T Item)
         {
             try
             {
                 db = new aModel();
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Item);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -137,7 +137,7 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> UpdateEntries(T[] Items)
+        public virtual Exception UpdateEntries(T[] Items)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Server.BLL
                 Items = Items ?? new T[] { };
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Items);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -156,15 +156,15 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> DeleteEntry(Object id)
+        public virtual Exception DeleteEntry(Object id)
         {
             try
             {
                 db = new aModel();
                 db.BeginTransaction();
-                T Item = await db.Set<T>().FindAsync(id);
+                T Item = db.Set<T>().Find(id);
                 db.Set<T>().Remove(Item);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -175,7 +175,7 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> DeleteEntry(T Item)
+        public virtual Exception DeleteEntry(T Item)
         {
             try
             {
@@ -183,7 +183,7 @@ namespace Server.BLL
                 db.BeginTransaction();
                 db.Set<T>().Attach(Item);
                 db.Set<T>().Remove(Item);
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -194,7 +194,7 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> DeleteEntries(Object[] ids)
+        public virtual Exception DeleteEntries(Object[] ids)
         {
             try
             {
@@ -203,10 +203,10 @@ namespace Server.BLL
                 db.BeginTransaction();
                 foreach (object id in ids)
                 {
-                    T Item = await db.Set<T>().FindAsync(id);
+                    T Item = db.Set<T>().Find(id);
                     db.Set<T>().Remove(Item);
                 }
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }
@@ -217,7 +217,7 @@ namespace Server.BLL
             }
         }
 
-        public virtual async Task<Exception> DeleteEntries(T[] Items)
+        public virtual Exception DeleteEntries(T[] Items)
         {
             try
             {
@@ -229,7 +229,7 @@ namespace Server.BLL
                     db.Set<T>().Attach(Item);
                     db.Set<T>().Remove(Item);
                 }
-                await db.SaveChangesAsync();
+                db.SaveChanges();
                 db.CommitTransaction();
                 return null;
             }

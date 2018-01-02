@@ -18,12 +18,12 @@ namespace Server.BLL
         }
         #endregion
 
-        public async Task<eCongNoNhaCungCap> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
+        public eCongNoNhaCungCap CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
         {
             try
             {
                 db = new Model.aModel();
-                IEnumerable<eCongNoNhaCungCap> lstCongNo = await db.eCongNoNhaCungCap.Where(x => x.IDNhaCungCap == IDNhaCungCap).ToListAsync();
+                IEnumerable<eCongNoNhaCungCap> lstCongNo = db.eCongNoNhaCungCap.Where(x => x.IDNhaCungCap == IDNhaCungCap).ToList();
                 lstCongNo = lstCongNo.Where(x => x.Ngay.Date <= NgayHienTai.Date);
 
                 eCongNoNhaCungCap congNo = lstCongNo.FirstOrDefault(x => x.IDMaster == IDMaster) ?? new eCongNoNhaCungCap();

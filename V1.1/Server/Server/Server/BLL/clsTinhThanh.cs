@@ -18,12 +18,12 @@ namespace Server.BLL
         }
         #endregion
 
-        public async Task<IList<eTinhThanh>> DanhSach63TinhThanh()
+        public List<eTinhThanh> DanhSach63TinhThanh()
         {
             try
             {
                 db = new Model.aModel();
-                IList<eTinhThanh> lstResult = await db.eTinhThanh.Where(x => x.IDLoai >= 1 && x.IDLoai <= 2).ToListAsync();
+                List<eTinhThanh> lstResult = db.eTinhThanh.Where(x => x.IDLoai >= 1 && x.IDLoai <= 2).ToList();
                 return lstResult;
             }
             catch { return new List<eTinhThanh>(); }
