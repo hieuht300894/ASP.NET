@@ -1,111 +1,137 @@
-﻿using DevExpress.XtraGrid.Views.Grid;
+﻿using Client.BLL.Common;
+using Client.GUI.Common;
+using Client.Module;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
 using EntityModel.DataModel;
-using Client.BLL.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Client.GUI.Common;
-using Client.Module;
 
 namespace Client.GUI.DanhMuc
 {
     public partial class frmSanPham : frmBase
     {
-        BindingList<eSanPham> lstEntries = new BindingList<eSanPham>();
-        BindingList<eSanPham> lstEdited = new BindingList<eSanPham>();
+        public eSanPham _iEntry;
+        eSanPham _aEntry;
 
         public frmSanPham()
         {
             InitializeComponent();
         }
-        protected async override void frmBase_Load(object sender, EventArgs e)
+        protected override async void frmBase_Load(object sender, EventArgs e)
         {
             await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
             await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadRepository(); });
+            await RunMethodAsync(() => { LoadDonViTinh(); });
             await RunMethodAsync(() => { LoadDataForm(); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-
-            //base.frmBase_Load(sender, e);
-            //LoadRepository();
-            //LoadDataForm();
-            //CustomForm();
         }
 
-        async void LoadRepository()
+        void LoadDonViTinh()
         {
-            IList<eDonViTinh> lstDVT = await clsFunction.GetItemsAsync<eDonViTinh>("donvitinh/getall");
-            await RunMethodAsync(() => { rlokDVT.DataSource = lstDVT; });
+            slokDVT.Properties.DataSource = clsFunction.GetItems<eDonViTinh>("DonViTinh/GetAll");
+        }
+        public override void ResetAll()
+        {
+            _iEntry = _aEntry = null;
         }
         public override void LoadDataForm()
         {
-            lstEdited = new BindingList<eSanPham>();
-            lstEntries = new BindingList<eSanPham>(clsFunction.GetItems<eSanPham>("sanpham/getall"));
-            //     lstEntries.ToList().ForEach(x => { x.Color = Color.FromArgb(x.ColorHex); });
+            _iEntry = _iEntry ?? new eSanPham();
+            _aEntry = clsFunction.GetItem<eSanPham>("SanPham/GetByID", _iEntry.KeyID);
 
-            gctDanhSach.DataSource = lstEntries;
+            SetControlValue();
+        }
+        public override void SetControlValue()
+        {
+            if (_aEntry.KeyID > 0)
+            {
+                txtTen.Select();
+            }
+            else
+            {
+                txtMa.Select();
+            }
+
+            txtMa.EditValue = _aEntry.Ma;
+            txtTen.EditValue = _aEntry.Ten;
+            clrpMauSac.Color = Color.FromArgb(_aEntry.ColorHex);
+            txtKichThuoc.EditValue = _aEntry.KichThuoc;
+            slokDVT.EditValue = _aEntry.IDDonViTinh;
+            mmeGhiChu.EditValue = _aEntry.GhiChu;
         }
         public override bool ValidateData()
         {
-            grvDanhSach.CloseEditor();
-            grvDanhSach.UpdateCurrentRow();
-            return base.ValidateData();
+            bool chk = true;
+
+            txtMa.ErrorText = string.Empty;
+            txtTen.ErrorText = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(txtMa.Text))
+            {
+                txtMa.ErrorText = "Mã không để trống";
+                chk = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtTen.Text))
+            {
+                txtTen.ErrorText = "Tên không để trống";
+                chk = false;
+            }
+
+            return chk;
         }
         public override bool SaveData()
         {
-            DateTime time = DateTime.Now.ServerNow();
-
-            lstEdited.ToList().ForEach(x =>
+            if (_aEntry.KeyID > 0)
             {
-                eDonViTinh dvt = (eDonViTinh)rlokDVT.GetDataSourceRowByKeyValue(x.IDDonViTinh) ?? new eDonViTinh();
-                x.MaDonViTinh = dvt.Ma;
-                x.TenDonViTinh = dvt.Ten;
+                _aEntry.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
+                _aEntry.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
+                _aEntry.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                _aEntry.NgayCapNhat = DateTime.Now.ServerNow();
+                _aEntry.TrangThai = 2;
 
-                x.MauSac = rpclr.ColorText.ToString();
-                // x.ColorHex = x.Color.ToArgb();
+            }
+            else
+            {
+                _aEntry.NguoiTao = clsGeneral.curPersonnel.KeyID;
+                _aEntry.MaNguoiTao = clsGeneral.curPersonnel.Ma;
+                _aEntry.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                _aEntry.NgayTao = DateTime.Now.ServerNow();
+                _aEntry.TrangThai = 1;
+            }
 
-                if (x.KeyID > 0)
-                {
-                    x.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                    x.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                    x.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
-                    x.NgayCapNhat = time;
-                }
-                else
-                {
-                    x.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                    x.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                    x.TenNguoiTao = clsGeneral.curPersonnel.Ten;
-                    x.NgayTao = time;
-                }
-            });
+            _aEntry.Ma = txtMa.Text.Trim();
+            _aEntry.Ten = txtTen.Text.Trim();
+            _aEntry.MauSac = clrpMauSac.Text;
+            _aEntry.ColorHex = clrpMauSac.Color.ToArgb();
+            _aEntry.KichThuoc = txtKichThuoc.Text.Trim();
+            _aEntry.GhiChu = mmeGhiChu.Text.Trim();
 
-            Tuple<bool, List<eSanPham>> Res = clsFunction.Post("sanpham/AddEntries", lstEdited.ToList());
+            eDonViTinh dvt = (eDonViTinh)slokDVT.Properties.GetRowByKeyValue(slokDVT.EditValue) ?? new eDonViTinh();
+            _aEntry.MaDonViTinh = dvt.Ma;
+            _aEntry.TenDonViTinh = dvt.Ten;
+
+            Tuple<bool, eSanPham> Res = (_aEntry.KeyID > 0 ?
+                clsFunction.Put("SanPham/UpdateEntries", _aEntry) :
+                clsFunction.Post("SanPham/AddEntries", _aEntry));
+            if (Res.Item1)
+                KeyID = Res.Item2.KeyID;
             return Res.Item1;
         }
         public override void CustomForm()
         {
-            rlokDVT.ValueMember = "KeyID";
-            rlokDVT.DisplayMember = "Ten";
+            slokDVT.Properties.ValueMember = "KeyID";
+            slokDVT.Properties.DisplayMember = "Ten";
 
             base.CustomForm();
-
-            gctDanhSach.MouseClick += gctDanhSach_MouseClick;
-            grvDanhSach.RowUpdated += grvDanhSach_RowUpdated;
-        }
-
-        private void gctDanhSach_MouseClick(object sender, MouseEventArgs e)
-        {
-            ShowGridPopup(sender, e, true, false, true, true, true, true);
-        }
-        private void grvDanhSach_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
-        {
-            if (!lstEdited.Any(x => x.KeyID == ((eSanPham)e.Row).KeyID)) lstEdited.Add((eSanPham)e.Row);
         }
     }
 }

@@ -1,20 +1,21 @@
-﻿using Client.BLL.Common;
-using Client.GUI.Common;
-using Client.Module;
-using DevExpress.XtraGrid.Views.Grid;
+﻿using DevExpress.XtraGrid.Views.Grid;
 using EntityModel.DataModel;
+using Client.BLL.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client.GUI.Common;
+using Client.Module;
 
 namespace Client.GUI.DanhMuc
 {
-    public partial class frmDonviTinh_List : frmBase
+    public partial class frmSanPham_List : frmBase
     {
-        public frmDonviTinh_List()
+        public frmSanPham_List()
         {
             InitializeComponent();
         }
@@ -29,7 +30,7 @@ namespace Client.GUI.DanhMuc
 
         public override void LoadData(object KeyID)
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eDonViTinh>("DonViTinh/GetAll");
+            gctDanhSach.DataSource = clsFunction.GetItems<eSanPham>("SanPham/GetAll");
 
             if ((int)KeyID > 0)
                 grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
@@ -53,15 +54,15 @@ namespace Client.GUI.DanhMuc
         }
         public override void InsertEntry()
         {
-            frmDonViTinh frm = new frmDonViTinh() { MsgAdd = "Thêm mới đơn vị tính", MsgEdit = "Cập nhật đơn vị tính", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
+            frmSanPham frm = new frmSanPham() { MsgAdd = "Thêm mới sản phẩm", MsgEdit = "Cập nhật sản phẩm", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm.Text = frm.MsgAdd;
             frm._ReloadData = LoadData;
             frm.ShowDialog();
         }
         public override void UpdateEntry()
         {
-            frmDonViTinh frm = new frmDonViTinh() { MsgAdd = "Thêm mới đơn vị tính", MsgEdit = "Cập nhật đơn vị tính", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
-            frm._iEntry = (eDonViTinh)grvDanhSach.GetFocusedRow();
+            frmSanPham frm = new frmSanPham() { MsgAdd = "Thêm mới sản phẩm", MsgEdit = "Cập nhật sản phẩm", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
+            frm._iEntry = (eSanPham)grvDanhSach.GetFocusedRow();
             frm.Text = frm.MsgEdit;
             frm._ReloadData = LoadData;
             frm.ShowDialog();

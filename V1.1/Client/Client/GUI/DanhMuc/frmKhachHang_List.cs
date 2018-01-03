@@ -1,5 +1,6 @@
 ﻿using Client.BLL.Common;
 using Client.GUI.Common;
+using Client.Model;
 using Client.Module;
 using DevExpress.XtraGrid.Views.Grid;
 using EntityModel.DataModel;
@@ -12,9 +13,9 @@ using System.Windows.Forms;
 
 namespace Client.GUI.DanhMuc
 {
-    public partial class frmDonviTinh_List : frmBase
+    public partial class frmKhachHang_List : frmBase
     {
-        public frmDonviTinh_List()
+        public frmKhachHang_List()
         {
             InitializeComponent();
         }
@@ -29,7 +30,7 @@ namespace Client.GUI.DanhMuc
 
         public override void LoadData(object KeyID)
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eDonViTinh>("DonViTinh/GetAll");
+            gctDanhSach.DataSource = clsFunction.GetItems<eKhachHang>("KhachHang/GetAll");
 
             if ((int)KeyID > 0)
                 grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
@@ -53,15 +54,15 @@ namespace Client.GUI.DanhMuc
         }
         public override void InsertEntry()
         {
-            frmDonViTinh frm = new frmDonViTinh() { MsgAdd = "Thêm mới đơn vị tính", MsgEdit = "Cập nhật đơn vị tính", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
+            frmKhachHang frm = new frmKhachHang() { MsgAdd = "Thêm mới khách hàng", MsgEdit = "Cập nhật khách hàng", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm.Text = frm.MsgAdd;
             frm._ReloadData = LoadData;
             frm.ShowDialog();
         }
         public override void UpdateEntry()
         {
-            frmDonViTinh frm = new frmDonViTinh() { MsgAdd = "Thêm mới đơn vị tính", MsgEdit = "Cập nhật đơn vị tính", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
-            frm._iEntry = (eDonViTinh)grvDanhSach.GetFocusedRow();
+            frmKhachHang frm = new frmKhachHang() { MsgAdd = "Thêm mới khách hàng", MsgEdit = "Cập nhật khách hàng", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
+            frm._iEntry = (eKhachHang)grvDanhSach.GetFocusedRow();
             frm.Text = frm.MsgEdit;
             frm._ReloadData = LoadData;
             frm.ShowDialog();

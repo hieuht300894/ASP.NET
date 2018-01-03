@@ -53,14 +53,14 @@ namespace Client.GUI.DanhMuc
         }
         public override void InsertEntry()
         {
-            frmNhaCungCap frm = new frmNhaCungCap() { MsgAdd = "Thêm mới nhà cung cấp", MsgEdit = "Cập nhật nhà cung cấp", FormBorderStyle = FormBorderStyle.FixedSingle };
+            frmNhaCungCap frm = new frmNhaCungCap() { MsgAdd = "Thêm mới nhà cung cấp", MsgEdit = "Cập nhật nhà cung cấp", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm.Text = frm.MsgAdd;
             frm._ReloadData = LoadData;
             frm.ShowDialog();
         }
         public override void UpdateEntry()
         {
-            frmNhaCungCap frm = new frmNhaCungCap() { MsgAdd = "Thêm mới nhà cung cấp", MsgEdit = "Cập nhật nhà cung cấp", FormBorderStyle = FormBorderStyle.FixedSingle };
+            frmNhaCungCap frm = new frmNhaCungCap() { MsgAdd = "Thêm mới nhà cung cấp", MsgEdit = "Cập nhật nhà cung cấp", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm._iEntry = (eNhaCungCap)grvDanhSach.GetFocusedRow();
             frm.Text = frm.MsgEdit;
             frm._ReloadData = LoadData;

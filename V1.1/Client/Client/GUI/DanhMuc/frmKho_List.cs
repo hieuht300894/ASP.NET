@@ -54,14 +54,14 @@ namespace Client.GUI.DanhMuc
         }
         public override void InsertEntry()
         {
-            frmKho frm = new frmKho() { MsgAdd = "Thêm mới kho", MsgEdit = "Cập nhật kho", FormBorderStyle = FormBorderStyle.FixedSingle };
+            frmKho frm = new frmKho() { MsgAdd = "Thêm mới kho", MsgEdit = "Cập nhật kho", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm.Text = frm.MsgAdd;
             frm._ReloadData = LoadData;
             frm.ShowDialog();
         }
         public override void UpdateEntry()
         {
-            frmKho frm = new frmKho() { MsgAdd = "Thêm mới kho", MsgEdit = "Cập nhật kho", FormBorderStyle = FormBorderStyle.FixedSingle };
+            frmKho frm = new frmKho() { MsgAdd = "Thêm mới kho", MsgEdit = "Cập nhật kho", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
             frm._iEntry = (eKho)grvDanhSach.GetFocusedRow();
             frm.Text = frm.MsgEdit;
             frm._ReloadData = LoadData;
