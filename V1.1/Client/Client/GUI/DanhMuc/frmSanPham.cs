@@ -85,7 +85,7 @@ namespace Client.GUI.DanhMuc
                 }
             });
 
-            Tuple<bool, List<eSanPham>> Res = clsFunction.Post("sanpham", lstEdited.ToList());
+            Tuple<bool, List<eSanPham>> Res = clsFunction.Post("sanpham/AddEntries", lstEdited.ToList());
             return Res.Item1;
         }
         public override void CustomForm()

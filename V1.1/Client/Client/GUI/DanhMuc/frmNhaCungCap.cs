@@ -22,26 +22,26 @@ namespace Client.GUI.DanhMuc
         {
             InitializeComponent();
         }
-        protected async override void frmBase_Load(object sender, EventArgs e)
+        protected override async void frmBase_Load(object sender, EventArgs e)
         {
             await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
             await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadRepository(); });
-            await RunMethodAsync(() => { LoadDataForm(); });
+            await RunMethodAsync(() => { LoadTinhThanh(); });
+            await RunMethodAsync(() => { LoadData(0); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-
-            //base.frmBase_Load(sender, e);
-
-            //LoadRepository();
-            //LoadDataForm();
-            //CustomForm();
         }
 
-        void LoadRepository()
+        void LoadTinhThanh()
         {
-            IList<eTinhThanh> lstTinhThanh = clsFunction.GetItems<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
-            slokTinhThanh.Properties.DataSource = lstTinhThanh;
+            slokTinhThanh.Properties.DataSource = clsFunction.GetItems<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
+        }
+        public override void LoadData(object KeyID)
+        {
+            gctDanhSach.DataSource = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/GetAll");
+
+            if ((int)KeyID > 0)
+                grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
         }
         public override void LoadDataForm()
         {
@@ -71,7 +71,24 @@ namespace Client.GUI.DanhMuc
         }
         public override bool ValidationForm()
         {
-            return base.ValidationForm();
+            bool chk = true;
+
+            txtMa.ErrorText = string.Empty;
+            txtTen.ErrorText = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(txtMa.Text))
+            {
+                txtMa.ErrorText = "Mã không để trống";
+                chk = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtTen.Text))
+            {
+                txtTen.ErrorText = "Tên không để trống";
+                chk = false;
+            }
+
+            return chk;
         }
         public override bool SaveData()
         {
@@ -116,6 +133,48 @@ namespace Client.GUI.DanhMuc
             slokTinhThanh.Properties.DisplayMember = "Ten";
 
             base.CustomForm();
+
+            DisableEvents();
+            EnableEvents();
+        }
+        public override void EnableEvents()
+        {
+            gctDanhSach.MouseClick += gctDanhSach_MouseClick;
+            grvDanhSach.DoubleClick += GrvDanhSach_DoubleClick;
+        }
+        public override void DisableEvents()
+        {
+            gctDanhSach.MouseClick -= gctDanhSach_MouseClick;
+            grvDanhSach.DoubleClick -= GrvDanhSach_DoubleClick;
+        }
+        public override void InsertEntry()
+        {
+            _iEntry = null;
+            LoadDataForm();
+        }
+        public override void UpdateEntry()
+        {
+            _iEntry = (eNhaCungCap)grvDanhSach.GetFocusedRow();
+            LoadDataForm();
+        }
+        public override void DeleteEntry()
+        {
+
+        }
+        public override async void RefreshEntry()
+        {
+            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            await RunMethodAsync(() => { LoadData(0); });
+            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+        }
+
+        private void GrvDanhSach_DoubleClick(object sender, EventArgs e)
+        {
+            UpdateEntry();
+        }
+        private void gctDanhSach_MouseClick(object sender, MouseEventArgs e)
+        {
+            ShowGridPopup(sender, e, true, false, true, true, true, true);
         }
     }
 }
