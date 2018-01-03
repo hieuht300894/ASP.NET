@@ -15,7 +15,7 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class BaseController<T> : CustomController where T : class, new()
     {
-        [HttpGet()]
+        [HttpGet]
         [Route("GetCode/{Prefix}")]
         public virtual async Task<ActionResult> GetCode(String Prefix)
         {
@@ -23,7 +23,7 @@ namespace Server.Controllers
             return Ok(Code);
         }
 
-        [HttpGet()]
+        [HttpGet]
         [Route("GetAll")]
         public virtual async Task<ActionResult> GetAll()
         {
@@ -31,7 +31,7 @@ namespace Server.Controllers
             return Ok(Items);
         }
 
-        [HttpGet()]
+        [HttpGet]
         [Route("GetByID/{id}")]
         public virtual async Task<ActionResult> GetByID(Int32 id)
         {
@@ -39,7 +39,8 @@ namespace Server.Controllers
             return Ok(Item);
         }
 
-        [HttpPost()]   
+        [HttpPost]
+        [Route("AddEntries")]
         public virtual async Task<ActionResult> AddEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.AddEntries(Items);
@@ -55,7 +56,8 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPut()]
+        [HttpPut]
+        [Route("UpdateEntries")]
         public virtual async Task<ActionResult> UpdateEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.UpdateEntries(Items);
@@ -71,7 +73,8 @@ namespace Server.Controllers
             }
         }
 
-        [HttpDelete()]
+        [HttpDelete]
+        [Route("DeleteEntries")]
         public virtual async Task<ActionResult> DeleteEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.DeleteEntries(Items);
