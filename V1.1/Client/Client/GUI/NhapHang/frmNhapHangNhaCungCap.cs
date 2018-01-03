@@ -38,23 +38,12 @@ namespace Client.GUI.NhapHang
             await RunMethodAsync(() => { LoadDataForm(); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-
-            //clsGeneral.CallWaitForm(this);
-
-            //base.frmBase_Load(sender, e);
-            //LoadNhaCungCap(0);
-            //LoadRepository();
-            //LoadDataForm();
-            //CustomForm();
-
-            //clsGeneral.CloseWaitForm();
         }
-        protected override void frmBase_FormClosing(object sender, FormClosingEventArgs e)
+
+        public override void ResetAll()
         {
-            base.frmBase_FormClosing(sender, e);
-            _ReloadData?.Invoke(0);
+            _iEntry = _aEntry = null;
         }
-
         void LoadRepository()
         {
             lstNhomSanPham = clsFunction.GetItems<eNhomSanPham>("NhomSanPham/getall");
@@ -145,9 +134,9 @@ namespace Client.GUI.NhapHang
             //    srcTenSanPham.Properties.Items.Add(rSanPham.Ten);
             //}
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
-            return base.ValidationForm();
+            return base.ValidateData();
         }
         public override bool SaveData()
         {
@@ -216,8 +205,8 @@ namespace Client.GUI.NhapHang
             }
 
             Tuple<bool, eNhapHangNhaCungCap> Res = _aEntry.KeyID > 0 ?
-                clsFunction.Put("NhapHangNhaCungCap", _aEntry) :
-                clsFunction.Post("NhapHangNhaCungCap", _aEntry);
+                clsFunction.Put("NhapHangNhaCungCap/UpdateEntries", _aEntry) :
+                clsFunction.Post("NhapHangNhaCungCap/AddEntries", _aEntry);
             if (Res.Item1)
                 KeyID = Res.Item2.KeyID;
             return Res.Item1;
@@ -240,11 +229,10 @@ namespace Client.GUI.NhapHang
                 grvChiTiet.Columns["SoLuongSi"], grvChiTiet.Columns["SoLuongLe"], grvChiTiet.Columns["SoLuong"],
                 grvChiTiet.Columns["ThanhTien"], grvChiTiet.Columns["TongTien"]);
 
-            //frmNhaCungCap frm = new frmNhaCungCap();
-            //frm.fType = Module.QuanLyBanHang.eFormType.Add;
-            //frm.Text = "Thêm mới nhà cung cấp";
-            //frm._ReloadData = LoadNhaCungCap;
-            //slokNhaCungCap.AddNewItem(frm); 
+            frmNhaCungCap frm = new frmNhaCungCap();
+            frm.fType = Module.QuanLyBanHang.eFormType.Add;
+            frm._ReloadData = LoadNhaCungCap;
+            slokNhaCungCap.AddNewItem(frm);
         }
         public override void EnableEvents()
         {

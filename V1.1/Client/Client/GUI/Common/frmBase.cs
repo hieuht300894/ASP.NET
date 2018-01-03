@@ -197,7 +197,7 @@ namespace Client.GUI.Common
         {
             try
             {
-                _ReloadData?.Invoke(KeyID);
+                _ReloadData.Invoke(KeyID);
 
                 foreach (ControlObject ctrObj in lstChildControls)
                 {
@@ -293,7 +293,7 @@ namespace Client.GUI.Common
         }
         protected virtual void btnSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (ValidationForm())
+            if (ValidateData())
             {
                 if (SaveData())
                 {
@@ -308,13 +308,14 @@ namespace Client.GUI.Common
         }
         protected virtual void btnSaveAndAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (ValidationForm())
+            if (ValidateData())
             {
                 if (SaveData())
                 {
                     ShowAlert("Lưu dữ liệu thành công");
                     fType = eFormType.Add;
                     Text = MsgAdd;
+                    ResetAll();
                     LoadDataForm();
                 }
                 else
@@ -329,7 +330,7 @@ namespace Client.GUI.Common
         }
         protected virtual void bbpSave_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (ValidationForm())
+            if (ValidateData())
             {
                 if (SaveData())
                 {
@@ -344,13 +345,14 @@ namespace Client.GUI.Common
         }
         protected virtual void bbpSaveAndAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (ValidationForm())
+            if (ValidateData())
             {
                 if (SaveData())
                 {
                     ShowAlert("Lưu dữ liệu thành công");
                     fType = eFormType.Add;
                     Text = MsgAdd;
+                    ResetAll();
                     LoadDataForm();
                 }
                 else
@@ -699,13 +701,17 @@ namespace Client.GUI.Common
         public virtual void SetDataSource()
         {
         }
-        public virtual bool ValidationForm()
+        public virtual bool ValidateData()
         {
             return true;
         }
         public virtual bool SaveData()
         {
             return true;
+        }
+        public virtual void ResetAll()
+        {
+
         }
         public virtual void EnableEvents()
         {

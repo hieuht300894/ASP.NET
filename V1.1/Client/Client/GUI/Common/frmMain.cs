@@ -114,19 +114,34 @@ namespace Client.GUI.Common
         }
         void ShowLogin()
         {
-            frmLogin frm = new frmLogin();
-            if (frm.ShowDialog() == DialogResult.OK)
+            //frmLogin frm = new frmLogin();
+            //if (frm.ShowDialog() == DialogResult.OK)
+            //{
+            //    BeginInvoke(new Action(() =>
+            //    {
+            //        rcMain.Show();
+            //        IsLogin = true;
+            //    }));
+            //}
+            //else if (!IsLogin)
+            //{
+            //    Application.Exit();
+            //}
+
+            IAsyncResult result = BeginInvoke(new Action(() =>
             {
-                BeginInvoke(new Action(() =>
+                frmLogin frm = new frmLogin();
+                if (frm.ShowDialog(this) == DialogResult.OK)
                 {
                     rcMain.Show();
                     IsLogin = true;
-                }));
-            }
-            else if (!IsLogin)
-            {
-                Application.Exit();
-            }
+                }
+                else if (!IsLogin)
+                {
+                    Application.Exit();
+                }
+            }));
+            EndInvoke(result);
         }
         bool CheckConnect()
         {
@@ -168,8 +183,11 @@ namespace Client.GUI.Common
                 ModuleHelper.Path = string.Empty;
                 ModuleHelper.Url = string.Empty;
 
-                frmServer frm = new frmServer();
-                return frm.ShowDialog() == DialogResult.OK;
+                return (Boolean)Invoke(new Func<Boolean>(() =>
+                {
+                    frmServer frm = new frmServer();
+                    return frm.ShowDialog(this) == DialogResult.OK;
+                }));
             }
         }
         #endregion

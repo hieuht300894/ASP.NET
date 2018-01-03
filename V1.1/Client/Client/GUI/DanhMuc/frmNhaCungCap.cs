@@ -15,7 +15,7 @@ namespace Client.GUI.DanhMuc
 {
     public partial class frmNhaCungCap : frmBase
     {
-        eNhaCungCap _iEntry;
+        public eNhaCungCap _iEntry;
         eNhaCungCap _aEntry;
 
         public frmNhaCungCap()
@@ -27,7 +27,7 @@ namespace Client.GUI.DanhMuc
             await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
             await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
             await RunMethodAsync(() => { LoadTinhThanh(); });
-            await RunMethodAsync(() => { LoadData(0); });
+            await RunMethodAsync(() => { LoadDataForm(); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
@@ -36,12 +36,9 @@ namespace Client.GUI.DanhMuc
         {
             slokTinhThanh.Properties.DataSource = clsFunction.GetItems<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
         }
-        public override void LoadData(object KeyID)
+        public override void ResetAll()
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/GetAll");
-
-            if ((int)KeyID > 0)
-                grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
+            _iEntry = _aEntry = null;
         }
         public override void LoadDataForm()
         {
@@ -69,7 +66,7 @@ namespace Client.GUI.DanhMuc
             txtNguoiLienHe.EditValue = _aEntry.NguoiLienHe;
             slokTinhThanh.EditValue = _aEntry.IDTinhThanh;
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
             bool chk = true;
 
@@ -133,48 +130,6 @@ namespace Client.GUI.DanhMuc
             slokTinhThanh.Properties.DisplayMember = "Ten";
 
             base.CustomForm();
-
-            DisableEvents();
-            EnableEvents();
-        }
-        public override void EnableEvents()
-        {
-            gctDanhSach.MouseClick += gctDanhSach_MouseClick;
-            grvDanhSach.DoubleClick += GrvDanhSach_DoubleClick;
-        }
-        public override void DisableEvents()
-        {
-            gctDanhSach.MouseClick -= gctDanhSach_MouseClick;
-            grvDanhSach.DoubleClick -= GrvDanhSach_DoubleClick;
-        }
-        public override void InsertEntry()
-        {
-            _iEntry = null;
-            LoadDataForm();
-        }
-        public override void UpdateEntry()
-        {
-            _iEntry = (eNhaCungCap)grvDanhSach.GetFocusedRow();
-            LoadDataForm();
-        }
-        public override void DeleteEntry()
-        {
-
-        }
-        public override async void RefreshEntry()
-        {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-        }
-
-        private void GrvDanhSach_DoubleClick(object sender, EventArgs e)
-        {
-            UpdateEntry();
-        }
-        private void gctDanhSach_MouseClick(object sender, MouseEventArgs e)
-        {
-            ShowGridPopup(sender, e, true, false, true, true, true, true);
         }
     }
 }

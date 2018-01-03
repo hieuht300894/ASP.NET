@@ -129,6 +129,12 @@
     <Compile Include="GUI\DanhMuc\frmDonViTinh.designer.cs">
       <DependentUpon>frmDonViTinh.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMuc\frmDonviTinh_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmDonviTinh_List.Designer.cs">
+      <DependentUpon>frmDonviTinh_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DanhMuc\frmKhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,11 +147,23 @@
     <Compile Include="GUI\DanhMuc\frmKho.designer.cs">
       <DependentUpon>frmKho.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMuc\frmKho_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmKho_List.Designer.cs">
+      <DependentUpon>frmKho_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DanhMuc\frmNhaCungCap.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\DanhMuc\frmNhaCungCap.designer.cs">
       <DependentUpon>frmNhaCungCap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmNhaCungCap_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmNhaCungCap_List.Designer.cs">
+      <DependentUpon>frmNhaCungCap_List.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\DanhMuc\frmNhomDonViTinh.cs">
       <SubType>Form</SubType>
@@ -244,14 +262,23 @@
     <EmbeddedResource Include="GUI\DanhMuc\frmDonViTinh.resx">
       <DependentUpon>frmDonViTinh.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMuc\frmDonviTinh_List.resx">
+      <DependentUpon>frmDonviTinh_List.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmKhachHang.resx">
       <DependentUpon>frmKhachHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmKho.resx">
       <DependentUpon>frmKho.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMuc\frmKho_List.resx">
+      <DependentUpon>frmKho_List.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmNhaCungCap.resx">
       <DependentUpon>frmNhaCungCap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMuc\frmNhaCungCap_List.resx">
+      <DependentUpon>frmNhaCungCap_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmNhomDonViTinh.resx">
       <DependentUpon>frmNhomDonViTinh.cs</DependentUpon>

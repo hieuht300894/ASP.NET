@@ -16,7 +16,7 @@ namespace Client.GUI.DanhMuc
 {
     public partial class frmKho : frmBase
     {
-        eKho _iEntry;
+        public eKho _iEntry;
         eKho _aEntry;
 
         public frmKho()
@@ -27,17 +27,14 @@ namespace Client.GUI.DanhMuc
         {
             await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
             await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadData(0); });
+            await RunMethodAsync(() => { LoadDataForm(); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
 
-        public override void LoadData(object KeyID)
+        public override void ResetAll()
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eKho>("Kho/GetAll");
-
-            if ((int)KeyID > 0)
-                grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
+            _iEntry = _aEntry = null;
         }
         public override void LoadDataForm()
         {
@@ -61,7 +58,7 @@ namespace Client.GUI.DanhMuc
             txtTen.EditValue = _aEntry.Ten;
             mmeGhiChu.EditValue = _aEntry.GhiChu;
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
             bool chk = true;
 
@@ -116,48 +113,6 @@ namespace Client.GUI.DanhMuc
         public override void CustomForm()
         {
             base.CustomForm();
-
-            DisableEvents();
-            EnableEvents();
-        }
-        public override void EnableEvents()
-        {
-            gctDanhSach.MouseClick += gctDanhSach_MouseClick;
-            grvDanhSach.DoubleClick += GrvDanhSach_DoubleClick;
-        }
-        public override void DisableEvents()
-        {
-            gctDanhSach.MouseClick -= gctDanhSach_MouseClick;
-            grvDanhSach.DoubleClick -= GrvDanhSach_DoubleClick;
-        }
-        public override void InsertEntry()
-        {
-            _iEntry = null;
-            LoadDataForm();
-        }
-        public override void UpdateEntry()
-        {
-            _iEntry = (eKho)grvDanhSach.GetFocusedRow();
-            LoadDataForm();
-        }
-        public override void DeleteEntry()
-        {
-
-        }
-        public override async void RefreshEntry()
-        {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-        }
-
-        private void GrvDanhSach_DoubleClick(object sender, EventArgs e)
-        {
-            UpdateEntry();
-        }
-        private void gctDanhSach_MouseClick(object sender, MouseEventArgs e)
-        {
-            ShowGridPopup(sender, e, true, false, true, true, true, true);
         }
     }
 }

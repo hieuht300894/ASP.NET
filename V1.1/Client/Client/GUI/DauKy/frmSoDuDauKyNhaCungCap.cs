@@ -47,11 +47,11 @@ namespace Client.GUI.DauKy
             lstEntries = new BindingList<eSoDuDauKyNhaCungCap>(clsFunction.GetItems<eSoDuDauKyNhaCungCap>("sodudaukynhacungcap/getall"));
             gctDanhSach.DataSource = lstEntries;
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
             grvDanhSach.CloseEditor();
             grvDanhSach.UpdateCurrentRow();
-            return base.ValidationForm();
+            return base.ValidateData();
         }
         public override bool SaveData()
         {

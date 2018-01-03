@@ -50,11 +50,11 @@ namespace Client.GUI.DanhMuc
 
             gctDanhSach.DataSource = lstEntries;
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
             grvDanhSach.CloseEditor();
             grvDanhSach.UpdateCurrentRow();
-            return base.ValidationForm();
+            return base.ValidateData();
         }
         public override bool SaveData()
         {

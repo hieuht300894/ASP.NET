@@ -40,11 +40,11 @@ namespace Client.GUI.DanhMuc
             lstEntries = new BindingList<eNhomKhachHang>(clsFunction.GetItems<eNhomKhachHang>("nhomkhachhang/getall"));
             gctDanhSach.DataSource = lstEntries;
         }
-        public override bool ValidationForm()
+        public override bool ValidateData()
         {
             grvDanhSach.CloseEditor();
             grvDanhSach.UpdateCurrentRow();
-            return base.ValidationForm();
+            return base.ValidateData();
         }
         public override bool SaveData()
         {

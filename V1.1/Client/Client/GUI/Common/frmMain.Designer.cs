@@ -33,15 +33,15 @@
             this.rcMain = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bhiNhanVien = new DevExpress.XtraBars.BarHeaderItem();
             this.frmTinhThanh = new DevExpress.XtraBars.BarButtonItem();
-            this.frmKho = new DevExpress.XtraBars.BarButtonItem();
-            this.frmSoDuDauKyKhachHang = new DevExpress.XtraBars.BarButtonItem();
-            this.frmSoDuDauKyNhaCungCap = new DevExpress.XtraBars.BarButtonItem();
-            this.frmTonKhoDauKy = new DevExpress.XtraBars.BarButtonItem();
+            this.frmKho_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmSoDuDauKyKhachHang_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmSoDuDauKyNhaCungCap_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmTonKhoDauKy_List = new DevExpress.XtraBars.BarButtonItem();
             this.frmNhapHangNhaCungCap_List = new DevExpress.XtraBars.BarButtonItem();
-            this.frmDonViTinh = new DevExpress.XtraBars.BarButtonItem();
-            this.frmKhachHang = new DevExpress.XtraBars.BarButtonItem();
-            this.frmNhaCungCap = new DevExpress.XtraBars.BarButtonItem();
-            this.frmSanPham = new DevExpress.XtraBars.BarButtonItem();
+            this.frmDonViTinh_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmKhachHang_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmNhaCungCap_List = new DevExpress.XtraBars.BarButtonItem();
+            this.frmSanPham_List = new DevExpress.XtraBars.BarButtonItem();
             this.rpTaiKhoan = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rpThietLap = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -66,15 +66,15 @@
             this.rcMain.ExpandCollapseItem,
             this.bhiNhanVien,
             this.frmTinhThanh,
-            this.frmKho,
-            this.frmSoDuDauKyKhachHang,
-            this.frmSoDuDauKyNhaCungCap,
-            this.frmTonKhoDauKy,
+            this.frmKho_List,
+            this.frmSoDuDauKyKhachHang_List,
+            this.frmSoDuDauKyNhaCungCap_List,
+            this.frmTonKhoDauKy_List,
             this.frmNhapHangNhaCungCap_List,
-            this.frmDonViTinh,
-            this.frmKhachHang,
-            this.frmNhaCungCap,
-            this.frmSanPham});
+            this.frmDonViTinh_List,
+            this.frmKhachHang_List,
+            this.frmNhaCungCap_List,
+            this.frmSanPham_List});
             this.rcMain.Location = new System.Drawing.Point(0, 0);
             this.rcMain.MaxItemId = 21;
             this.rcMain.Name = "rcMain";
@@ -104,29 +104,29 @@
             this.frmTinhThanh.Id = 11;
             this.frmTinhThanh.Name = "frmTinhThanh";
             // 
-            // frmKho
+            // frmKho_List
             // 
-            this.frmKho.Caption = "Kho";
-            this.frmKho.Id = 12;
-            this.frmKho.Name = "frmKho";
+            this.frmKho_List.Caption = "Kho";
+            this.frmKho_List.Id = 12;
+            this.frmKho_List.Name = "frmKho_List";
             // 
-            // frmSoDuDauKyKhachHang
+            // frmSoDuDauKyKhachHang_List
             // 
-            this.frmSoDuDauKyKhachHang.Caption = "Khách hàng";
-            this.frmSoDuDauKyKhachHang.Id = 13;
-            this.frmSoDuDauKyKhachHang.Name = "frmSoDuDauKyKhachHang";
+            this.frmSoDuDauKyKhachHang_List.Caption = "Khách hàng";
+            this.frmSoDuDauKyKhachHang_List.Id = 13;
+            this.frmSoDuDauKyKhachHang_List.Name = "frmSoDuDauKyKhachHang_List";
             // 
-            // frmSoDuDauKyNhaCungCap
+            // frmSoDuDauKyNhaCungCap_List
             // 
-            this.frmSoDuDauKyNhaCungCap.Caption = "Nhà cung cấp";
-            this.frmSoDuDauKyNhaCungCap.Id = 14;
-            this.frmSoDuDauKyNhaCungCap.Name = "frmSoDuDauKyNhaCungCap";
+            this.frmSoDuDauKyNhaCungCap_List.Caption = "Nhà cung cấp";
+            this.frmSoDuDauKyNhaCungCap_List.Id = 14;
+            this.frmSoDuDauKyNhaCungCap_List.Name = "frmSoDuDauKyNhaCungCap_List";
             // 
-            // frmTonKhoDauKy
+            // frmTonKhoDauKy_List
             // 
-            this.frmTonKhoDauKy.Caption = "Tồn kho";
-            this.frmTonKhoDauKy.Id = 15;
-            this.frmTonKhoDauKy.Name = "frmTonKhoDauKy";
+            this.frmTonKhoDauKy_List.Caption = "Tồn kho";
+            this.frmTonKhoDauKy_List.Id = 15;
+            this.frmTonKhoDauKy_List.Name = "frmTonKhoDauKy_List";
             // 
             // frmNhapHangNhaCungCap_List
             // 
@@ -134,29 +134,29 @@
             this.frmNhapHangNhaCungCap_List.Id = 16;
             this.frmNhapHangNhaCungCap_List.Name = "frmNhapHangNhaCungCap_List";
             // 
-            // frmDonViTinh
+            // frmDonViTinh_List
             // 
-            this.frmDonViTinh.Caption = "ĐVT";
-            this.frmDonViTinh.Id = 17;
-            this.frmDonViTinh.Name = "frmDonViTinh";
+            this.frmDonViTinh_List.Caption = "ĐVT";
+            this.frmDonViTinh_List.Id = 17;
+            this.frmDonViTinh_List.Name = "frmDonViTinh_List";
             // 
-            // frmKhachHang
+            // frmKhachHang_List
             // 
-            this.frmKhachHang.Caption = "Khách hàng";
-            this.frmKhachHang.Id = 18;
-            this.frmKhachHang.Name = "frmKhachHang";
+            this.frmKhachHang_List.Caption = "Khách hàng";
+            this.frmKhachHang_List.Id = 18;
+            this.frmKhachHang_List.Name = "frmKhachHang_List";
             // 
-            // frmNhaCungCap
+            // frmNhaCungCap_List
             // 
-            this.frmNhaCungCap.Caption = "Nhà cung cấp";
-            this.frmNhaCungCap.Id = 19;
-            this.frmNhaCungCap.Name = "frmNhaCungCap";
+            this.frmNhaCungCap_List.Caption = "Nhà cung cấp";
+            this.frmNhaCungCap_List.Id = 19;
+            this.frmNhaCungCap_List.Name = "frmNhaCungCap_List";
             // 
-            // frmSanPham
+            // frmSanPham_List
             // 
-            this.frmSanPham.Caption = "Sản phẩm";
-            this.frmSanPham.Id = 20;
-            this.frmSanPham.Name = "frmSanPham";
+            this.frmSanPham_List.Caption = "Sản phẩm";
+            this.frmSanPham_List.Id = 20;
+            this.frmSanPham_List.Name = "frmSanPham_List";
             // 
             // rpTaiKhoan
             // 
@@ -192,11 +192,11 @@
             // ribbonPageGroup3
             // 
             this.ribbonPageGroup3.ItemLinks.Add(this.frmTinhThanh);
-            this.ribbonPageGroup3.ItemLinks.Add(this.frmKho);
-            this.ribbonPageGroup3.ItemLinks.Add(this.frmDonViTinh);
-            this.ribbonPageGroup3.ItemLinks.Add(this.frmKhachHang);
-            this.ribbonPageGroup3.ItemLinks.Add(this.frmNhaCungCap);
-            this.ribbonPageGroup3.ItemLinks.Add(this.frmSanPham);
+            this.ribbonPageGroup3.ItemLinks.Add(this.frmKho_List);
+            this.ribbonPageGroup3.ItemLinks.Add(this.frmDonViTinh_List);
+            this.ribbonPageGroup3.ItemLinks.Add(this.frmKhachHang_List);
+            this.ribbonPageGroup3.ItemLinks.Add(this.frmNhaCungCap_List);
+            this.ribbonPageGroup3.ItemLinks.Add(this.frmSanPham_List);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "ribbonPageGroup3";
             // 
@@ -210,9 +210,9 @@
             // 
             // ribbonPageGroup4
             // 
-            this.ribbonPageGroup4.ItemLinks.Add(this.frmSoDuDauKyKhachHang);
-            this.ribbonPageGroup4.ItemLinks.Add(this.frmSoDuDauKyNhaCungCap);
-            this.ribbonPageGroup4.ItemLinks.Add(this.frmTonKhoDauKy);
+            this.ribbonPageGroup4.ItemLinks.Add(this.frmSoDuDauKyKhachHang_List);
+            this.ribbonPageGroup4.ItemLinks.Add(this.frmSoDuDauKyNhaCungCap_List);
+            this.ribbonPageGroup4.ItemLinks.Add(this.frmTonKhoDauKy_List);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "Đầu kỳ";
             // 
@@ -278,15 +278,15 @@
         private DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView tbvMain;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar rsbBottom;
         private DevExpress.XtraBars.BarButtonItem frmTinhThanh;
-        private DevExpress.XtraBars.BarButtonItem frmKho;
-        private DevExpress.XtraBars.BarButtonItem frmSoDuDauKyKhachHang;
-        private DevExpress.XtraBars.BarButtonItem frmSoDuDauKyNhaCungCap;
-        private DevExpress.XtraBars.BarButtonItem frmTonKhoDauKy;
+        private DevExpress.XtraBars.BarButtonItem frmKho_List;
+        private DevExpress.XtraBars.BarButtonItem frmSoDuDauKyKhachHang_List;
+        private DevExpress.XtraBars.BarButtonItem frmSoDuDauKyNhaCungCap_List;
+        private DevExpress.XtraBars.BarButtonItem frmTonKhoDauKy_List;
         private DevExpress.XtraBars.BarButtonItem frmNhapHangNhaCungCap_List;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
-        private DevExpress.XtraBars.BarButtonItem frmDonViTinh;
-        private DevExpress.XtraBars.BarButtonItem frmKhachHang;
-        private DevExpress.XtraBars.BarButtonItem frmNhaCungCap;
-        private DevExpress.XtraBars.BarButtonItem frmSanPham;
+        private DevExpress.XtraBars.BarButtonItem frmDonViTinh_List;
+        private DevExpress.XtraBars.BarButtonItem frmKhachHang_List;
+        private DevExpress.XtraBars.BarButtonItem frmNhaCungCap_List;
+        private DevExpress.XtraBars.BarButtonItem frmSanPham_List;
     }
 }
