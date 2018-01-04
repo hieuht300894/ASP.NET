@@ -1,13 +1,11 @@
 ﻿using EntityModel.DataModel;
 using EntityModel.Model;
-using Server.Attribute;
 using Server.Extension;
 using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -18,12 +16,10 @@ using System.Web.Mvc;
 
 namespace Server.Controllers
 {
-    [AllowJsonGet]
     [Route("[controller]")]
     public class ModuleController : CustomController
     {
-        [HttpPost()]
-        [Route("DataSeed")]
+        [HttpPost]
         public async Task<ActionResult> DataSeed()
         {
             IList<ActionResult> lstResult = new List<ActionResult>();
@@ -101,8 +97,7 @@ namespace Server.Controllers
             return Ok($"No init {(typeof(eDonViTinh).Name)} data");
         }
 
-        [HttpGet()]
-        [Route("TimeServer")]
+        [HttpGet]
         public async Task<ActionResult> TimeServer()
         {
             try { return await Task.Factory.StartNew(() => { return Ok(DateTime.Now); }); }
@@ -110,8 +105,7 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost()]
-        [Route("InitUser")]
+        [HttpPost]
         public async Task<ActionResult> InitUser()
         {
             aModel db = new aModel();
@@ -186,8 +180,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpPost()]
-        [Route("GetController")]
+        [HttpPost]
         public async Task<ActionResult> GetController()
         {
             List<xFeature> lstFeatures = new List<xFeature>();
@@ -195,11 +188,11 @@ namespace Server.Controllers
             Assembly asm = Assembly.GetExecutingAssembly();
 
             var Controllers = asm.GetExportedTypes()
-                .Where(x => typeof(ControllerBase).IsAssignableFrom(x) && !x.Name.Equals(typeof(BaseController<>).Name))
+                .Where(x => typeof(CustomController).IsAssignableFrom(x) && !x.Name.Equals(typeof(BaseController<>).Name) && !x.Name.Equals(typeof(CustomController).Name))
                 .Select(x => new
                 {
                     Controller = x.Name,
-                    Methods = x.GetMethods().Where(y => y.DeclaringType.IsSubclassOf(typeof(ControllerBase)) && y.IsPublic && !y.IsStatic).ToList()
+                    Methods = x.GetMethods().Where(y => y.DeclaringType.IsSubclassOf(typeof(CustomController)) && y.IsPublic && !y.IsStatic).ToList()
                 })
                 .Select(x => new
                 {
@@ -217,51 +210,51 @@ namespace Server.Controllers
                 {
                     xFeature f = new xFeature();
 
-                    //HttpGetAttribute attr_Get = (HttpGetAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpGetAttribute));
-                    //if (attr_Get != null)
-                    //{
-                    //    f.Method = HttpMethods.Get.ToLower();
-                    //    f.Template = string.IsNullOrWhiteSpace(attr_Get.Template) ? string.Empty : attr_Get.Template.ToLower();
-                    //    lstTemps.Add(f);
-                    //}
+                    HttpGetAttribute attr_Get = (HttpGetAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpGetAttribute));
+                    if (attr_Get != null)
+                    {
+                        f.Method = HttpVerbs.Get.ToString().ToLower();
+                        // f.Template = string.IsNullOrWhiteSpace(attr_Get.Template) ? string.Empty : attr_Get.Template.ToLower();
+                        lstTemps.Add(f);
+                    }
 
-                    //HttpPostAttribute attr_Post = (HttpPostAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPostAttribute));
-                    //if (attr_Post != null)
-                    //{
-                    //    f.Method = HttpMethods.Post.ToLower();
-                    //    f.Template = string.IsNullOrWhiteSpace(attr_Post.Template) ? string.Empty : attr_Post.Template.ToLower();
-                    //    lstTemps.Add(f);
-                    //}
+                    HttpPostAttribute attr_Post = (HttpPostAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPostAttribute));
+                    if (attr_Post != null)
+                    {
+                        f.Method = HttpVerbs.Post.ToString().ToLower();
+                        //f.Template = string.IsNullOrWhiteSpace(attr_Post.Template) ? string.Empty : attr_Post.Template.ToLower();
+                        lstTemps.Add(f);
+                    }
 
-                    //HttpPutAttribute attr_Put = (HttpPutAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPutAttribute));
-                    //if (attr_Put != null)
-                    //{
-                    //    f.Method = HttpMethods.Put.ToLower();
-                    //    f.Template = string.IsNullOrWhiteSpace(attr_Put.Template) ? string.Empty : attr_Put.Template.ToLower();
-                    //    lstTemps.Add(f);
-                    //}
+                    HttpPutAttribute attr_Put = (HttpPutAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPutAttribute));
+                    if (attr_Put != null)
+                    {
+                        f.Method = HttpVerbs.Put.ToString().ToLower();
+                        // f.Template = string.IsNullOrWhiteSpace(attr_Put.Template) ? string.Empty : attr_Put.Template.ToLower();
+                        lstTemps.Add(f);
+                    }
 
-                    //HttpDeleteAttribute attr_Delete = (HttpDeleteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpDeleteAttribute));
-                    //if (attr_Delete != null)
-                    //{
-                    //    f.Method = HttpMethods.Delete.ToLower();
-                    //    f.Template = string.IsNullOrWhiteSpace(attr_Delete.Template) ? string.Empty : attr_Delete.Template.ToLower();
-                    //    lstTemps.Add(f);
-                    //}
+                    HttpDeleteAttribute attr_Delete = (HttpDeleteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpDeleteAttribute));
+                    if (attr_Delete != null)
+                    {
+                        f.Method = HttpVerbs.Delete.ToString().ToLower();
+                        //  f.Template = string.IsNullOrWhiteSpace(attr_Delete.Template) ? string.Empty : attr_Delete.Template.ToLower();
+                        lstTemps.Add(f);
+                    }
 
-                    //RouteAttribute attr_Route = (RouteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(RouteAttribute));
-                    //if (attr_Route != null)
-                    //{
-                    //    f.Method = string.IsNullOrWhiteSpace(f.Method) ? HttpMethods.Get.ToLower() : f.Method;
-                    //    f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
-                    //    lstTemps.Add(f);
-                    //}
+                    RouteAttribute attr_Route = (RouteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(RouteAttribute));
+                    if (attr_Route != null)
+                    {
+                        f.Method = string.IsNullOrWhiteSpace(f.Method) ? HttpVerbs.Get.ToString().ToLower() : f.Method;
+                        f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
+                        lstTemps.Add(f);
+                    }
 
                     f.KeyID = 0;
                     f.NgayTao = time;
                     f.Controller = controller.Controller;
                     f.Action = action.Action;
-                    f.Path = string.Join("/", "api", f.Controller, f.Template).TrimEnd('/');
+                    f.Path = string.Join("/", f.Controller, f.Action, f.Template).TrimEnd('/');
                 }
 
                 lstFeatures.AddRange(lstTemps);
@@ -290,8 +283,7 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet()]
-        [Route("Login")]
+        [HttpGet]
         public async Task<ActionResult> Login()
         {
             aModel db = new aModel();

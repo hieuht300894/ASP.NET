@@ -12,17 +12,9 @@ namespace Server.Controllers
     public class TinhThanhController : BaseController<eTinhThanh>
     {
         [HttpGet]
-        [Route("DanhSach63TinhThanh")]
         public async Task<ActionResult> DanhSach63TinhThanh()
         {
             return Ok(await clsTinhThanh.Instance.DanhSach63TinhThanh());
-        }
-
-        [HttpGet]
-        [Route("DanhSachTinhThanh")]
-        public ActionResult DanhSachTinhThanh()
-        {
-            return Ok(clsTinhThanh.Instance.DanhSachTinhThanh());
         }
     }
 }

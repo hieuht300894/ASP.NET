@@ -28,7 +28,7 @@ namespace Server.BLL
         #region Method
         public virtual async Task<String> GetCode(String Prefix)
         {
-            String bRe = Prefix + DateTime.Now.ToString("yyyyMMdd");
+            String bRe = Prefix.ToUpper() + DateTime.Now.ToString("yyyyMMdd");
 
             try
             {

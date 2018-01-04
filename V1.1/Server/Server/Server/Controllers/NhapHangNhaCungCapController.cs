@@ -22,8 +22,7 @@ namespace Server.Controllers
             return Ok(await clsNhapHangNhaCungCap.Instance.GetByID(id));
         }
 
-        [HttpGet()]
-        [Route("CongNoHienTai/{IDMaster}/{IDNhaCungCap}/{NgayHienTai}")]
+        [HttpGet, Route("{IDMaster}/{IDNhaCungCap}/{NgayHienTai}")]
         public async Task<ActionResult> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
         {
             return Ok(await clsCongNoNhaCungCap.Instance.CongNoHienTai(IDMaster, IDNhaCungCap, NgayHienTai));

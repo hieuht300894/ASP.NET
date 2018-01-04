@@ -1,7 +1,5 @@
-﻿using Server.Attribute;
-using Server.BLL;
+﻿using Server.BLL;
 using Server.Extension;
-using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,12 +9,10 @@ using System.Web.Mvc;
 
 namespace Server.Controllers
 {
-    [AllowJsonGet]
     [Route("[controller]")]
     public class BaseController<T> : CustomController where T : class, new()
     {
-        [HttpGet]
-        [Route("GetCode/{Prefix}")]
+        [HttpGet, Route("{Prefix}")]
         public virtual async Task<ActionResult> GetCode(String Prefix)
         {
             String Code = await clsFunction<T>.Instance.GetCode(Prefix);
@@ -24,7 +20,6 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
         public virtual async Task<ActionResult> GetAll()
         {
             IEnumerable<T> Items = await clsFunction<T>.Instance.GetAll();
@@ -32,7 +27,6 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetByID/{id}")]
         public virtual async Task<ActionResult> GetByID(Int32 id)
         {
             T Item = await clsFunction<T>.Instance.GetByID(id);
@@ -40,7 +34,6 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        [Route("AddEntries")]
         public virtual async Task<ActionResult> AddEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.AddEntries(Items);
@@ -57,7 +50,6 @@ namespace Server.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateEntries")]
         public virtual async Task<ActionResult> UpdateEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.UpdateEntries(Items);
@@ -74,7 +66,6 @@ namespace Server.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteEntries")]
         public virtual async Task<ActionResult> DeleteEntries(T[] Items)
         {
             Exception ex = await clsFunction<T>.Instance.DeleteEntries(Items);

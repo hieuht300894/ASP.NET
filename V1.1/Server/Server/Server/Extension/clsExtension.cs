@@ -103,18 +103,19 @@ namespace Server.Extension
         #endregion
     }
 
-    public class CustomController : Controller
+    public class CustomController : Controller   
     {
         protected JsonResult Ok(String message) { return new Ok(message); }
         protected JsonResult BadRequest(String message) { return new BadRequest(message); }
+        protected JsonResult NoContent(String message) { return new NoContent(message); }
 
         protected JsonResult Ok() { return new Ok(); }
         protected JsonResult BadRequest() { return new BadRequest(); }
+        protected JsonResult NoContent() { return new NoContent(); }
 
         protected JsonResult Ok(Object obj) { return new Ok(obj); }
         protected JsonResult BadRequest(Object obj) { return new BadRequest(obj); }
-
-        protected JsonResult NoContent() { return new NoContent(); }
+        protected JsonResult NoContent(Object obj) { return new NoContent(obj); }
     }
 
     public class Ok : JsonResult
@@ -135,9 +136,10 @@ namespace Server.Extension
 
         public override void ExecuteResult(ControllerContext context)
         {
-
+            MaxJsonLength = Int32.MaxValue;
+            ContentType = "application/json";
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.OK;
-
             base.ExecuteResult(context);
         }
     }
@@ -146,6 +148,7 @@ namespace Server.Extension
     {
         public BadRequest()
         {
+
         }
 
         public BadRequest(string message)
@@ -160,6 +163,9 @@ namespace Server.Extension
 
         public override void ExecuteResult(ControllerContext context)
         {
+            MaxJsonLength = Int32.MaxValue;
+            ContentType = "application/json";
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.BadRequest;
             base.ExecuteResult(context);
         }
@@ -183,6 +189,9 @@ namespace Server.Extension
 
         public override void ExecuteResult(ControllerContext context)
         {
+            MaxJsonLength = Int32.MaxValue;
+            ContentType = "application/json";
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.NoContent;
             base.ExecuteResult(context);
         }

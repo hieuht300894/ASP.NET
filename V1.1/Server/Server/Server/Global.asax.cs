@@ -11,9 +11,10 @@ namespace Server
     {
         protected void Application_Start()
         {
+            DatabaseConfig.RegisterDatabase();
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            DatabaseConfig.RegisterDatabase();
+
         }
     }
 }
