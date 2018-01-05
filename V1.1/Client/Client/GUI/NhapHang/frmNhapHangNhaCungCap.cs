@@ -20,7 +20,6 @@ namespace Client.GUI.NhapHang
         List<eKho> lstKho = new List<eKho>();
         List<eTonKho> lstTonKho = new List<eTonKho>();
         List<eNhomSanPham> lstNhomSanPham = new List<eNhomSanPham>();
-        List<eNhaCungCap> lstNhaCungCap = new List<eNhaCungCap>();
         public eNhapHangNhaCungCap _iEntry;
         eNhapHangNhaCungCap _aEntry;
         BindingList<eNhapHangNhaCungCapChiTiet> lstDetail = new BindingList<eNhapHangNhaCungCapChiTiet>();
@@ -55,7 +54,6 @@ namespace Client.GUI.NhapHang
             slokNhomSanPham.Properties.DataSource = lstNhomSanPham;
             rlokSanPham.DataSource = lstSanPham;
             rlokKho.DataSource = lstKho;
-            slokNhaCungCap.Properties.DataSource = lstNhaCungCap;
             gctSanPham.DataSource = lstSanPham;
 
             var qSanPham = lstSanPham.Select(x => new { x.Ma, x.Ten });
@@ -67,7 +65,7 @@ namespace Client.GUI.NhapHang
         }
         void LoadNhaCungCap(object KeyID)
         {
-            lstNhaCungCap = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/getall");
+            slokNhaCungCap.Properties.DataSource = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/getall");
             if (Convert.ToInt32(KeyID) > 0)
                 slokNhaCungCap.EditValue = KeyID;
         }
@@ -75,10 +73,9 @@ namespace Client.GUI.NhapHang
         {
             lstDetail = new BindingList<eNhapHangNhaCungCapChiTiet>();
             _iEntry = _iEntry ?? new eNhapHangNhaCungCap();
-            _aEntry = clsFunction.GetItem<eNhapHangNhaCungCap>("NhapHangNhaCungCap/GetByID", _iEntry.KeyID);
+            _aEntry = clsFunction.GetByID<eNhapHangNhaCungCap>("NhapHangNhaCungCap/GetByID", _iEntry.KeyID);
 
             DisableEvents();
-            SetDataSource();
             SetControlValue();
             EnableEvents();
         }
@@ -117,22 +114,6 @@ namespace Client.GUI.NhapHang
 
             lstDetail = new BindingList<eNhapHangNhaCungCapChiTiet>(_aEntry.eNhapHangNhaCungCapChiTiet.ToList());
             gctChiTiet.DataSource = lstDetail;
-        }
-        public override void SetDataSource()
-        {
-            //dteNgayNhap.DateTime = DateTime.Now.ServerNow();
-            //slokNhomSanPham.Properties.DataSource = lstNhomSanPham;
-            //rlokSanPham.DataSource = lstSanPham;
-            //rlokKho.DataSource = lstKho;
-            //slokNhaCungCap.Properties.DataSource = lstNhaCungCap;
-            //gctSanPham.DataSource = lstSanPham;
-
-            //var qSanPham = lstSanPham.Select(x => new { x.Ma, x.Ten });
-            //foreach (var rSanPham in qSanPham)
-            //{
-            //    srcMaSanPham.Properties.Items.Add(rSanPham.Ma);
-            //    srcTenSanPham.Properties.Items.Add(rSanPham.Ten);
-            //}
         }
         public override bool ValidateData()
         {
@@ -229,10 +210,7 @@ namespace Client.GUI.NhapHang
                 grvChiTiet.Columns["SoLuongSi"], grvChiTiet.Columns["SoLuongLe"], grvChiTiet.Columns["SoLuong"],
                 grvChiTiet.Columns["ThanhTien"], grvChiTiet.Columns["TongTien"]);
 
-            frmNhaCungCap frm = new frmNhaCungCap();
-            frm.fType = Module.QuanLyBanHang.eFormType.Add;
-            frm._ReloadData = LoadNhaCungCap;
-            slokNhaCungCap.AddNewItem(frm);
+            slokNhaCungCap.AddNewItem();
         }
         public override void EnableEvents()
         {
@@ -245,6 +223,7 @@ namespace Client.GUI.NhapHang
             grvSanPham.DoubleClick += GrvSanPham_DoubleClick;
             slokNhaCungCap.EditValueChanged += SlokNhaCungCap_EditValueChanged;
             dteNgayNhap.EditValueChanged += DteNgayNhap_EditValueChanged;
+            slokNhaCungCap.Properties.ButtonClick += Properties_ButtonClick;
         }
         public override void DisableEvents()
         {
@@ -257,6 +236,7 @@ namespace Client.GUI.NhapHang
             grvSanPham.DoubleClick -= GrvSanPham_DoubleClick;
             slokNhaCungCap.EditValueChanged -= SlokNhaCungCap_EditValueChanged;
             dteNgayNhap.EditValueChanged -= DteNgayNhap_EditValueChanged;
+            slokNhaCungCap.Properties.ButtonClick -= Properties_ButtonClick;
         }
         void TimKiemSanPham()
         {
@@ -385,5 +365,16 @@ namespace Client.GUI.NhapHang
         {
             CongNoHienTai();
         }
+        private void Properties_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        {
+            if (e.Button.Index == 1)
+            {
+                frmNhaCungCap frm = new frmNhaCungCap() { MsgAdd = "Thêm mới nhà cung cấp", MsgEdit = "Cập nhật nhà cung cấp", FormBorderStyle = FormBorderStyle.FixedSingle, MinimizeBox = false, MaximizeBox = false };
+                frm.Text = frm.MsgAdd;
+                frm._ReloadData = LoadNhaCungCap;
+                frm.ShowDialog();
+            }
+        }
+
     }
 }

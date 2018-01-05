@@ -141,6 +141,12 @@
     <Compile Include="GUI\DanhMuc\frmKhachHang.designer.cs">
       <DependentUpon>frmKhachHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMuc\frmKhachHang_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmKhachHang_List.Designer.cs">
+      <DependentUpon>frmKhachHang_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DanhMuc\frmKho.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,12 @@
     <Compile Include="GUI\DanhMuc\frmSanPham.designer.cs">
       <DependentUpon>frmSanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMuc\frmSanPham_List.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMuc\frmSanPham_List.Designer.cs">
+      <DependentUpon>frmSanPham_List.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DanhMuc\frmTinhThanh.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,11 +251,6 @@
     <Compile Include="Module\TempHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuanLyBanHangModelDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>QuanLyBanHangModelDataSet.xsd</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="GUI\Common\frmBase.resx">
       <DependentUpon>frmBase.cs</DependentUpon>
     </EmbeddedResource>
@@ -267,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmKhachHang.resx">
       <DependentUpon>frmKhachHang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMuc\frmKhachHang_List.resx">
+      <DependentUpon>frmKhachHang_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmKho.resx">
       <DependentUpon>frmKho.cs</DependentUpon>
@@ -294,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmSanPham.resx">
       <DependentUpon>frmSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMuc\frmSanPham_List.resx">
+      <DependentUpon>frmSanPham_List.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DanhMuc\frmTinhThanh.resx">
       <DependentUpon>frmTinhThanh.cs</DependentUpon>
@@ -342,17 +355,6 @@
     <Content Include="market-store-icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="QuanLyBanHangModelDataSet.xsc">
-      <DependentUpon>QuanLyBanHangModelDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="QuanLyBanHangModelDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>QuanLyBanHangModelDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="QuanLyBanHangModelDataSet.xss">
-      <DependentUpon>QuanLyBanHangModelDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Resources\3DClusteredColumn_16x16.png" />
   </ItemGroup>
   <ItemGroup>

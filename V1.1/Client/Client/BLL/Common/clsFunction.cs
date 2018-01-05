@@ -12,6 +12,11 @@ namespace Client.BLL.Common
     public class clsFunction
     {
         #region Connection
+        /// <summary>
+        /// Check connect to server
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <returns></returns>
         public static bool CheckConnect(String Url)
         {
             try
@@ -30,6 +35,14 @@ namespace Client.BLL.Common
         #endregion
 
         #region Login
+        /// <summary>
+        /// Check login
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="api"></param>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
         public static Tuple<bool, T> Login<T>(String api, string Username, string Password)
         {
             try
@@ -56,7 +69,57 @@ namespace Client.BLL.Common
 
         #region Base Method Async
         /// <summary>
-        /// Lấy danh sách dữ liệu
+        /// Get code by prefix
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<String> GetCodeAsync(String api, String Prefix)
+        {
+            try
+            {
+                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?Prefix={Prefix}";
+
+                IRestClient client = new RestClient(Url);
+                IRestRequest request = new RestRequest();
+                request.Method = Method.GET;
+                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+
+                IRestResponse response = await client.ExecuteTaskAsync(request);
+
+                String Item = response.Content.DeserializeJsonToObject<String>();
+                return String.IsNullOrWhiteSpace(Item) ? string.Empty : Item;
+            }
+            catch { return String.Empty; }
+        }
+
+        /// <summary>
+        /// Get item by KeyID
+        /// </summary>
+        /// <returns></returns>
+        public async static Task<T> GetByIDAsync<T>(String api, Object KeyID)
+        {
+            try
+            {
+                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?KeyID={KeyID}";
+
+                IRestClient client = new RestClient(Url);
+                IRestRequest request = new RestRequest();
+                request.Method = Method.GET;
+                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+
+                IRestResponse response = await client.ExecuteTaskAsync(request);
+
+                T Item = response.Content.DeserializeJsonToObject<T>();
+
+                if (Item == null)
+                    Item = ReflectionPopulator.CreateObject<T>();
+
+                return Item;
+            }
+            catch { return ReflectionPopulator.CreateObject<T>(); }
+        }
+
+        /// <summary>
+        /// Get items by paramaters
         /// </summary>
         /// <returns></returns>
         public async static Task<List<T>> GetItemsAsync<T>(String api, params object[] Objs)
@@ -81,7 +144,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Tìm kiếm dữ liệu
+        /// Search item by paramaters
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="KeyID"></param>
@@ -112,7 +175,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Thêm mới dữ liệu
+        /// Insert item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -143,7 +206,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Thêm mới dữ liệu
+        /// Insert items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -171,7 +234,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Cập nhật dữ liệu
+        /// Update item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -202,7 +265,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Cập nhật dữ liệu
+        /// Update items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -230,7 +293,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Xóa dữ liệu
+        /// Delete item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -255,7 +318,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Xóa dữ liệu
+        /// Delete items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -281,9 +344,58 @@ namespace Client.BLL.Common
         #endregion
 
         #region Base Method
+        /// <summary>
+        /// Get code by prefix
+        /// </summary>
+        /// <returns></returns>
+        public static String GetCode(String api, String Prefix)
+        {
+            try
+            {
+                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}/{Prefix}";
+
+                IRestClient client = new RestClient(Url);
+                IRestRequest request = new RestRequest();
+                request.Method = Method.GET;
+                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+
+                IRestResponse response = client.Execute(request);
+
+                String Item = response.Content.DeserializeJsonToObject<String>();
+                return String.IsNullOrWhiteSpace(Item) ? string.Empty : Item;
+            }
+            catch { return String.Empty; }
+        }
 
         /// <summary>
-        /// Lấy danh sách dữ liệu
+        /// Get item by KeyID
+        /// </summary>
+        /// <returns></returns>
+        public static T GetByID<T>(String api, Object KeyID)
+        {
+            try
+            {
+                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?KeyID={KeyID}";
+
+                IRestClient client = new RestClient(Url);
+                IRestRequest request = new RestRequest();
+                request.Method = Method.GET;
+                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+
+                IRestResponse response = client.Execute(request);
+
+                T Item = response.Content.DeserializeJsonToObject<T>();
+
+                if (Item == null)
+                    Item = ReflectionPopulator.CreateObject<T>();
+
+                return Item;
+            }
+            catch { return ReflectionPopulator.CreateObject<T>(); }
+        }
+
+        /// <summary>
+        /// Get item by paramaters
         /// </summary>
         /// <returns></returns>
         public static List<T> GetItems<T>(String api, params object[] Objs)
@@ -308,7 +420,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Tìm kiếm dữ liệu
+        /// Search item by paramaters
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="KeyID"></param>
@@ -339,7 +451,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Thêm mới dữ liệu
+        /// Insert item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -370,7 +482,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Thêm mới dữ liệu
+        /// Insert items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -398,7 +510,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Cập nhật dữ liệu
+        /// Update item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -429,7 +541,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Cập nhật dữ liệu
+        /// Update items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -457,7 +569,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Xóa dữ liệu
+        /// Delete item
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>
@@ -482,7 +594,7 @@ namespace Client.BLL.Common
         }
 
         /// <summary>
-        /// Xóa dữ liệu
+        /// Delete items
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="api"></param>

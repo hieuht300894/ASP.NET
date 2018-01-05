@@ -43,7 +43,7 @@ namespace Client.GUI.DanhMuc
         public override void LoadDataForm()
         {
             _iEntry = _iEntry ?? new eNhaCungCap();
-            _aEntry = clsFunction.GetItem<eNhaCungCap>("NhaCungCap/GetByID", _iEntry.KeyID);
+            _aEntry = clsFunction.GetByID<eNhaCungCap>("NhaCungCap/GetByID", _iEntry.KeyID);
 
             SetControlValue();
         }
@@ -118,8 +118,8 @@ namespace Client.GUI.DanhMuc
             _aEntry.TinhThanh = tinhThanh.Ten;
 
             Tuple<bool, eNhaCungCap> Res = (_aEntry.KeyID > 0 ?
-                clsFunction.Put("NhaCungCap", _aEntry) :
-                clsFunction.Post("NhaCungCap", _aEntry));
+                clsFunction.Put("NhaCungCap/UpdateEntries", _aEntry) :
+                clsFunction.Post("NhaCungCap/AddEntries", _aEntry));
             if (Res.Item1)
                 KeyID = Res.Item2.KeyID;
             return Res.Item1;

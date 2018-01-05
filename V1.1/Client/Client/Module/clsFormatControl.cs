@@ -310,7 +310,7 @@ namespace Client.Module
             txtMain.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtMain.Properties.Mask.EditMask = @"([A-Z]+)(19|20\d\d)(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])([0-9]+)";
 
-            txtMain.EditValue = clsFunction.GetItem<String>(Url, Prefix);
+            txtMain.EditValue = clsFunction.GetCode(Url, Prefix);
             txtMain.Enabled = string.IsNullOrWhiteSpace(txtMain.Text.Trim());
         }
 
@@ -1569,22 +1569,14 @@ namespace Client.Module
             catch { return 0; }
         }
 
-        public static void AddNewItem(this SearchLookUpEdit slokMain, XtraForm frmMain)
+        public static void AddNewItem(this SearchLookUpEdit slokMain)
         {
             EditorButton btn = new EditorButton();
             btn.Kind = ButtonPredefines.Glyph;
             btn.Image = Properties.Resources.Add_16x16;
             slokMain.Properties.Buttons.Add(btn);
-
-            slokMain.Properties.ButtonClick -= (s, e) => slokMain_Properties_ButtonClick(s, e, frmMain);
-            slokMain.Properties.ButtonClick += (s, e) => slokMain_Properties_ButtonClick(s, e, frmMain);
         }
 
-        private static void slokMain_Properties_ButtonClick(object sender, ButtonPressedEventArgs e, XtraForm frmMain)
-        {
-            if (e.Button.Index == 1)
-                frmMain.ShowDialog();
-        }
 
         public static void LockButton(this SearchLookUpEdit slokMain)
         {

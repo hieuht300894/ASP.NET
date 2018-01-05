@@ -661,8 +661,7 @@ namespace Client.GUI.Common
             Acts = Acts ?? new Action[] { };
             foreach (Action act in Acts)
             {
-                Task task = Task.Run(() => { BeginInvoke(act); });
-                await task;
+                await Task.Factory.StartNew(() => { BeginInvoke(act); });
             }
         }
         #endregion

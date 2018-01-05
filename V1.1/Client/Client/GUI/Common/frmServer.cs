@@ -51,18 +51,12 @@ namespace Client.GUI.Common
         bool ValidateForm()
         {
             txtDomain.ErrorText = string.Empty;
-            txtPort.ErrorText = string.Empty;
             txtUrl.ErrorText = string.Empty;
 
             bool chk = true;
             if (string.IsNullOrWhiteSpace(txtDomain.Text))
             {
                 txtDomain.ErrorText = "Vui lòng nhập tên miền(Domain)";
-                chk = false;
-            }
-            if (string.IsNullOrWhiteSpace(txtPort.Text))
-            {
-                txtPort.ErrorText = "Vui lòng nhập cổng kết nối(Port)";
                 chk = false;
             }
             if (string.IsNullOrWhiteSpace(txtUrl.Text))

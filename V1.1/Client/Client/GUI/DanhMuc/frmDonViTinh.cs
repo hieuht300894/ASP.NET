@@ -37,7 +37,7 @@ namespace Client.GUI.DanhMuc
         public override void LoadDataForm()
         {
             _iEntry = _iEntry ?? new eDonViTinh();
-            _aEntry = clsFunction.GetItem<eDonViTinh>("DonViTinh/GetByID", _iEntry.KeyID);
+            _aEntry = clsFunction.GetByID<eDonViTinh>("DonViTinh/GetByID", _iEntry.KeyID);
 
             SetControlValue();
         }

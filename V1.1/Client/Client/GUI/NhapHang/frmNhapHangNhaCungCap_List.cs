@@ -29,11 +29,6 @@ namespace Client.GUI.NhapHang
             await RunMethodAsync(() => { LoadData(0); });
             await RunMethodAsync(() => { CustomForm(); });
             await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-
-            //base.frmBase_Load(sender, e);
-
-            //LoadData(0);
-            //CustomForm();
         }
 
         public override void LoadData(object KeyID)
@@ -45,7 +40,6 @@ namespace Client.GUI.NhapHang
         {
             frmNhapHangNhaCungCap frm = new frmNhapHangNhaCungCap() { MsgAdd = "Thêm mới phiếu nhập kho", MsgEdit = "Cập nhật phiếu nhập kho" };
             frm.Text = frm.MsgAdd;
-            frm.fType = Module.QuanLyBanHang.eFormType.Add;
             frm._ReloadData = LoadData;
             frm.ShowDialog();
         }
@@ -53,7 +47,6 @@ namespace Client.GUI.NhapHang
         {
             frmNhapHangNhaCungCap frm = new frmNhapHangNhaCungCap() { MsgAdd = "Thêm mới phiếu nhập kho", MsgEdit = "Cập nhật phiếu nhập kho" };
             frm.Text = frm.MsgEdit;
-            frm.fType = Module.QuanLyBanHang.eFormType.Edit;
             frm._iEntry = (eNhapHangNhaCungCap)grvDanhSach.GetFocusedRow();
             frm._ReloadData = LoadData;
             frm.ShowDialog();
@@ -62,9 +55,11 @@ namespace Client.GUI.NhapHang
         {
 
         }
-        public override void RefreshEntry()
+        public override async void RefreshEntry()
         {
-            LoadData(0);
+            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            await RunMethodAsync(() => { LoadData(0); });
+            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
         public override void CustomForm()
         {

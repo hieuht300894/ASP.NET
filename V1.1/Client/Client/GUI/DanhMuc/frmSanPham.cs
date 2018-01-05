@@ -45,7 +45,7 @@ namespace Client.GUI.DanhMuc
         public override void LoadDataForm()
         {
             _iEntry = _iEntry ?? new eSanPham();
-            _aEntry = clsFunction.GetItem<eSanPham>("SanPham/GetByID", _iEntry.KeyID);
+            _aEntry = clsFunction.GetByID<eSanPham>("SanPham/GetByID", _iEntry.KeyID);
 
             SetControlValue();
         }
@@ -116,6 +116,7 @@ namespace Client.GUI.DanhMuc
             _aEntry.GhiChu = mmeGhiChu.Text.Trim();
 
             eDonViTinh dvt = (eDonViTinh)slokDVT.Properties.GetRowByKeyValue(slokDVT.EditValue) ?? new eDonViTinh();
+            _aEntry.IDDonViTinh = dvt.KeyID;
             _aEntry.MaDonViTinh = dvt.Ma;
             _aEntry.TenDonViTinh = dvt.Ten;
 
