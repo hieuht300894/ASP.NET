@@ -12,7 +12,7 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class BaseController<T> : CustomController where T : class, new()
     {
-        [HttpGet, Route("{Prefix}")]
+        [HttpGet]
         public virtual async Task<ActionResult> GetCode(String Prefix)
         {
             String Code = await clsFunction<T>.Instance.GetCode(Prefix);
@@ -26,10 +26,10 @@ namespace Server.Controllers
             return Ok(Items);
         }
 
-        [HttpGet, Route("{id}")]
-        public virtual async Task<ActionResult> GetByID(Int32? id)
+        [HttpGet]
+        public virtual async Task<ActionResult> GetByID(Int32? KeyID)
         {
-            T Item = await clsFunction<T>.Instance.GetByID(id.HasValue ? id.Value : 0);
+            T Item = await clsFunction<T>.Instance.GetByID(KeyID.HasValue ? KeyID.Value : 0);
             return Ok(Item);
         }
 

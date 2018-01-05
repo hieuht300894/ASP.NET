@@ -161,7 +161,7 @@ namespace Server.BLL
                     congNo.TenNguoiTao = item.TenNguoiTao;
                     congNo.NgayTao = item.NgayTao;
                     congNo.IsNhapHang = true;
-                    db.eCongNoNhaCungCap.Add(congNo);
+                    db.eCongNoNhaCungCap.AddOrUpdate(congNo);
                 }
                 else
                 {

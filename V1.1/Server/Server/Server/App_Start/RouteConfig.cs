@@ -40,21 +40,26 @@ namespace Server
             try
             {
                 aModel db = new aModel();
-                IEnumerable<xFeature> features = db.xFeature.ToList();
-                features = features.Where(x => !string.IsNullOrWhiteSpace(x.Template) && !x.IsDefault);
+                IEnumerable<xFeature> features = db.xFeature.Where(x => !x.IsDefault);
+                features = features.Where(x => !string.IsNullOrWhiteSpace(x.Template));
 
-                var q = features.GroupBy(x => x.Template).Select(x => new { Template = x.Key }).ToList();
+                int i = 0;
+                features.ToList().ForEach(x =>
+                {
+                    //string name = $"Route{i++}";
+                    //string url = $"{{controller}}/{{action}}/{x.Template}";
+                    //routes.MapRoute(name, url);
 
-                int i = 1;
-                q.ForEach(x => routes.MapRoute($"Default{i++}", $"{{controller}}/{{action}}/{x.Template}"));
+                    string name = $"Route{i++}";
+                    string url = $"{x.Path}";
+                    routes.MapRoute(name, url, new { controller = x.Controller, action = x.Action }, new string[] { "Server.Controllers" });
+                });
             }
-            catch
-            {
-            }
+            catch { }
         }
         static void MapRouteDefault(RouteCollection routes)
         {
-            routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Module", action = "TimeServer", id = UrlParameter.Optional });
+            routes.MapRoute("Default", "{controller}/{action}", new { controller = "Module", action = "TimeServer" });
         }
     }
 }

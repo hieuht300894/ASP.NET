@@ -17,9 +17,9 @@ namespace Server.Controllers
             return Ok(await clsNhapHangNhaCungCap.Instance.GetAll());
         }
 
-        public async override Task<ActionResult> GetByID(Int32? id)
+        public async override Task<ActionResult> GetByID(Int32? KeyID)
         {
-            return Ok(await clsNhapHangNhaCungCap.Instance.GetByID(id.HasValue ? id.Value : 0));
+            return Ok(await clsNhapHangNhaCungCap.Instance.GetByID(KeyID.HasValue ? KeyID.Value : 0));
         }
 
         [HttpGet, Route("{IDMaster}/{IDNhaCungCap}/{NgayHienTai}")]

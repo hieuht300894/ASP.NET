@@ -34,8 +34,9 @@ namespace Server.BLL
             {
                 DateTime time = DateTime.Now;
 
+                db = new aModel();
                 IEnumerable<T> lstTemp = await db.Set<T>().ToListAsync();
-                T Item = lstTemp.OrderByDescending<T, T>("KeyID").FirstOrDefault();
+                T Item = lstTemp.OrderByDescending<T, Int32>("KeyID").FirstOrDefault();
                 if (Item == null)
                 {
                     bRe += "0001";
@@ -54,7 +55,7 @@ namespace Server.BLL
                 }
                 return bRe;
             }
-            catch { return bRe += "0001"; }
+            catch (Exception ex) { return bRe += "0001"; }
         }
 
         public virtual async Task<List<T>> GetAll()
@@ -67,7 +68,7 @@ namespace Server.BLL
                 List<T> lstResult = lstTemp.ToList();
                 return lstResult;
             }
-            catch { return new List<T>(); }
+            catch (Exception ex) { return new List<T>(); }
         }
 
         public virtual async Task<T> GetByID(Object id)
@@ -79,7 +80,7 @@ namespace Server.BLL
                 T Item = await db.Set<T>().FindAsync(id);
                 return Item ?? new T();
             }
-            catch { return new T(); }
+            catch (Exception ex) { return new T(); }
         }
 
         public virtual async Task<Exception> AddEntry(T Item)
