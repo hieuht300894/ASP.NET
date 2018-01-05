@@ -24,5 +24,6 @@ namespace EntityModel.DataModel
         public string Method { get; set; } = string.Empty;
         public string Template { get; set; } = string.Empty;
         public string Path { get; set; } = string.Empty;
+        public bool IsDefault { get; set; }
     }
 }

@@ -187,20 +187,91 @@ namespace Server.Controllers
 
             Assembly asm = Assembly.GetExecutingAssembly();
 
-            var Controllers = asm.GetExportedTypes()
-                .Where(x => typeof(CustomController).IsAssignableFrom(x) && !x.Name.Equals(typeof(BaseController<>).Name) && !x.Name.Equals(typeof(CustomController).Name))
+            var q1 = asm
+                .GetExportedTypes()
+                .Where(x => typeof(CustomController).IsAssignableFrom(x) && !x.Name.Equals(typeof(CustomController).Name))
                 .Select(x => new
                 {
                     Controller = x.Name,
                     Methods = x.GetMethods().Where(y => y.DeclaringType.IsSubclassOf(typeof(CustomController)) && y.IsPublic && !y.IsStatic).ToList()
-                })
+                });
+
+            var BaseController = q1
+                .Where(x => x.Controller.Equals(typeof(BaseController<>).Name))
                 .Select(x => new
                 {
                     Controller = x.Controller.ToLower().Replace("controller", string.Empty),
-                    Actions = x.Methods.Select(y => new { Action = y.Name.ToLower(), Attributes = y.GetCustomAttributes(true).ToList() })
+                    Actions = x.Methods.Where(y => y.IsVirtual).Select(y => new { Action = y.Name.ToLower(), Attributes = y.GetCustomAttributes(false).ToList() })
+                })
+                .FirstOrDefault();
+
+            var Controllers = q1
+                .Where(x => !x.Controller.Equals(typeof(BaseController<>).Name))
+                .Select(x => new
+                {
+                    Controller = x.Controller.ToLower().Replace("controller", string.Empty),
+                    Actions = x.Methods.Where(y => !y.IsVirtual).Select(y => new { Action = y.Name.ToLower(), Attributes = y.GetCustomAttributes(false).ToList() })
                 });
 
             DateTime time = DateTime.Now;
+
+            if (BaseController != null)
+            {
+                foreach (var action in BaseController.Actions)
+                {
+                    xFeature f = new xFeature();
+
+                    HttpGetAttribute attr_Get = (HttpGetAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpGetAttribute));
+                    RouteAttribute attr_Route = (RouteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(RouteAttribute));
+                    if (attr_Get != null && attr_Route != null)
+                    {
+                        f.Method = HttpVerbs.Get.ToString().ToLower();
+                        f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
+                        lstFeatures.Add(f);
+                    }
+                    else if (attr_Get != null && attr_Route == null)
+                    {
+                        f.Method = HttpVerbs.Get.ToString().ToLower();
+                        lstFeatures.Add(f);
+                    }
+                    else if (attr_Get == null && attr_Route != null)
+                    {
+                        f.Method = HttpVerbs.Get.ToString().ToLower();
+                        f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
+                        lstFeatures.Add(f);
+                    }
+
+                    HttpPostAttribute attr_Post = (HttpPostAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPostAttribute));
+                    if (attr_Post != null)
+                    {
+                        f.Method = HttpVerbs.Post.ToString().ToLower();
+                        lstFeatures.Add(f);
+                    }
+
+                    HttpPutAttribute attr_Put = (HttpPutAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPutAttribute));
+                    if (attr_Put != null)
+                    {
+                        f.Method = HttpVerbs.Put.ToString().ToLower();
+                        lstFeatures.Add(f);
+                    }
+
+                    HttpDeleteAttribute attr_Delete = (HttpDeleteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpDeleteAttribute));
+                    if (attr_Delete != null)
+                    {
+                        f.Method = HttpVerbs.Delete.ToString().ToLower();
+                        lstFeatures.Add(f);
+                    }
+
+
+
+                    f.KeyID = 0;
+                    f.NgayTao = time;
+                    f.Controller = BaseController.Controller;
+                    f.Action = action.Action;
+                    f.IsDefault = true;
+                    f.Path = string.Join("/", f.Controller, f.Action, f.Template).TrimEnd('/');
+                }
+            }
 
             foreach (var controller in Controllers)
             {

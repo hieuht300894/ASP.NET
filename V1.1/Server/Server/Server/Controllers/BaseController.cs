@@ -26,10 +26,10 @@ namespace Server.Controllers
             return Ok(Items);
         }
 
-        [HttpGet]
-        public virtual async Task<ActionResult> GetByID(Int32 id)
+        [HttpGet, Route("{id}")]
+        public virtual async Task<ActionResult> GetByID(Int32? id)
         {
-            T Item = await clsFunction<T>.Instance.GetByID(id);
+            T Item = await clsFunction<T>.Instance.GetByID(id.HasValue ? id.Value : 0);
             return Ok(Item);
         }
 

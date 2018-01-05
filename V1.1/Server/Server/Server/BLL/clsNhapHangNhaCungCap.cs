@@ -25,30 +25,27 @@ namespace Server.BLL
             try
             {
                 db = new Model.aModel();
-                IEnumerable<eNhapHangNhaCungCap> lstMaster = await db.eNhapHangNhaCungCap.ToListAsync();
-                IEnumerable<eNhapHangNhaCungCapChiTiet> lstDetail = await db.eNhapHangNhaCungCapChiTiet.ToListAsync();
 
-                var q1 =
+                List<eNhapHangNhaCungCapChiTiet> lstDetail = await db.eNhapHangNhaCungCapChiTiet.ToListAsync();
+                var qDT =
                     from a in lstDetail
-                    group a by a.IDNhapHangNhaCungCap into g
-                    select new { Key = g.Key, Value = g.ToList() };
-                var q2 =
-                    from a in lstMaster
-                    join b in q1
-                    on a.KeyID equals b.Key
-                    select new { Master = a, Detail = b.Value };
-                q2.ToList().ForEach(x =>
-                {
-                    x.Detail.ForEach(y =>
-                    {
-                        x.Master.eNhapHangNhaCungCapChiTiet.Add(y);
-                    });
-                });
-                var q3 =
-                    from a in q2
-                    select a.Master;
+                    group a by a.IDNhapHangNhaCungCap into b
+                    select new { IDNhapHangNhaCungCap = b.Key, NhapHangNhaCungCapChiTiets = b.ToList() };
 
-                List<eNhapHangNhaCungCap> lstResult = new List<eNhapHangNhaCungCap>(q3);
+                List<eNhapHangNhaCungCap> lstMaster = await db.eNhapHangNhaCungCap.ToListAsync();
+                lstMaster.ForEach(a =>
+                {
+                    var b = qDT.FirstOrDefault(c => c.IDNhapHangNhaCungCap == a.KeyID);
+                    if (b != null)
+                    {
+                        b.NhapHangNhaCungCapChiTiets.ForEach(c =>
+                        {
+                            a.eNhapHangNhaCungCapChiTiet.Add(c);
+                        });
+                    }
+                });
+
+                List<eNhapHangNhaCungCap> lstResult = new List<eNhapHangNhaCungCap>(lstMaster);
                 return lstResult;
             }
             catch { return new List<eNhapHangNhaCungCap>(); }
@@ -76,17 +73,17 @@ namespace Server.BLL
 
                 Items = Items ?? new eNhapHangNhaCungCap[] { };
 
-                db.eNhapHangNhaCungCap.AddRange(Items);
+                db.eNhapHangNhaCungCap.AddOrUpdate(Items);
                 await db.SaveChangesAsync();
 
                 Items.ToList().ForEach(x =>
-               {
-                   x.eNhapHangNhaCungCapChiTiet.ToList().ForEach(y =>
-                   {
-                       y.IDNhapHangNhaCungCap = x.KeyID;
-                   });
-                   db.eNhapHangNhaCungCapChiTiet.AddRange(x.eNhapHangNhaCungCapChiTiet.ToArray());
-               });
+                {
+                    x.eNhapHangNhaCungCapChiTiet.ToList().ForEach(y =>
+                    {
+                        y.IDNhapHangNhaCungCap = x.KeyID;
+                    });
+                    db.eNhapHangNhaCungCapChiTiet.AddOrUpdate(x.eNhapHangNhaCungCapChiTiet.ToArray());
+                });
 
                 await CapNhatCongNo(Items);
 
