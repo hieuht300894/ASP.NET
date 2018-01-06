@@ -103,34 +103,88 @@ namespace Server.Extension
         #endregion
     }
 
-    public class CustomController : Controller   
+    #region Custom Controller
+    public interface IJsonResult
     {
-        protected JsonResult Ok(String message) { return new Ok(message); }
-        protected JsonResult BadRequest(String message) { return new BadRequest(message); }
-        protected JsonResult NoContent(String message) { return new NoContent(message); }
+        JsonResult Ok();
+        JsonResult BadRequest();
+        JsonResult NoContent();
 
-        protected JsonResult Ok() { return new Ok(); }
-        protected JsonResult BadRequest() { return new BadRequest(); }
-        protected JsonResult NoContent() { return new NoContent(); }
+        JsonResult Ok(String message);
+        JsonResult BadRequest(String message);
+        JsonResult NoContent(String message);
 
-        protected JsonResult Ok(Object obj) { return new Ok(obj); }
-        protected JsonResult BadRequest(Object obj) { return new BadRequest(obj); }
-        protected JsonResult NoContent(Object obj) { return new NoContent(obj); }
+        JsonResult Ok(Object obj);
+        JsonResult BadRequest(Object obj);
+        JsonResult NoContent(Object obj);
+
+        JsonResult BadRequest( Exception exception);
     }
-
-    public class Ok : JsonResult
+    public class CustomController : Controller, IJsonResult
     {
-        public Ok()
+        public JsonResult Ok()
         {
+            return new CustomJsonResult(HttpStatusCode.OK);
+        }
+        public JsonResult BadRequest()
+        {
+            return new CustomJsonResult(HttpStatusCode.BadRequest);
+        }
+        public JsonResult NoContent()
+        {
+            return new CustomJsonResult(HttpStatusCode.NoContent);
         }
 
-        public Ok(string message)
+        public JsonResult Ok(String message)
         {
+            return new CustomJsonResult(HttpStatusCode.OK, message);
+        }
+        public JsonResult BadRequest(String message)
+        {
+            return new CustomJsonResult(HttpStatusCode.BadRequest, message);
+        }
+        public JsonResult NoContent(String message)
+        {
+            return new CustomJsonResult(HttpStatusCode.NoContent, message);
+        }
+
+        public JsonResult Ok(Object obj)
+        {
+            return new CustomJsonResult(HttpStatusCode.OK, obj);
+        }
+        public JsonResult BadRequest(Object obj)
+        {
+            return new CustomJsonResult(HttpStatusCode.BadRequest, obj);
+        }
+        public JsonResult NoContent(Object obj)
+        {
+            return new CustomJsonResult(HttpStatusCode.NoContent, obj);
+        }
+
+        public JsonResult BadRequest( Exception exception)
+        {
+            ModelStateDictionary modelState = new ModelStateDictionary();
+            modelState.AddModelError("Exception", exception);
+            return new CustomJsonResult(HttpStatusCode.BadRequest, modelState);
+        }
+    }
+    public class CustomJsonResult : JsonResult
+    {
+        private Int32 _statusCode;
+
+        public CustomJsonResult(HttpStatusCode statusCode)
+        {
+            _statusCode = Convert.ToInt32(statusCode);
+        }
+        public CustomJsonResult(HttpStatusCode statusCode, String message)
+        {
+            _statusCode = Convert.ToInt32(statusCode);
             Data = message;
-        }
 
-        public Ok(object data)
+        }
+        public CustomJsonResult(HttpStatusCode statusCode, Object data)
         {
+            _statusCode = Convert.ToInt32(statusCode);
             Data = data;
         }
 
@@ -139,61 +193,9 @@ namespace Server.Extension
             MaxJsonLength = Int32.MaxValue;
             ContentType = "application/json";
             JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.OK;
+            context.RequestContext.HttpContext.Response.StatusCode = _statusCode;
             base.ExecuteResult(context);
         }
     }
-
-    public class BadRequest : JsonResult
-    {
-        public BadRequest()
-        {
-
-        }
-
-        public BadRequest(string message)
-        {
-            Data = message;
-        }
-
-        public BadRequest(object data)
-        {
-            Data = data;
-        }
-
-        public override void ExecuteResult(ControllerContext context)
-        {
-            MaxJsonLength = Int32.MaxValue;
-            ContentType = "application/json";
-            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.BadRequest;
-            base.ExecuteResult(context);
-        }
-    }
-
-    public class NoContent : JsonResult
-    {
-        public NoContent()
-        {
-        }
-
-        public NoContent(string message)
-        {
-            Data = message;
-        }
-
-        public NoContent(object data)
-        {
-            Data = data;
-        }
-
-        public override void ExecuteResult(ControllerContext context)
-        {
-            MaxJsonLength = Int32.MaxValue;
-            ContentType = "application/json";
-            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-            context.RequestContext.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.NoContent;
-            base.ExecuteResult(context);
-        }
-    }
+    #endregion
 }

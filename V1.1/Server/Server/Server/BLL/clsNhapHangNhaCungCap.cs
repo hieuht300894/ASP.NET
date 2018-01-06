@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Server.Extension;
 using System.Data.Entity.Migrations;
+using System.Web.Mvc;
 
 namespace Server.BLL
 {
@@ -20,7 +21,7 @@ namespace Server.BLL
         }
         #endregion
 
-        public override async Task<List<eNhapHangNhaCungCap>> GetAll()
+        public async override Task<ActionResult> GetAll()
         {
             try
             {
@@ -46,12 +47,12 @@ namespace Server.BLL
                 });
 
                 List<eNhapHangNhaCungCap> lstResult = new List<eNhapHangNhaCungCap>(lstMaster);
-                return lstResult;
+                return Ok(lstResult);
             }
-            catch { return new List<eNhapHangNhaCungCap>(); }
+            catch { return BadRequest(new List<eNhapHangNhaCungCap>()); }
         }
 
-        public async override Task<eNhapHangNhaCungCap> GetByID(Object id)
+        public async override Task<ActionResult> GetByID(Object id)
         {
             try
             {
@@ -59,12 +60,12 @@ namespace Server.BLL
                 eNhapHangNhaCungCap Item = await db.eNhapHangNhaCungCap.FindAsync(id);
                 IEnumerable<eNhapHangNhaCungCapChiTiet> lstItemDetail = await db.eNhapHangNhaCungCapChiTiet.Where(x => x.IDNhapHangNhaCungCap == Item.KeyID).ToListAsync();
                 lstItemDetail.ToList().ForEach(x => Item.eNhapHangNhaCungCapChiTiet.Add(x));
-                return Item;
+                return Ok(Item);
             }
-            catch { return new eNhapHangNhaCungCap(); }
+            catch { return BadRequest(new eNhapHangNhaCungCap()); }
         }
 
-        public async override Task<Exception> AddEntries(eNhapHangNhaCungCap[] Items)
+        public async override Task<ActionResult> AddEntries(eNhapHangNhaCungCap[] Items)
         {
             try
             {
@@ -90,16 +91,16 @@ namespace Server.BLL
                 await db.SaveChangesAsync();
                 db.CommitTransaction();
 
-                return null;
+                return Ok(Items);
             }
             catch (Exception ex)
             {
                 db.RollbackTransaction();
-                return ex;
+                return BadRequest(ex);
             }
         }
 
-        public async override Task<Exception> UpdateEntries(eNhapHangNhaCungCap[] Items)
+        public async override Task<ActionResult> UpdateEntries(eNhapHangNhaCungCap[] Items)
         {
             try
             {
@@ -135,12 +136,12 @@ namespace Server.BLL
                 await db.SaveChangesAsync();
                 db.CommitTransaction();
 
-                return null;
+                return Ok(Items);
             }
             catch (Exception ex)
             {
                 db.RollbackTransaction();
-                return ex;
+                return BadRequest(ex);
             }
         }
 

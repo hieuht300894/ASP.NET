@@ -15,70 +15,37 @@ namespace Server.Controllers
         [HttpGet]
         public virtual async Task<ActionResult> GetCode(String Prefix)
         {
-            String Code = await clsFunction<T>.Instance.GetCode(Prefix);
-            return Ok(Code);
+            return await clsFunction<T>.Instance.GetCode(Prefix);
         }
 
         [HttpGet]
         public virtual async Task<ActionResult> GetAll()
         {
-            IEnumerable<T> Items = await clsFunction<T>.Instance.GetAll();
-            return Ok(Items);
+            return await clsFunction<T>.Instance.GetAll();
         }
 
         [HttpGet]
         public virtual async Task<ActionResult> GetByID(Int32? KeyID)
         {
-            T Item = await clsFunction<T>.Instance.GetByID(KeyID.HasValue ? KeyID.Value : 0);
-            return Ok(Item);
+            return await clsFunction<T>.Instance.GetByID(KeyID.HasValue ? KeyID.Value : 0);
         }
 
         [HttpPost]
         public virtual async Task<ActionResult> AddEntries(T[] Items)
         {
-            Exception ex = await clsFunction<T>.Instance.AddEntries(Items);
-
-            if (ex == null)
-            {
-                return Ok(Items);
-            }
-            else
-            {
-                ModelState.AddModelError("Exception_Message", ex.Message);
-                return BadRequest(ModelState);
-            }
+            return await clsFunction<T>.Instance.AddEntries(Items);
         }
 
         [HttpPut]
         public virtual async Task<ActionResult> UpdateEntries(T[] Items)
         {
-            Exception ex = await clsFunction<T>.Instance.UpdateEntries(Items);
-
-            if (ex == null)
-            {
-                return Ok(Items);
-            }
-            else
-            {
-                ModelState.AddModelError("Exception_Message", ex.Message);
-                return BadRequest(ModelState);
-            }
+            return await clsFunction<T>.Instance.UpdateEntries(Items);
         }
 
         [HttpDelete]
         public virtual async Task<ActionResult> DeleteEntries(T[] Items)
         {
-            Exception ex = await clsFunction<T>.Instance.DeleteEntries(Items);
-
-            if (ex == null)
-            {
-                return NoContent();
-            }
-            else
-            {
-                ModelState.AddModelError("Exception_Message", ex.Message);
-                return BadRequest(ModelState);
-            }
+            return await clsFunction<T>.Instance.DeleteEntries(Items);
         }
     }
 }

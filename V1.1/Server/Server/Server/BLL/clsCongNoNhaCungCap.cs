@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Server.BLL
 {
@@ -18,7 +19,7 @@ namespace Server.BLL
         }
         #endregion
 
-        public async Task<eCongNoNhaCungCap> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
+        public async Task<ActionResult> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
         {
             try
             {
@@ -28,9 +29,9 @@ namespace Server.BLL
 
                 eCongNoNhaCungCap congNo = lstCongNo.FirstOrDefault(x => x.IDMaster == IDMaster) ?? new eCongNoNhaCungCap();
                 congNo.ConLai = lstCongNo.Where(x => x.IDMaster != IDMaster).ToList().Sum(x => x.ConLai);
-                return congNo;
+                return Ok(congNo);
             }
-            catch { return new eCongNoNhaCungCap(); }
+            catch { return BadRequest(new eCongNoNhaCungCap()); }
         }
     }
 }
