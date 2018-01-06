@@ -22,19 +22,19 @@ namespace Client.GUI.NhapHang
         {
             InitializeComponent();
         }
-        protected  override void frmBase_Load(object sender, EventArgs e)
+        protected override void frmBase_Load(object sender, EventArgs e)
         {
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            //await RunMethodAsync(() => { LoadData(0); });
-            //await RunMethodAsync(() => { CustomForm(); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadData(0);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
-        public override void LoadData(object KeyID)
+        public async override void LoadData(object KeyID)
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eNhapHangNhaCungCap>("NhapHangNhaCungCap/getall");
-            gctChiTiet.DataSource = ((eNhapHangNhaCungCap)grvDanhSach.GetFocusedRow() ?? new eNhapHangNhaCungCap()).eNhapHangNhaCungCapChiTiet.ToList();
+            gctDanhSach.DataSource = await clsFunction.GetItemsAsync<eNhapHangNhaCungCap>("NhapHangNhaCungCap/getall");
+            gctChiTiet.DataSource = await this.RunMethodAsync(() => { return ((eNhapHangNhaCungCap)grvDanhSach.GetFocusedRow() ?? new eNhapHangNhaCungCap()).eNhapHangNhaCungCapChiTiet.ToList(); });
         }
         public override void InsertEntry()
         {
@@ -55,11 +55,11 @@ namespace Client.GUI.NhapHang
         {
 
         }
-        public override  void RefreshEntry()
+        public override void RefreshEntry()
         {
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { LoadData(0); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            clsGeneral.CallWaitForm(this);
+            LoadData(0);
+            clsGeneral.CloseWaitForm();
         }
         public override void CustomForm()
         {

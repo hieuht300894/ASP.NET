@@ -97,6 +97,7 @@ namespace Client.GUI.NhapHang
             _aEntry = clsFunction.GetByID<eNhapHangNhaCungCap>("NhapHangNhaCungCap/GetByID", _iEntry.KeyID);
             DisableEvents();
             SetControlValue();
+            SetDataSource();
             EnableEvents();
         }
         public override void SetControlValue()
@@ -131,8 +132,10 @@ namespace Client.GUI.NhapHang
                 lciSoTienCu.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
                 lciThanhToanCu.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
             }
-
-            lstDetail = new BindingList<eNhapHangNhaCungCapChiTiet>(_aEntry.eNhapHangNhaCungCapChiTiet.ToList());
+        }
+        public async override void SetDataSource()
+        {
+            lstDetail = await this.RunMethodAsync(() => { return new BindingList<eNhapHangNhaCungCapChiTiet>(_aEntry.eNhapHangNhaCungCapChiTiet.ToList()); });
             gctChiTiet.DataSource = lstDetail;
         }
         public override bool ValidateData()
