@@ -22,13 +22,13 @@ namespace Client.GUI.NhapHang
         {
             InitializeComponent();
         }
-        protected async override void frmBase_Load(object sender, EventArgs e)
+        protected  override void frmBase_Load(object sender, EventArgs e)
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { CustomForm(); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
+            //await RunMethodAsync(() => { LoadData(0); });
+            //await RunMethodAsync(() => { CustomForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
 
         public override void LoadData(object KeyID)
@@ -55,11 +55,11 @@ namespace Client.GUI.NhapHang
         {
 
         }
-        public override async void RefreshEntry()
+        public override  void RefreshEntry()
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { LoadData(0); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
         public override void CustomForm()
         {

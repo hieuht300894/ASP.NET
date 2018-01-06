@@ -18,13 +18,13 @@ namespace Client.GUI.DanhMuc
         {
             InitializeComponent();
         }
-        protected override async void frmBase_Load(object sender, EventArgs e)
+        protected override  void frmBase_Load(object sender, EventArgs e)
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { CustomForm(); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
+            //await RunMethodAsync(() => { LoadData(0); });
+            //await RunMethodAsync(() => { CustomForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
        
 
@@ -71,11 +71,11 @@ namespace Client.GUI.DanhMuc
         {
 
         }
-        public override async void RefreshEntry()
+        public override  void RefreshEntry()
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { LoadData(0); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { LoadData(0); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
         }
 
         private void GrvDanhSach_DoubleClick(object sender, EventArgs e)

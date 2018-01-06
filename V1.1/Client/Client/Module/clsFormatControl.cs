@@ -256,6 +256,19 @@ namespace Client.Module
         #endregion
 
         #region FormatControl
+        #region Control
+        public async static Task RunMethodAsync(this Control ctrMain, Action action)
+        {
+            if (!ctrMain.IsHandleCreated) return;
+            await Task.Factory.StartNew(new Action(() => { ctrMain.BeginInvoke(action); }));
+        }
+        public static Task<T> RunMethodAsync<T>(this Control ctrMain, Func<T> action)
+        {
+            if (!ctrMain.IsHandleCreated) return Task.Factory.StartNew(new Func<T>(() => { return ReflectionPopulator.CreateObject<T>(); }));
+            return Task.Factory.StartNew(new Func<T>(action));
+        }
+        #endregion
+
         #region LayoutControl
         public static void BestFitFormHeight(this LayoutControl lctMain)
         {

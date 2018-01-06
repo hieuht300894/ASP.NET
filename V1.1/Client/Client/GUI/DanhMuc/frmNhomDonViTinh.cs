@@ -21,17 +21,17 @@ namespace Client.GUI.DanhMuc
         {
             InitializeComponent();
         }
-        protected async override void frmBase_Load(object sender, EventArgs e)
+        protected  override void frmBase_Load(object sender, EventArgs e)
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadDataForm(); });
-            await RunMethodAsync(() => { CustomForm(); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
+            //await RunMethodAsync(() => { LoadDataForm(); });
+            //await RunMethodAsync(() => { CustomForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
 
-            base.frmBase_Load(sender, e);
-            LoadDataForm();
-            CustomForm();
+            //base.frmBase_Load(sender, e);
+            //LoadDataForm();
+            //CustomForm();
         }
 
         public override void LoadDataForm()

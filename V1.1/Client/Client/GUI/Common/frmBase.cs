@@ -641,29 +641,11 @@ namespace Client.GUI.Common
         {
             alertMsg.Show(this, Title, Text);
         }
-        public async Task<bool> RunMethodAsync(params Func<bool>[] Funcs)
-        {
-            Funcs = Funcs ?? new Func<bool>[] { };
-
-            foreach (Func<bool> action in Funcs)
-            {
-                Task task = Task.Factory.StartNew(action);
-                await task;
-            }
-
-            Task<bool> taskTemp = Task.Factory.StartNew(() => { return true; });
-            return await taskTemp;
-        }
-        public async Task RunMethodAsync(params Action[] Acts)
-        {
-            if (!IsHandleCreated) return;
-
-            Acts = Acts ?? new Action[] { };
-            foreach (Action act in Acts)
-            {
-                await Task.Factory.StartNew(() => { BeginInvoke(act); });
-            }
-        }
+        //public async Task RunMethodAsync(Action action)
+        //{
+        //    if (!IsHandleCreated) return;
+        //    await Task.Factory.StartNew(() => { BeginInvoke(action); });
+        //}
         #endregion
 
         #region Common Method

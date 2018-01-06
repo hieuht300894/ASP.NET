@@ -28,53 +28,73 @@ namespace Client.GUI.NhapHang
         {
             InitializeComponent();
         }
-        protected async override void frmBase_Load(object sender, EventArgs e)
+        protected override void frmBase_Load(object sender, EventArgs e)
         {
-            await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            await RunMethodAsync(() => { LoadNhaCungCap(0); });
-            await RunMethodAsync(() => { LoadRepository(); });
-            await RunMethodAsync(() => { LoadDataForm(); });
-            await RunMethodAsync(() => { CustomForm(); });
-            await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
+            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
+            //await RunMethodAsync(() => { LoadNhaCungCap(0); });
+            //await RunMethodAsync(() => { LoadRepository(); });
+            //await RunMethodAsync(() => { LoadDataForm(); });
+            //await RunMethodAsync(() => { CustomForm(); });
+            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadDataForm();
+            CustomForm();
+            clsGeneral.CloseWaitForm();
+
+            LoadNhomSanPham();
+            LoadSanPham();
+            LoadKho();
+            LoadTonKho();
+            LoadNgayNhap(_aEntry.NgayNhap);
+            LoadNhaCungCap(_aEntry.IDNhaCungCap);
         }
 
+        async void LoadNhomSanPham()
+        {
+            lstNhomSanPham = await clsFunction.GetItemsAsync<eNhomSanPham>("NhomSanPham/getall");
+            slokNhomSanPham.Properties.DataSource = lstNhomSanPham;
+        }
+        async void LoadSanPham()
+        {
+            lstSanPham = await clsFunction.GetItemsAsync<eSanPham>("SanPham/getall");
+            rlokSanPham.DataSource = lstSanPham;
+            gctSanPham.DataSource = lstSanPham;
+
+            await srcMaSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ma)).Select(x => x.Ma).ToArray(); });
+            await srcTenSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ten)).Select(x => x.Ten).ToArray(); });
+        }
+        async void LoadKho()
+        {
+            lstKho = await clsFunction.GetItemsAsync<eKho>("Kho/getall");
+            rlokKho.DataSource = lstKho;
+        }
+        async void LoadTonKho()
+        {
+            lstTonKho = await clsFunction.GetItemsAsync<eTonKho>("TonKho/getall");
+        }
+        async void LoadNhaCungCap(object KeyID)
+        {
+            slokNhaCungCap.Properties.DataSource = await clsFunction.GetItemsAsync<eNhaCungCap>("NhaCungCap/getall");
+            if (Convert.ToInt32(KeyID) > 0)
+                await slokNhaCungCap.RunMethodAsync(() => { slokNhaCungCap.EditValue = KeyID; });
+        }
+        void LoadNgayNhap(DateTime time)
+        {
+            dteNgayNhap.BeginInvoke(new Action(() => { dteNgayNhap.DateTime = time; }));
+        }
         public override void ResetAll()
         {
             _iEntry = _aEntry = null;
-        }
-        void LoadRepository()
-        {
-            lstNhomSanPham = clsFunction.GetItems<eNhomSanPham>("NhomSanPham/getall");
-            lstSanPham = clsFunction.GetItems<eSanPham>("SanPham/getall");
-            lstKho = clsFunction.GetItems<eKho>("Kho/getall");
-            lstTonKho = clsFunction.GetItems<eTonKho>("TonKho/getall");
-
-            dteNgayNhap.DateTime = DateTime.Now.ServerNow();
-            slokNhomSanPham.Properties.DataSource = lstNhomSanPham;
-            rlokSanPham.DataSource = lstSanPham;
-            rlokKho.DataSource = lstKho;
-            gctSanPham.DataSource = lstSanPham;
-
-            var qSanPham = lstSanPham.Select(x => new { x.Ma, x.Ten });
-            foreach (var rSanPham in qSanPham)
-            {
-                srcMaSanPham.Properties.Items.Add(rSanPham.Ma);
-                srcTenSanPham.Properties.Items.Add(rSanPham.Ten);
-            }
-        }
-        void LoadNhaCungCap(object KeyID)
-        {
-            slokNhaCungCap.Properties.DataSource = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/getall");
-            if (Convert.ToInt32(KeyID) > 0)
-                slokNhaCungCap.EditValue = KeyID;
         }
         public override void LoadDataForm()
         {
             lstDetail = new BindingList<eNhapHangNhaCungCapChiTiet>();
             _iEntry = _iEntry ?? new eNhapHangNhaCungCap();
-            _aEntry = clsFunction.GetByID<eNhapHangNhaCungCap>("NhapHangNhaCungCap/GetByID", _iEntry.KeyID);
 
+            _aEntry = clsFunction.GetByID<eNhapHangNhaCungCap>("NhapHangNhaCungCap/GetByID", _iEntry.KeyID);
             DisableEvents();
             SetControlValue();
             EnableEvents();
