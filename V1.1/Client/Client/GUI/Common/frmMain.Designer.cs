@@ -42,6 +42,7 @@
             this.frmKhachHang_List = new DevExpress.XtraBars.BarButtonItem();
             this.frmNhaCungCap_List = new DevExpress.XtraBars.BarButtonItem();
             this.frmSanPham_List = new DevExpress.XtraBars.BarButtonItem();
+            this.bsiServer = new DevExpress.XtraBars.BarStaticItem();
             this.rpTaiKhoan = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rpThietLap = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -51,12 +52,21 @@
             this.rpChucNang = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup5 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.repositoryItemHyperLinkEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
+            this.repositoryItemHyperLinkEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
+            this.repositoryItemHyperLinkEdit3 = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
             this.rsbBottom = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.docManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
             this.tbvMain = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
+            this.rhleServer = new DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit();
+            this.bhiServer = new DevExpress.XtraBars.BarHeaderItem();
             ((System.ComponentModel.ISupportInitialize)(this.rcMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.docManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbvMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rhleServer)).BeginInit();
             this.SuspendLayout();
             // 
             // rcMain
@@ -74,9 +84,11 @@
             this.frmDonViTinh_List,
             this.frmKhachHang_List,
             this.frmNhaCungCap_List,
-            this.frmSanPham_List});
+            this.frmSanPham_List,
+            this.bsiServer,
+            this.bhiServer});
             this.rcMain.Location = new System.Drawing.Point(0, 0);
-            this.rcMain.MaxItemId = 21;
+            this.rcMain.MaxItemId = 27;
             this.rcMain.Name = "rcMain";
             this.rcMain.PageHeaderItemLinks.Add(this.bhiNhanVien);
             this.rcMain.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -84,6 +96,11 @@
             this.rpThietLap,
             this.rpDanhMuc,
             this.rpChucNang});
+            this.rcMain.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.repositoryItemHyperLinkEdit1,
+            this.repositoryItemHyperLinkEdit2,
+            this.repositoryItemHyperLinkEdit3,
+            this.rhleServer});
             this.rcMain.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
             this.rcMain.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.True;
             this.rcMain.ShowToolbarCustomizeItem = false;
@@ -158,6 +175,12 @@
             this.frmSanPham_List.Id = 20;
             this.frmSanPham_List.Name = "frmSanPham_List";
             // 
+            // bsiServer
+            // 
+            this.bsiServer.Id = 23;
+            this.bsiServer.Name = "bsiServer";
+            this.bsiServer.TextAlignment = System.Drawing.StringAlignment.Near;
+            // 
             // rpTaiKhoan
             // 
             this.rpTaiKhoan.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -222,8 +245,25 @@
             this.ribbonPageGroup5.Name = "ribbonPageGroup5";
             this.ribbonPageGroup5.Text = "Nhập hàng";
             // 
+            // repositoryItemHyperLinkEdit1
+            // 
+            this.repositoryItemHyperLinkEdit1.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit1.Name = "repositoryItemHyperLinkEdit1";
+            // 
+            // repositoryItemHyperLinkEdit2
+            // 
+            this.repositoryItemHyperLinkEdit2.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit2.Name = "repositoryItemHyperLinkEdit2";
+            // 
+            // repositoryItemHyperLinkEdit3
+            // 
+            this.repositoryItemHyperLinkEdit3.AutoHeight = false;
+            this.repositoryItemHyperLinkEdit3.Name = "repositoryItemHyperLinkEdit3";
+            // 
             // rsbBottom
             // 
+            this.rsbBottom.ItemLinks.Add(this.bsiServer);
+            this.rsbBottom.ItemLinks.Add(this.bhiServer);
             this.rsbBottom.Location = new System.Drawing.Point(0, 384);
             this.rsbBottom.Name = "rsbBottom";
             this.rsbBottom.Ribbon = this.rcMain;
@@ -241,6 +281,16 @@
             // 
             this.tbvMain.RootContainer.Element = null;
             // 
+            // rhleServer
+            // 
+            this.rhleServer.AutoHeight = false;
+            this.rhleServer.Name = "rhleServer";
+            // 
+            // bhiServer
+            // 
+            this.bhiServer.Id = 26;
+            this.bhiServer.Name = "bhiServer";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,8 +305,12 @@
             this.Text = "Phần mềm demo";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.rcMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemHyperLinkEdit3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.docManager)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbvMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rhleServer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,5 +342,11 @@
         private DevExpress.XtraBars.BarButtonItem frmKhachHang_List;
         private DevExpress.XtraBars.BarButtonItem frmNhaCungCap_List;
         private DevExpress.XtraBars.BarButtonItem frmSanPham_List;
+        private DevExpress.XtraBars.BarStaticItem bsiServer;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit repositoryItemHyperLinkEdit3;
+        private DevExpress.XtraEditors.Repository.RepositoryItemHyperLinkEdit rhleServer;
+        private DevExpress.XtraBars.BarHeaderItem bhiServer;
     }
 }

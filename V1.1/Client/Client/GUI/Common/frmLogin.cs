@@ -128,8 +128,30 @@ namespace Client.GUI.Common
 
             btnOK.Click += BtnOK_Click;
             btnCancel.Click += BtnCancel_Click;
+
+            txtUsername.KeyDown -= TxtMain_KeyDown;
+            txtUsername.KeyDown += TxtMain_KeyDown;
+
+            txtPassword.KeyDown -= TxtMain_KeyDown;
+            txtPassword.KeyDown += TxtMain_KeyDown;
         }
 
+        private void TxtMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (ValidateForm())
+                {
+                    if (CheckLogin())
+                    {
+                        SaveData();
+                        DialogResult = DialogResult.OK;
+                    }
+                    else
+                        lbMessage.Text = "Đăng nhập không thành công";
+                }
+            }
+        }
         private void BtnOK_Click(object sender, EventArgs e)
         {
             if (ValidateForm())
@@ -140,7 +162,7 @@ namespace Client.GUI.Common
                     DialogResult = DialogResult.OK;
                 }
                 else
-                    clsGeneral.showMessage("Đăng nhập không thành công");
+                    lbMessage.Text = "Đăng nhập không thành công";
             }
         }
         private void BtnCancel_Click(object sender, EventArgs e)

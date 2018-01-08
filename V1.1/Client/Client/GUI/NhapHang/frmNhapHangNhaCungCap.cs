@@ -377,6 +377,9 @@ namespace Client.GUI.NhapHang
                     iDT.SoLuongLe = 1;
                     iDT.SoLuong = 1;
                     lstDetail.Add(iDT);
+
+                    spnSoLuong.Value += iDT.SoLuong;
+                    spnSoTien.Value += iDT.TongTien;
                 }
             }
         }

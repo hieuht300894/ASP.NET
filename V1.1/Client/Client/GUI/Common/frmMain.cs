@@ -32,6 +32,8 @@ namespace Client.GUI.Common
 
             Load -= FrmMain_Load;
             Load += FrmMain_Load;
+            bhiServer.ItemClick -= BhiServer_ItemClick;
+            bhiServer.ItemClick += BhiServer_ItemClick;
         }
         #endregion
 
@@ -114,20 +116,6 @@ namespace Client.GUI.Common
         }
         void ShowLogin()
         {
-            //frmLogin frm = new frmLogin();
-            //if (frm.ShowDialog() == DialogResult.OK)
-            //{
-            //    BeginInvoke(new Action(() =>
-            //    {
-            //        rcMain.Show();
-            //        IsLogin = true;
-            //    }));
-            //}
-            //else if (!IsLogin)
-            //{
-            //    Application.Exit();
-            //}
-
             IAsyncResult result = BeginInvoke(new Action(() =>
             {
                 frmLogin frm = new frmLogin();
@@ -135,6 +123,7 @@ namespace Client.GUI.Common
                 {
                     rcMain.Show();
                     IsLogin = true;
+                    bhiNhanVien.Caption = clsGeneral.curPersonnel.Ten;
                 }
                 else if (!IsLogin)
                 {
@@ -162,6 +151,7 @@ namespace Client.GUI.Common
                             ModuleHelper.Port = info.Port;
                             ModuleHelper.Path = info.Path;
                             ModuleHelper.Url = info.Url;
+                            bhiServer.Caption = $"Server: {info.Url}";
                         }
                         else
                         {
@@ -193,13 +183,19 @@ namespace Client.GUI.Common
         #endregion
 
         #region Event
-        private void FrmMain_Load(object sender, EventArgs e)
+        void FrmMain_Load(object sender, EventArgs e)
         {
             LoadDataForm();
         }
         void bbi_ItemClick(object sender, ItemClickEventArgs e)
         {
             AddDocument(e.Item.Name);
+        }
+        void BhiServer_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            frmServer frm = new frmServer();
+            if (frm.ShowDialog(this) == DialogResult.OK)
+                Application.Restart();
         }
         #endregion
     }
