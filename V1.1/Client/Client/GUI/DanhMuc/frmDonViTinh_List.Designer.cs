@@ -1,6 +1,6 @@
 ﻿namespace Client.GUI.DanhMuc
 {
-    partial class frmDonviTinh_List
+    partial class frmDonViTinh_List
     {
         /// <summary>
         /// Required designer variable.

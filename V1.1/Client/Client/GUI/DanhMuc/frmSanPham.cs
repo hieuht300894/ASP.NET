@@ -24,19 +24,22 @@ namespace Client.GUI.DanhMuc
         {
             InitializeComponent();
         }
-        protected override  void frmBase_Load(object sender, EventArgs e)
+        protected override void frmBase_Load(object sender, EventArgs e)
         {
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            //await RunMethodAsync(() => { LoadDonViTinh(); });
-            //await RunMethodAsync(() => { LoadDataForm(); });
-            //await RunMethodAsync(() => { CustomForm(); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadDataForm();
+            LoadDonViTinh(_aEntry.IDDonViTinh);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
-        void LoadDonViTinh()
+        async void LoadDonViTinh(object KeyID)
         {
-            slokDVT.Properties.DataSource = clsFunction.GetItems<eDonViTinh>("DonViTinh/GetAll");
+            slokDVT.Properties.DataSource = await clsFunction.GetItemsAsync<eDonViTinh>("DonViTinh/GetAll");
+
+            if ((int)KeyID > 0)
+                slokDVT.BeginInvoke(new Action(async () => { slokDVT.EditValue = await slokDVT.RunMethodAsync(() => { return KeyID; }); }));
         }
         public override void ResetAll()
         {
@@ -64,7 +67,6 @@ namespace Client.GUI.DanhMuc
             txtTen.EditValue = _aEntry.Ten;
             clrpMauSac.Color = Color.FromArgb(_aEntry.ColorHex);
             txtKichThuoc.EditValue = _aEntry.KichThuoc;
-            slokDVT.EditValue = _aEntry.IDDonViTinh;
             mmeGhiChu.EditValue = _aEntry.GhiChu;
         }
         public override bool ValidateData()

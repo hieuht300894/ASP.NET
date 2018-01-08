@@ -30,26 +30,17 @@ namespace Client.GUI.NhapHang
         }
         protected override void frmBase_Load(object sender, EventArgs e)
         {
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            //await RunMethodAsync(() => { LoadNhaCungCap(0); });
-            //await RunMethodAsync(() => { LoadRepository(); });
-            //await RunMethodAsync(() => { LoadDataForm(); });
-            //await RunMethodAsync(() => { CustomForm(); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-
             clsGeneral.CallWaitForm(this);
             base.frmBase_Load(sender, e);
             LoadDataForm();
-            CustomForm();
-            clsGeneral.CloseWaitForm();
-
+            LoadNgayNhap(DateTime.Now.ServerNow());
             LoadNhomSanPham();
             LoadSanPham();
             LoadKho();
             LoadTonKho();
-            LoadNgayNhap(_aEntry.NgayNhap);
             LoadNhaCungCap(_aEntry.IDNhaCungCap);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
         async void LoadNhomSanPham()
@@ -63,8 +54,8 @@ namespace Client.GUI.NhapHang
             rlokSanPham.DataSource = lstSanPham;
             gctSanPham.DataSource = lstSanPham;
 
-            await srcMaSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ma)).Select(x => x.Ma).ToArray(); });
-            await srcTenSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ten)).Select(x => x.Ten).ToArray(); });
+            srcMaSanPham.Properties.Items.AddRange(await srcMaSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ma)).Select(x => x.Ma).ToArray(); }));
+            srcTenSanPham.Properties.Items.AddRange(await srcTenSanPham.RunMethodAsync(() => { return lstSanPham.Where(x => !string.IsNullOrWhiteSpace(x.Ten)).Select(x => x.Ten).ToArray(); }));
         }
         async void LoadKho()
         {
@@ -83,7 +74,7 @@ namespace Client.GUI.NhapHang
         }
         void LoadNgayNhap(DateTime time)
         {
-            dteNgayNhap.BeginInvoke(new Action(() => { dteNgayNhap.DateTime = time; }));
+            dteNgayNhap.DateTime = time;
         }
         public override void ResetAll()
         {

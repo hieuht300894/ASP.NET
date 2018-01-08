@@ -37,17 +37,18 @@ namespace Client.GUI.DanhMuc
             //await RunMethodAsync(() => { CustomForm(); });
             //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
 
-            //base.frmBase_Load(sender, e);
-
-            //LoadData(0);
-            //CustomForm();
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadData(0);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
         #endregion
 
         #region Methods
-        public void LoadData(int KeyID)
+        public async void LoadData(int KeyID)
         {
-            lstDanhSach = new List<eTinhThanh>(clsFunction.GetItems<eTinhThanh>("tinhthanh/getall"));
+            lstDanhSach = new List<eTinhThanh>(await clsFunction.GetItemsAsync<eTinhThanh>("tinhthanh/getall"));
             lstDanhSachLoai1 = new List<eTinhThanh>(lstDanhSach.Where(x => x.IDLoai >= 1 && x.IDLoai <= 2));
             lstDanhSachLoai2 = new List<eTinhThanh>(lstDanhSach.Where(x => x.IDLoai >= 3 && x.IDLoai <= 6));
             lstDanhSachLoai3 = new List<eTinhThanh>(lstDanhSach.Where(x => x.IDLoai >= 7 && x.IDLoai <= 9));
@@ -62,35 +63,9 @@ namespace Client.GUI.DanhMuc
         }
         public override void InsertEntry()
         {
-            //using (frmPermission _frm = new frmPermission())
-            //{
-            //    _frm.Text = "Thêm mới quyền";
-            //    _frm.fType = eFormType.Add;
-            //    _frm.ReloadData = this.LoadData;
-            //    _frm.ShowDialog();
-            //}
         }
         public override void UpdateEntry()
         {
-            //if (grvPermission.RowCount > 0 && grvPermission.FocusedRowHandle >= 0)
-            //{
-            //    try
-            //    {
-            //        using (frmPermission _frm = new frmPermission())
-            //        {
-            //            xPermission _eEntry = (xPermission)grvPermission.GetRow(grvPermission.FocusedRowHandle);
-            //            _frm._iEntry = _eEntry;
-            //            _frm.Text = "Cập nhật quyền";
-            //            _frm.fType = eFormType.Edit;
-            //            _frm.ReloadData = this.LoadData;
-            //            _frm.ShowDialog();
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        clsGeneral.showErrorException(ex, "Exception");
-            //    }
-            //}
         }
         public override void DeleteEntry()
         {

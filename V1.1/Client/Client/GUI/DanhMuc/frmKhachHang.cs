@@ -31,11 +31,21 @@ namespace Client.GUI.DanhMuc
             //await RunMethodAsync(() => { LoadDataForm(); });
             //await RunMethodAsync(() => { CustomForm(); });
             //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadDataForm();
+            LoadTinhThanh(_aEntry.IDTinhThanh);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
-        void LoadTinhThanh()
+        async void LoadTinhThanh(object KeyID)
         {
-            slokTinhThanh.Properties.DataSource = clsFunction.GetItems<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
+            slokTinhThanh.Properties.DataSource = await clsFunction.GetItemsAsync<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
+
+            if ((int)KeyID > 0)
+                slokTinhThanh.BeginInvoke(new Action(async () => { slokTinhThanh.EditValue = await slokTinhThanh.RunMethodAsync(() => { return KeyID; }); }));
         }
         public override void ResetAll()
         {
@@ -63,7 +73,6 @@ namespace Client.GUI.DanhMuc
             txtTen.EditValue = _aEntry.Ten;
             tgsGioiTinh.IsOn = Convert.ToBoolean(_aEntry.IDGioiTinh);
             dteNgaySinh.DateTime = _aEntry.NgaySinh;
-            slokTinhThanh.EditValue = _aEntry.IDTinhThanh;
             txtDiaChi.EditValue = _aEntry.DiaChi;
             txtDienThoai.EditValue = _aEntry.DienThoai;
             txtEmail.EditValue = _aEntry.Email;

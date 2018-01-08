@@ -19,20 +19,20 @@ namespace Client.GUI.DanhMuc
             InitializeComponent();
         }
         protected override  void frmBase_Load(object sender, EventArgs e)
-        { 
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
-            //await RunMethodAsync(() => { LoadData(0); });
-            //await RunMethodAsync(() => { CustomForm(); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
-        }
-        
-        public override void LoadData(object KeyID)
         {
-            gctDanhSach.DataSource = clsFunction.GetItems<eNhaCungCap>("NhaCungCap/GetAll");
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadData(0);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
+        }
+
+        public async override void LoadData(object KeyID)
+        {
+            gctDanhSach.DataSource =await clsFunction.GetItemsAsync<eNhaCungCap>("NhaCungCap/GetAll");
 
             if ((int)KeyID > 0)
-                grvDanhSach.FocusedRowHandle = grvDanhSach.LocateByValue("KeyID", KeyID);
+                gctDanhSach.BeginInvoke(new Action(async () => { grvDanhSach.FocusedRowHandle = await gctDanhSach.RunMethodAsync(() => { return grvDanhSach.LocateByValue("KeyID", KeyID); }); }));
         }
         public override void CustomForm()
         {
@@ -72,9 +72,7 @@ namespace Client.GUI.DanhMuc
         }
         public override  void RefreshEntry()
         {
-            //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
-            //await RunMethodAsync(() => { LoadData(0); });
-            //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+            LoadData(0);
         }
 
         private void GrvDanhSach_DoubleClick(object sender, EventArgs e)

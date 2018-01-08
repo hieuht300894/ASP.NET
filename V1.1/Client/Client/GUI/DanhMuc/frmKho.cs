@@ -30,6 +30,12 @@ namespace Client.GUI.DanhMuc
             //await RunMethodAsync(() => { LoadDataForm(); });
             //await RunMethodAsync(() => { CustomForm(); });
             //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadDataForm();
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
         public override void ResetAll()

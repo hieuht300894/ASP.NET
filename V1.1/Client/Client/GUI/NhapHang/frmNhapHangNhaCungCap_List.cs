@@ -34,6 +34,8 @@ namespace Client.GUI.NhapHang
         public async override void LoadData(object KeyID)
         {
             gctDanhSach.DataSource = await clsFunction.GetItemsAsync<eNhapHangNhaCungCap>("NhapHangNhaCungCap/getall");
+            if ((int)KeyID > 0)
+                gctDanhSach.BeginInvoke(new Action(async () => { grvDanhSach.FocusedRowHandle = await gctDanhSach.RunMethodAsync(() => { return grvDanhSach.LocateByValue("KeyID", KeyID); }); }));
             gctChiTiet.DataSource = await this.RunMethodAsync(() => { return ((eNhapHangNhaCungCap)grvDanhSach.GetFocusedRow() ?? new eNhapHangNhaCungCap()).eNhapHangNhaCungCapChiTiet.ToList(); });
         }
         public override void InsertEntry()

@@ -22,7 +22,7 @@ namespace Client.GUI.DanhMuc
         {
             InitializeComponent();
         }
-        protected override  void frmBase_Load(object sender, EventArgs e)
+        protected override void frmBase_Load(object sender, EventArgs e)
         {
             //await RunMethodAsync(() => { clsGeneral.CallWaitForm(this); });
             //await RunMethodAsync(() => { base.frmBase_Load(sender, e); });
@@ -30,11 +30,21 @@ namespace Client.GUI.DanhMuc
             //await RunMethodAsync(() => { LoadDataForm(); });
             //await RunMethodAsync(() => { CustomForm(); });
             //await RunMethodAsync(() => { clsGeneral.CloseWaitForm(); });
+
+            clsGeneral.CallWaitForm(this);
+            base.frmBase_Load(sender, e);
+            LoadDataForm();
+            LoadTinhThanh(_aEntry.IDTinhThanh);
+            CustomForm();
+            clsGeneral.CloseWaitForm();
         }
 
-        void LoadTinhThanh()
+        async void LoadTinhThanh(object KeyID)
         {
-            slokTinhThanh.Properties.DataSource = clsFunction.GetItems<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
+            slokTinhThanh.Properties.DataSource = await clsFunction.GetItemsAsync<eTinhThanh>("TinhThanh/DanhSach63TinhThanh");
+
+            if ((int)KeyID > 0)
+                slokTinhThanh.BeginInvoke(new Action(async () => { slokTinhThanh.EditValue = await slokTinhThanh.RunMethodAsync(() => { return KeyID; }); }));
         }
         public override void ResetAll()
         {
@@ -64,7 +74,6 @@ namespace Client.GUI.DanhMuc
             txtDiaChi.EditValue = _aEntry.DiaChi;
             txtSDT.EditValue = _aEntry.DienThoai;
             txtNguoiLienHe.EditValue = _aEntry.NguoiLienHe;
-            slokTinhThanh.EditValue = _aEntry.IDTinhThanh;
         }
         public override bool ValidateData()
         {
