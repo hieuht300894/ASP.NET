@@ -54,16 +54,16 @@ namespace Client.GUI.DanhMuc
             {
                 if (x.KeyID > 0)
                 {
-                    x.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                    x.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                    x.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                    x.NguoiCapNhat = clsGeneral.xNhanVien.KeyID;
+                    x.MaNguoiCapNhat = clsGeneral.xNhanVien.Ma;
+                    x.TenNguoiCapNhat = clsGeneral.xNhanVien.Ten;
                     x.NgayCapNhat = time;
                 }
                 else
                 {
-                    x.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                    x.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                    x.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                    x.NguoiTao = clsGeneral.xNhanVien.KeyID;
+                    x.MaNguoiTao = clsGeneral.xNhanVien.Ma;
+                    x.TenNguoiTao = clsGeneral.xNhanVien.Ten;
                     x.NgayTao = time;
                 }
             });

@@ -536,10 +536,10 @@ namespace Client.Module
                 if (!File.Exists(path))
                     File.Create(path).Close();
 
-                List<xDisplay> lstDisplays = new List<xDisplay>();
+                List<xHienThi> lstHienThis = new List<xHienThi>();
                 foreach (GridColumn col in grvMain.Columns)
                 {
-                    xDisplay dis = new xDisplay();
+                    xHienThi hienThi = new xHienThi();
                     //dis.ParentName = frmMain.Name;
                     //dis.Group = string.Empty;
                     //dis.Showing = col.Visible;
@@ -548,11 +548,11 @@ namespace Client.Module
                     //dis.EnableEdit = col.OptionsColumn.AllowEdit;
                     //dis.VisibleIndex = col.VisibleIndex;
                     //dis.Caption = col.Caption;
-                    lstDisplays.Add(dis);
+                    lstHienThis.Add(hienThi);
                 }
 
                 StreamWriter sw = new StreamWriter(path);
-                sw.Write(lstDisplays.SerializeListObjectToXML());
+                sw.Write(lstHienThis.SerializeListObjectToXML());
                 sw.Close();
             }
             catch { }
@@ -571,17 +571,17 @@ namespace Client.Module
                     using (StreamReader sr = new StreamReader(path))
                     {
                         grvMain.BeginUpdate();
-                        //List<xDisplay> lstDisplays = sr.ReadToEnd().DeserializeXML<xDisplay>().OrderByDescending(x => x.VisibleIndex).ToList();
+                        //List<xHienThi> lstDisplays = sr.ReadToEnd().DeserializeXML<xHienThi>().OrderByDescending(x => x.VisibleIndex).ToList();
 
                         //foreach (GridColumn col in grvMain.Columns)
                         //{
-                        //    xDisplay dis = lstDisplays.Find(x => x.ColumnName.Equals(col.Name)) ?? new xDisplay() { Showing = false };
+                        //    xHienThi dis = lstDisplays.Find(x => x.ColumnName.Equals(col.Name)) ?? new xHienThi() { Showing = false };
                         //    col.Visible = dis.Showing;
                         //}
 
-                        //List<xDisplay> lstVisibles = lstDisplays.Where(x => x.VisibleIndex >= 0).OrderBy(x => x.VisibleIndex).ToList();
+                        //List<xHienThi> lstVisibles = lstDisplays.Where(x => x.VisibleIndex >= 0).OrderBy(x => x.VisibleIndex).ToList();
 
-                        //foreach (xDisplay dis in lstVisibles)
+                        //foreach (xHienThi dis in lstVisibles)
                         //{
                         //    GridColumn col = grvMain.Columns.FirstOrDefault(x => x.Name.Equals(dis.ColumnName));
                         //    col.VisibleIndex = dis.VisibleIndex;
@@ -1052,16 +1052,16 @@ namespace Client.Module
             //        catch { return; }
             //    }
             //    if (string.IsNullOrEmpty(fName)) return;
-            //    List<xDisplay> lstAdd = new List<xDisplay>();
+            //    List<xHienThi> lstAdd = new List<xHienThi>();
             //    trlMain.BeginInit();
             //    bool addCol = false;
             //    foreach (TreeListColumn col in trlMain.Columns)
             //    {
             //        addCol = false;
-            //        xDisplay myDisplay = null;
+            //        xHienThi myDisplay = null;
             //        try
             //        {
-            //            myDisplay = db.xDisplays.FirstOrDefault<xDisplay>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(trlMain.Name) && hts.ColumnName.Equals(col.Name));
+            //            myDisplay = db.xHienThis.FirstOrDefault<xHienThi>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(trlMain.Name) && hts.ColumnName.Equals(col.Name));
 
             //            addCol = (myDisplay == null);
             //        }
@@ -1070,7 +1070,7 @@ namespace Client.Module
             //        {
             //            if (addCol && trlMain.DataSource != null)
             //            {
-            //                myDisplay = new xDisplay();
+            //                myDisplay = new xHienThi();
             //                myDisplay.ParentName = fName;
             //                myDisplay.Group = trlMain.Name;
             //                myDisplay.ColumnName = col.Name;
@@ -1100,7 +1100,7 @@ namespace Client.Module
             //                lstAdd.Add(myDisplay);
             //            }
             //            else if (myDisplay == null)
-            //                myDisplay = db.xDisplays.FirstOrDefault<xDisplay>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(trlMain.Name) && hts.ColumnName.Equals(col.Name));
+            //                myDisplay = db.xHienThis.FirstOrDefault<xHienThi>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(trlMain.Name) && hts.ColumnName.Equals(col.Name));
 
             //            if (myDisplay != null)
             //            {
@@ -1142,7 +1142,7 @@ namespace Client.Module
             //    //    try
             //    //    {
             //    //        db = new aModel();
-            //    //        db.xDisplays.AddRange(lstAdd);
+            //    //        db.xHienThis.AddRange(lstAdd);
             //    //        db.SaveChanges();
             //    //    }
             //    //    catch { }
@@ -1395,16 +1395,16 @@ namespace Client.Module
         public static void FormatColumnRepositoryLookUpEdit(this RepositoryItemLookUpEdit rlokMain, string fName)
         {
             //db = new aModel();
-            //List<xDisplay> lstAdd = new List<xDisplay>();
+            //List<xHienThi> lstAdd = new List<xHienThi>();
 
             //bool addCol = false;
             //foreach (LookUpColumnInfo col in rlokMain.Columns)
             //{
             //    addCol = false;
-            //    xDisplay myDisplay = null;
+            //    xHienThi myDisplay = null;
             //    try
             //    {
-            //        myDisplay = db.xDisplays.FirstOrDefault<xDisplay>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(rlokMain.Name) && hts.ColumnName.Equals(col.FieldName));
+            //        myDisplay = db.xHienThis.FirstOrDefault<xHienThi>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(rlokMain.Name) && hts.ColumnName.Equals(col.FieldName));
 
             //        if (myDisplay == null)
             //            addCol = true;
@@ -1414,7 +1414,7 @@ namespace Client.Module
             //    {
             //        if (addCol && rlokMain.DataSource != null)
             //        {
-            //            myDisplay = new xDisplay();
+            //            myDisplay = new xHienThi();
             //            myDisplay.ParentName = fName;
             //            myDisplay.Group = rlokMain.Name;
             //            myDisplay.ColumnName = col.FieldName;
@@ -1442,7 +1442,7 @@ namespace Client.Module
             //            lstAdd.Add(myDisplay);
             //        }
             //        else if (myDisplay == null)
-            //            myDisplay = db.xDisplays.FirstOrDefault<xDisplay>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(rlokMain.Name) && hts.ColumnName.Equals(col.FieldName));
+            //            myDisplay = db.xHienThis.FirstOrDefault<xHienThi>(hts => hts.ParentName.Equals(fName) && hts.Group.Equals(rlokMain.Name) && hts.ColumnName.Equals(col.FieldName));
 
 
             //        if (myDisplay != null)
@@ -1471,7 +1471,7 @@ namespace Client.Module
             //    try
             //    {
             //        db = new aModel();
-            //        db.xDisplays.AddRange(lstAdd);
+            //        db.xHienThis.AddRange(lstAdd);
             //        db.SaveChanges();
             //    }
             //    catch { }

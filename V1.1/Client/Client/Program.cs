@@ -1,12 +1,5 @@
-﻿using Client.BLL.Common;
-using Client.GUI.Common;
-using Client.Module;
-using EntityModel.Model;
+﻿using Client.GUI.Common;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Client

@@ -1,7 +1,7 @@
 ﻿using Client.BLL.Common;
 using Client.Module;
 using DevExpress.XtraEditors;
-using EntityModel.Model;
+using EntityModel;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -26,13 +26,13 @@ namespace Client.GUI.Common
             try
             {
                 string dir = @"Config";
-                string path = $@"{dir}\LoginSetting.xml";
+                string path = $@"{dir}\ThongTinDangNhap.xml";
                 if (File.Exists(path))
                 {
                     using (StreamReader sr = new StreamReader(path))
                     {
                         string text = sr.ReadToEnd();
-                        LoginSetting info = text.DeserializeXMLToObject<LoginSetting>() ?? new LoginSetting();
+                        ThongTinDangNhap info = text.DeserializeXMLToObject<ThongTinDangNhap>() ?? new ThongTinDangNhap();
 
                         if (info.IsRemember)
                         {
@@ -78,13 +78,13 @@ namespace Client.GUI.Common
         {
             try
             {
-                Tuple<bool, UserInfo> tuple = clsFunction.Login<UserInfo>("Module/Login", txtUsername.Text.Trim(), txtPassword.Text.Trim());
+                Tuple<bool, ThongTinNguoiDung> tuple = clsFunction.Login<ThongTinNguoiDung>("Module/Login", txtUsername.Text.Trim(), txtPassword.Text.Trim());
 
                 if (!tuple.Item1)
                     throw new Exception();
 
-                clsGeneral.curAccount = tuple.Item2.xAccount;
-                clsGeneral.curPersonnel = tuple.Item2.xPersonnel;
+                clsGeneral.xTaiKhoan = tuple.Item2.xAccount;
+                clsGeneral.xNhanVien = tuple.Item2.xPersonnel;
 
                 return true;
             }
@@ -101,11 +101,11 @@ namespace Client.GUI.Common
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                string path = $@"{dir}\LoginSetting.xml";
+                string path = $@"{dir}\ThongTinDangNhap.xml";
                 if (!File.Exists(path))
                     File.Create(path).Close();
 
-                LoginSetting info = new LoginSetting();
+                ThongTinDangNhap info = new ThongTinDangNhap();
                 info.Username = txtUsername.Text.Trim();
                 info.Password = txtPassword.Text.Trim();
                 info.IsRemember = chkRemember.Checked;

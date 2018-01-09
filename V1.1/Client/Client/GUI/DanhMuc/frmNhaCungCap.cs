@@ -100,17 +100,17 @@ namespace Client.GUI.DanhMuc
         {
             if (_aEntry.KeyID > 0)
             {
-                _aEntry.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiCapNhat = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiCapNhat = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiCapNhat = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayCapNhat = DateTime.Now.ServerNow();
                 _aEntry.TrangThai = 2;
             }
             else
             {
-                _aEntry.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiTao = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiTao = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiTao = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayTao = DateTime.Now.ServerNow();
                 _aEntry.TrangThai = 1;
             }

@@ -17,10 +17,10 @@ namespace Client.Module
     public static class clsGeneral
     {
         #region User
-        public static xPersonnel curPersonnel = new xPersonnel();
-        public static xAgency curAgency = new xAgency();
-        public static xAccount curAccount = new xAccount();
-        public static xUserFeature curUserFeature = new xUserFeature();
+        public static xNhanVien xNhanVien = new xNhanVien();
+        public static xChiNhanh xChiNhanh = new xChiNhanh();
+        public static xTaiKhoan xTaiKhoan = new xTaiKhoan();
+        public static xPhanQuyen xPhanQuyen = new xPhanQuyen();
         #endregion
 
         #region Mã hóa và giải mã

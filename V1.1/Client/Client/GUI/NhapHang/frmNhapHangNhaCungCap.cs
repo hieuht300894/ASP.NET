@@ -133,18 +133,18 @@ namespace Client.GUI.NhapHang
 
             if (_aEntry.KeyID > 0)
             {
-                _aEntry.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiCapNhat = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiCapNhat = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiCapNhat = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayCapNhat = time;
                 _aEntry.TrangThai = 2;
 
             }
             else
             {
-                _aEntry.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiTao = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiTao = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiTao = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayTao = time;
                 _aEntry.TrangThai = 1;
 
@@ -170,18 +170,18 @@ namespace Client.GUI.NhapHang
             {
                 if (item.KeyID > 0)
                 {
-                    item.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                    item.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                    item.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                    item.NguoiCapNhat = clsGeneral.xNhanVien.KeyID;
+                    item.MaNguoiCapNhat = clsGeneral.xNhanVien.Ma;
+                    item.TenNguoiCapNhat = clsGeneral.xNhanVien.Ten;
                     item.NgayCapNhat = time;
                     item.TrangThai = 2;
 
                 }
                 else
                 {
-                    item.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                    item.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                    item.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                    item.NguoiTao = clsGeneral.xNhanVien.KeyID;
+                    item.MaNguoiTao = clsGeneral.xNhanVien.Ma;
+                    item.TenNguoiTao = clsGeneral.xNhanVien.Ten;
                     item.NgayTao = time;
                     item.TrangThai = 1;
                 }

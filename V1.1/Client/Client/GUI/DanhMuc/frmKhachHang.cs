@@ -107,17 +107,17 @@ namespace Client.GUI.DanhMuc
         {
             if (_aEntry.KeyID > 0)
             {
-                _aEntry.NguoiCapNhat = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiCapNhat = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiCapNhat = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiCapNhat = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiCapNhat = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiCapNhat = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayCapNhat = DateTime.Now.ServerNow();
                 _aEntry.TrangThai = 2;
             }
             else
             {
-                _aEntry.NguoiTao = clsGeneral.curPersonnel.KeyID;
-                _aEntry.MaNguoiTao = clsGeneral.curPersonnel.Ma;
-                _aEntry.TenNguoiTao = clsGeneral.curPersonnel.Ten;
+                _aEntry.NguoiTao = clsGeneral.xNhanVien.KeyID;
+                _aEntry.MaNguoiTao = clsGeneral.xNhanVien.Ma;
+                _aEntry.TenNguoiTao = clsGeneral.xNhanVien.Ten;
                 _aEntry.NgayTao = DateTime.Now.ServerNow();
                 _aEntry.TrangThai = 1;
             }
@@ -126,7 +126,7 @@ namespace Client.GUI.DanhMuc
             _aEntry.Ten = txtTen.Text.Trim();
             _aEntry.NgaySinh = dteNgaySinh.DateTime;
             _aEntry.IDGioiTinh = Convert.ToInt32(tgsGioiTinh.IsOn);
-            _aEntry.GioiTinh = tgsGioiTinh.IsOn ? tgsGioiTinh.Properties.OnText : tgsGioiTinh.Properties.OffText;
+            _aEntry.TenGioiTinh = tgsGioiTinh.IsOn ? tgsGioiTinh.Properties.OnText : tgsGioiTinh.Properties.OffText;
             _aEntry.DiaChi = txtDiaChi.Text.Trim();
             _aEntry.DienThoai = txtDienThoai.Text.Trim();
             _aEntry.Email = txtEmail.Text.Trim();
@@ -135,7 +135,7 @@ namespace Client.GUI.DanhMuc
 
             eTinhThanh tinhThanh = (eTinhThanh)slokTinhThanh.Properties.GetRowByKeyValue(slokTinhThanh.EditValue) ?? new eTinhThanh();
             _aEntry.IDTinhThanh = tinhThanh.KeyID;
-            _aEntry.TinhThanh = tinhThanh.Ten;
+            _aEntry.TenTinhThanh = tinhThanh.Ten;
 
             Tuple<bool, eKhachHang> Res = (_aEntry.KeyID > 0 ?
                 clsFunction.Put("KhachHang/UpdateEntries", _aEntry) :

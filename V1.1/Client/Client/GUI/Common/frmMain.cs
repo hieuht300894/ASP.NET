@@ -3,17 +3,11 @@ using Client.Module;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraBars.Ribbon;
-using DevExpress.XtraBars.Ribbon.Internal;
 using DevExpress.XtraEditors;
-using EntityModel.Model;
+using EntityModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -123,7 +117,7 @@ namespace Client.GUI.Common
                 {
                     rcMain.Show();
                     IsLogin = true;
-                    bhiNhanVien.Caption = clsGeneral.curPersonnel.Ten;
+                    bhiNhanVien.Caption = clsGeneral.xNhanVien.Ten;
                 }
                 else if (!IsLogin)
                 {
@@ -137,13 +131,13 @@ namespace Client.GUI.Common
             try
             {
                 string dir = @"Config";
-                string path = $@"{dir}\UrlSetting.xml";
+                string path = $@"{dir}\ThongTinMayChu.xml";
                 if (File.Exists(path))
                 {
                     using (StreamReader sr = new StreamReader(path))
                     {
                         string text = sr.ReadToEnd();
-                        UrlSetting info = text.DeserializeXMLToObject<UrlSetting>() ?? new UrlSetting();
+                        ThongTinMayChu info = text.DeserializeXMLToObject<ThongTinMayChu>() ?? new ThongTinMayChu();
 
                         if (clsFunction.CheckConnect(info.Url))
                         {

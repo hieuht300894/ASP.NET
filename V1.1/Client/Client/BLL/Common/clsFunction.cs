@@ -81,7 +81,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
 
@@ -104,7 +104,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
 
@@ -133,7 +133,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
 
@@ -160,7 +160,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
 
@@ -189,7 +189,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -220,7 +220,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -248,7 +248,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -279,7 +279,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -307,7 +307,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -332,7 +332,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = await client.ExecuteTaskAsync(request);
@@ -357,7 +357,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = client.Execute(request);
 
@@ -380,7 +380,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = client.Execute(request);
 
@@ -409,7 +409,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = client.Execute(request);
 
@@ -436,7 +436,7 @@ namespace Client.BLL.Common
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
 
                 IRestResponse response = client.Execute(request);
 
@@ -465,7 +465,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);
@@ -496,7 +496,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);
@@ -524,7 +524,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);
@@ -555,7 +555,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);
@@ -583,7 +583,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", (new List<T>() { entity }).SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);
@@ -608,7 +608,7 @@ namespace Client.BLL.Common
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
-                request.AddHeader("IDAccount", clsGeneral.curAccount.KeyID.ToString());
+                request.AddHeader("IDAccount", clsGeneral.xTaiKhoan.KeyID.ToString());
                 request.AddParameter("application/json", entries.SerializeListObjectToJson(), ParameterType.RequestBody);
 
                 IRestResponse response = client.Execute(request);

@@ -1,7 +1,7 @@
 ﻿using Client.BLL.Common;
 using Client.Module;
 using DevExpress.XtraEditors;
-using EntityModel.Model;
+using EntityModel;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -25,13 +25,13 @@ namespace Client.GUI.Common
             try
             {
                 string dir = @"Config";
-                string path = $@"{dir}\UrlSetting.xml";
+                string path = $@"{dir}\ThongTinMayChu.xml";
                 if (File.Exists(path))
                 {
                     using (StreamReader sr = new StreamReader(path))
                     {
                         string text = sr.ReadToEnd();
-                        UrlSetting info = text.DeserializeXMLToObject<UrlSetting>() ?? new UrlSetting();
+                        ThongTinMayChu info = text.DeserializeXMLToObject<ThongTinMayChu>() ?? new ThongTinMayChu();
 
                         txtDomain.EditValue = info.Domain;
                         txtPort.EditValue = info.Port;
@@ -78,11 +78,11 @@ namespace Client.GUI.Common
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                string path = $@"{dir}\UrlSetting.xml";
+                string path = $@"{dir}\ThongTinMayChu.xml";
                 if (!File.Exists(path))
                     File.Create(path).Close();
 
-                UrlSetting info = new UrlSetting();
+                ThongTinMayChu info = new ThongTinMayChu();
                 info.Domain = ModuleHelper.Domain = txtDomain.Text.Trim();
                 info.Port = ModuleHelper.Port = txtPort.Text.Trim();
                 info.Path = ModuleHelper.Path = txtPath.Text.Trim();
