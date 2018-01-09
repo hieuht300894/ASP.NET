@@ -47,7 +47,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.GET;
                 request.AddHeader("Accept", "application/json");
@@ -76,7 +76,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?Prefix={Prefix}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}?Prefix={Prefix}";
 
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
@@ -99,7 +99,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?KeyID={KeyID}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}?KeyID={KeyID}";
 
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
@@ -127,7 +127,7 @@ namespace Client.BLL.Common
             try
             {
                 Objs = Objs ?? new object[] { };
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}";
                 foreach (Object obj in Objs) { Url += $"/{obj}"; }
 
                 IRestClient client = new RestClient(Url);
@@ -154,7 +154,7 @@ namespace Client.BLL.Common
             try
             {
                 Objs = Objs ?? new object[] { };
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}";
                 foreach (Object obj in Objs) { Url += $"/{obj}"; }
 
                 IRestClient client = new RestClient(Url);
@@ -185,7 +185,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
@@ -216,7 +216,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
@@ -244,7 +244,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
@@ -275,7 +275,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
@@ -303,7 +303,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
@@ -328,7 +328,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
@@ -352,7 +352,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}/{Prefix}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}?Prefix={Prefix}";
 
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
@@ -375,7 +375,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}?KeyID={KeyID}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}?KeyID={KeyID}";
 
                 IRestClient client = new RestClient(Url);
                 IRestRequest request = new RestRequest();
@@ -403,7 +403,7 @@ namespace Client.BLL.Common
             try
             {
                 Objs = Objs ?? new object[] { };
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}";
                 foreach (Object obj in Objs) { Url += $"/{obj}"; }
 
                 IRestClient client = new RestClient(Url);
@@ -430,7 +430,7 @@ namespace Client.BLL.Common
             try
             {
                 Objs = Objs ?? new object[] { };
-                String Url = ModuleHelper.Url + $"/{(api.TrimStart('/'))}";
+                String Url = ModuleHelper.Url + $"{(api.TrimStart('/'))}";
                 foreach (Object obj in Objs) { Url += $"/{obj}"; }
 
                 IRestClient client = new RestClient(Url);
@@ -461,7 +461,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
@@ -492,7 +492,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.POST;
                 request.AddHeader("Accept", "application/json");
@@ -520,7 +520,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
@@ -551,7 +551,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.PUT;
                 request.AddHeader("Accept", "application/json");
@@ -579,7 +579,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
@@ -604,7 +604,7 @@ namespace Client.BLL.Common
         {
             try
             {
-                IRestClient client = new RestClient(ModuleHelper.Url + "/" + api.TrimStart('/'));
+                IRestClient client = new RestClient(ModuleHelper.Url + $"{(api.TrimStart('/'))}");
                 IRestRequest request = new RestRequest();
                 request.Method = Method.DELETE;
                 request.AddHeader("Accept", "application/json");
