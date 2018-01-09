@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityModel
 {
-    public class UrlSetting
+    public class ThongTinMayChu
     {
         public string Domain { get; set; } = string.Empty;
         public string Port { get; set; } = string.Empty;

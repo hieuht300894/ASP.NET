@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityModel
 {
-    public class LoginSetting
+    public class ThongTinDangNhap
     {
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

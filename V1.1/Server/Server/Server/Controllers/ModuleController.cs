@@ -377,7 +377,7 @@ namespace Server.Controllers
                 if (personnel == null)
                     throw new Exception("Nhân viên không tồn tại");
 
-                UserInfo user = new UserInfo()
+                ThongTinNguoiDung user = new ThongTinNguoiDung()
                 {
                     xPersonnel = personnel,
                     xAccount = account
