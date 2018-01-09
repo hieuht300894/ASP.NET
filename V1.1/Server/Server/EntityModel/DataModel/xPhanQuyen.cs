@@ -12,14 +12,14 @@ namespace EntityModel.DataModel
         //public string Method { get; set; } = string.Empty;
         //public string Template { get; set; } = string.Empty;
         //public string Path { get; set; } = string.Empty;
-        public int IDNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public int IDQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Controller { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Action { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Method { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Template { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Path { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDNhomQuyen { get ; set ; }
+        public string MaNhomQuyen { get ; set ; }
+        public string TenNhomQuyen { get ; set ; }
+        public int IDQuyen { get ; set ; }
+        public string Controller { get ; set ; }
+        public string Action { get ; set ; }
+        public string Method { get ; set ; }
+        public string Template { get ; set ; }
+        public string Path { get ; set ; }
     }
 }

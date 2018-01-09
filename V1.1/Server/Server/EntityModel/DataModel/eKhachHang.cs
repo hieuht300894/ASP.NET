@@ -7,11 +7,11 @@
         public string DienThoai { get; set; }
         public string Email { get; set; }
         public byte[] HinhAnh { get; set; }
-        public int IDTinhThanh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaTinhThanh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenTinhThanh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public int IDGioiTinh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaGioiTinh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenGioiTinh { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDTinhThanh { get ; set ; }
+        public string MaTinhThanh { get ; set ; }
+        public string TenTinhThanh { get ; set ; }
+        public int IDGioiTinh { get ; set ; }
+        public string MaGioiTinh { get ; set ; }
+        public string TenGioiTinh { get ; set ; }
     }
 }

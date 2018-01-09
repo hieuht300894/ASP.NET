@@ -24,11 +24,11 @@ namespace EntityModel.DataModel
         public decimal ChietKhau { get; set; }
         public decimal TienChietKhau { get; set; }
         public decimal TongTien { get; set; }
-        public int IDNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public int IDNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDNhomSanPham { get ; set ; }
+        public string MaNhomSanPham { get ; set ; }
+        public string TenNhomSanPham { get ; set ; }
+        public string MaNhapHangNhaCungCap { get ; set ; }
+        public string TenNhapHangNhaCungCap { get ; set ; }
+        public int IDNhapHangNhaCungCap { get ; set ; }
     }
 }

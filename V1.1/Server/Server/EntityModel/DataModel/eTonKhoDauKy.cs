@@ -18,8 +18,8 @@ namespace EntityModel.DataModel
         public System.DateTime NgayKiem { get; set; }
         public DateTime? HanSuDung { get; set; }
         public decimal SoLuong { get; set; }
-        public int IDNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string MaNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string TenNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDNhomSanPham { get ; set ; }
+        public string MaNhomSanPham { get ; set ; }
+        public string TenNhomSanPham { get ; set ; }
     }
 }
