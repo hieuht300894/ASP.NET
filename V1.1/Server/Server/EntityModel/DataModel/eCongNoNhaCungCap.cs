@@ -1,4 +1,4 @@
-﻿using EntityModel.General;
+﻿
 using System;
 
 namespace EntityModel.DataModel

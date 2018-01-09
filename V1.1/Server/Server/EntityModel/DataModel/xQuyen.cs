@@ -1,8 +1,8 @@
-﻿
+
 
 namespace EntityModel.DataModel
 {
-    public class eNhomNhaCungCap : Master
+    public partial class xQuyen : Master
     {
     }
 }

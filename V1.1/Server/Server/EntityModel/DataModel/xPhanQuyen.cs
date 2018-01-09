@@ -1,8 +1,8 @@
-using EntityModel.General;
+
 
 namespace EntityModel.DataModel
 {
-    public class xUserFeature : Master
+    public class xPhanQuyen : Master
     {
         public int IDPermission { get; set; } 
         public string PermissionName { get; set; } = string.Empty;

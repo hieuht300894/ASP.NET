@@ -1,8 +1,8 @@
-﻿using EntityModel.General;
+﻿
 
 namespace EntityModel.DataModel
 {
-    public class xLog : Master
+    public class xLichSu : Master
     {
         public string ThaoTac { get; set; }
         public string Bang { get; set; }

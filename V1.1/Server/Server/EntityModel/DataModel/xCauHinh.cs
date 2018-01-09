@@ -1,8 +1,8 @@
-using EntityModel.General;
+
 
 namespace EntityModel.DataModel
 {
-    public partial class xAppConfig : Master
+    public partial class xCauHinh : Master
     {
         //public int KeyID { get; set; }
         //public string colName { get; set; }

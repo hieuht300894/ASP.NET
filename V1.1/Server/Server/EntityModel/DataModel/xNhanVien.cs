@@ -1,8 +1,8 @@
-using EntityModel.General;
+
 
 namespace EntityModel.DataModel
 {
-    public  class xPersonnel : Master
+    public  class xNhanVien : Master
     {
         //public int KeyID { get; set; }
         //public string Code { get; set; }

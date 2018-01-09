@@ -1,6 +1,4 @@
-﻿using EntityModel.General;
-
-namespace EntityModel.DataModel
+﻿namespace EntityModel.DataModel
 {
     public class eKhachHang : Master
     {

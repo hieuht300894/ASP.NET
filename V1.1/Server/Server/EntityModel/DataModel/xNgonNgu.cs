@@ -1,8 +1,8 @@
-using EntityModel.General;
+
 
 namespace EntityModel.DataModel
 {
-    public partial class xLayoutItemCaption : Master
+    public partial class xNgonNgu : Master
     {
         //public int KeyID { get; set; }
         //public string FormName { get; set; }
