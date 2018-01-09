@@ -103,7 +103,7 @@
     <Content Include="wwwroot\InitData\DATA_eDonViTinh.sql" />
     <Content Include="wwwroot\InitData\DATA_eTienTe.sql" />
     <Content Include="wwwroot\InitData\DATA_eTinhThanh.sql" />
-    <Content Include="wwwroot\InitData\DATA_xAgency.sql" />
+    <Content Include="wwwroot\InitData\DATA_xChiNhanh.sql" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\DatabaseConfig.cs" />

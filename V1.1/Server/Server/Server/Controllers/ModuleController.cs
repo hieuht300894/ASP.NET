@@ -39,7 +39,7 @@ namespace Server.Controllers
             {
                 try
                 {
-                    string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_xAgency.sql");
+                    string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_xChiNhanh.sql");
                     await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                     return Ok($"Init data {(typeof(xChiNhanh).Name)} success.");
                 }
