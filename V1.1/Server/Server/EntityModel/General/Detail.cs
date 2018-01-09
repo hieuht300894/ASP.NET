@@ -14,5 +14,6 @@ namespace EntityModel
         public Int32 KeyID { get; set; } = _KeyID;
         public String GhiChu { get; set; } = string.Empty;
         public Int32 TrangThai { get; set; } = 1;
+        public Boolean MacDinh { get; set; }
     }
 }

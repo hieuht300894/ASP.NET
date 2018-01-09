@@ -2,7 +2,7 @@
 
 namespace EntityModel.DataModel
 {
-    public class eSoDuDauKyNhaCungCap : Master
+    public class eSoDuDauKyNhaCungCap : Master,INhaCungCap
     {
         public int IDNhaCungCap { get; set; }
         public string MaNhaCungCap { get; set; }

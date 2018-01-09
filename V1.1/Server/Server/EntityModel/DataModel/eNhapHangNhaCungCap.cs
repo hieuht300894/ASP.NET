@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace EntityModel.DataModel
 {
-    public class eNhapHangNhaCungCap : Master
-    { 
+    public class eNhapHangNhaCungCap : Master, INhaCungCap
+    {
         public string MaLoHang { get; set; }
         public System.DateTime NgayNhap { get; set; }
         public int IDNhaCungCap { get; set; }

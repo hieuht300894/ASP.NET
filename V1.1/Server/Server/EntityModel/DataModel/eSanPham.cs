@@ -1,6 +1,6 @@
 ﻿namespace EntityModel.DataModel
 {
-    public class eSanPham : Master
+    public class eSanPham : Master, IDonViTinh
     {
         //[NotMapped]
         //public Color Color { get; set; }

@@ -2,13 +2,14 @@
 
 namespace EntityModel.DataModel
 {
-    public partial class xTaiKhoan : Master
+    public partial class xTaiKhoan : Master, INhanVien,INhomQuyen
     {
-        public string PersonelName { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-        public int IDPermission { get; set; }
-        public string PermissionName { get; set; } = string.Empty;
-        public string IPAddress { get; set; } = string.Empty;
+        public string DiaChiIP { get; set; } = string.Empty;
+        public int IDNhanVien { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string MaNhanVien { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string TenNhanVien { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string MaNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string TenNhomQuyen { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }

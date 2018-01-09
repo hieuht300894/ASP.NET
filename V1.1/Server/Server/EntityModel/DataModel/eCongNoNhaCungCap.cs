@@ -3,7 +3,7 @@ using System;
 
 namespace EntityModel.DataModel
 {
-    public class eCongNoNhaCungCap : Master
+    public class eCongNoNhaCungCap : Master,INhaCungCap
     {
         public DateTime Ngay { get; set; }
         public int IDNhaCungCap { get; set; }

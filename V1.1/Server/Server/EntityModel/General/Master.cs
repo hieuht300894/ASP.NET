@@ -20,5 +20,6 @@ namespace EntityModel
         public String TenNguoiCapNhat { get; set; } = string.Empty;
         public String GhiChu { get; set; } = string.Empty;
         public Int32 TrangThai { get; set; } = 1;
+        public Boolean MacDinh { get; set; }
     }
 }

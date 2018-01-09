@@ -2,7 +2,7 @@
 
 namespace EntityModel.DataModel
 {
-   public class eTonKho : Master
+    public class eTonKho : Master, INhomSanPham, ISanPham, IDonViTinh, IKho
     {
         public System.DateTime Ngay { get; set; }
         public int IDSanPham { get; set; }

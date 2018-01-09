@@ -2,9 +2,8 @@
 
 namespace EntityModel.DataModel
 {
-    public class eNhapHangNhaCungCapChiTiet : Master
+    public class eNhapHangNhaCungCapChiTiet : Master,INhapHangNhaCungCap, INhomSanPham, ISanPham, IDonViTinh, IKho
     {
-        public int IDNhapHangNhaCungCap { get; set; }
         public int IDSanPham { get; set; }
         public string MaSanPham { get; set; }
         public string TenSanPham { get; set; }
@@ -25,5 +24,11 @@ namespace EntityModel.DataModel
         public decimal ChietKhau { get; set; }
         public decimal TienChietKhau { get; set; }
         public decimal TongTien { get; set; }
+        public int IDNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string MaNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string TenNhomSanPham { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string MaNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string TenNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public int IDNhapHangNhaCungCap { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     }
 }
