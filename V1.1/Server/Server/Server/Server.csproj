@@ -99,7 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="wwwroot\InitData\DATA_eDonViTinh.sql" />
     <Content Include="wwwroot\InitData\DATA_eTienTe.sql" />
     <Content Include="wwwroot\InitData\DATA_eTinhThanh.sql" />
