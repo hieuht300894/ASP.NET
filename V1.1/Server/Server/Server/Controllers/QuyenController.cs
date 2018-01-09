@@ -4,7 +4,7 @@
 
 namespace Server.Controllers
 {
-    public class PersonnelController : BaseController<xPersonnel>
+    public class QuyenController : BaseController<xQuyen>
     {
     }
 }

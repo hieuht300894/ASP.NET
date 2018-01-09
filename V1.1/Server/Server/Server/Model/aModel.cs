@@ -112,7 +112,7 @@ namespace Server.Model
 
                     foreach (var obj in lstObjs)
                     {
-                        xLog log = new xLog();
+                        xLichSu log = new xLichSu();
                         log.KeyID = 0;
                         log.NguoiTao = 0;
                         log.NgayTao = CurrentDate;
@@ -142,7 +142,7 @@ namespace Server.Model
                             Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
                             log.GiaTriMoi = ParamsValues.SerializeJSON();
                         }
-                        db.xLog.Add(log);
+                        db.xLichSu.Add(log);
                     }
                     await db.SaveChangesAsync();
                 }

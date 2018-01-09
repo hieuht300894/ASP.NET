@@ -4,7 +4,7 @@
 
 namespace Server.Controllers
 {
-    public class PermissionController : BaseController<xPermission>
+    public class PhanQuyenController : BaseController<xPhanQuyen>
     {
     }
 }

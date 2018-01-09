@@ -4,7 +4,7 @@
 
 namespace Server.Controllers
 {
-    public class UserFeatureController : BaseController<xUserFeature>
+    public class NhomQuyenController : BaseController<xQuyen>
     {
     }
 }

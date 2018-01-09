@@ -4,7 +4,7 @@
 
 namespace Server.Controllers
 {
-    public class AgencyController : BaseController<xAgency>
+    public class NhanVienController : BaseController<xNhanVien>
     {
     }
 }

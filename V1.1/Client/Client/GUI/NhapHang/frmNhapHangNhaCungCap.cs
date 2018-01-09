@@ -18,7 +18,6 @@ namespace Client.GUI.NhapHang
     {
         List<eSanPham> lstSanPham = new List<eSanPham>();
         List<eKho> lstKho = new List<eKho>();
-        List<eTonKho> lstTonKho = new List<eTonKho>();
         List<eNhomSanPham> lstNhomSanPham = new List<eNhomSanPham>();
         public eNhapHangNhaCungCap _iEntry;
         eNhapHangNhaCungCap _aEntry;
@@ -37,7 +36,6 @@ namespace Client.GUI.NhapHang
             LoadNhomSanPham();
             LoadSanPham();
             LoadKho();
-            LoadTonKho();
             LoadNhaCungCap(_aEntry.IDNhaCungCap);
             CustomForm();
             clsGeneral.CloseWaitForm();
@@ -61,10 +59,6 @@ namespace Client.GUI.NhapHang
         {
             lstKho = await clsFunction.GetItemsAsync<eKho>("Kho/getall");
             rlokKho.DataSource = lstKho;
-        }
-        async void LoadTonKho()
-        {
-            lstTonKho = await clsFunction.GetItemsAsync<eTonKho>("TonKho/getall");
         }
         async void LoadNhaCungCap(object KeyID)
         {

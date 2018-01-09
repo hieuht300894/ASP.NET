@@ -22,17 +22,16 @@ namespace Server.Model
         #endregion
 
         #region Hệ thống
-        public virtual DbSet<xAccount> xAccount { get; set; }
-        public virtual DbSet<xAgency> xAgency { get; set; }
-        public virtual DbSet<xPersonnel> xPersonnel { get; set; }
-        public virtual DbSet<xAppConfig> xAppConfig { get; set; }
-        public virtual DbSet<xDisplay> xDisplay { get; set; }
-        public virtual DbSet<xFeature> xFeature { get; set; }
-        public virtual DbSet<xLayoutItemCaption> xLayoutItemCaption { get; set; }
-        public virtual DbSet<xMsgDictionary> xMsgDictionary { get; set; }
-        public virtual DbSet<xPermission> xPermission { get; set; }
-        public virtual DbSet<xUserFeature> xUserFeature { get; set; }
-        public virtual DbSet<xLog> xLog { get; set; }
+        public virtual DbSet<xTaiKhoan> xTaiKhoan { get; set; }
+        public virtual DbSet<xChiNhanh> xChiNhanh { get; set; }
+        public virtual DbSet<xNhanVien> xNhanVien { get; set; }
+        public virtual DbSet<xCauHinh> xCauHinh { get; set; }
+        public virtual DbSet<xHienThi> xHienThi { get; set; }
+        public virtual DbSet<xNhomQuyen> xNhomQuyen { get; set; }
+        public virtual DbSet<xNgonNgu> xNgonNgu { get; set; }
+        public virtual DbSet<xQuyen> xQuyen { get; set; }
+        public virtual DbSet<xPhanQuyen> xPhanQuyen { get; set; }
+        public virtual DbSet<xLichSu> xLichSu { get; set; }
         #endregion
 
         #region Danh mục
@@ -73,18 +72,7 @@ namespace Server.Model
             #region Table Name
             modelBuilder.Entity<eHienThi>().ToTable("eHienThi");
             modelBuilder.Entity<eQuyDoiDonVi>().ToTable("eQuyDoiDonVi");
-            modelBuilder.Entity<eQuyDoiTienTe>().ToTable("eQuyDoiTienTe");
-            modelBuilder.Entity<xAccount>().ToTable("xAccount");
-            modelBuilder.Entity<xAgency>().ToTable("xAgency");
-            modelBuilder.Entity<xPersonnel>().ToTable("xPersonnel");
-            modelBuilder.Entity<xAppConfig>().ToTable("xAppConfig");
-            modelBuilder.Entity<xDisplay>().ToTable("xDisplay");
-            modelBuilder.Entity<xFeature>().ToTable("xFeature");
-            modelBuilder.Entity<xLayoutItemCaption>().ToTable("xLayoutItemCaption");
-            modelBuilder.Entity<xMsgDictionary>().ToTable("xMsgDictionary");
-            modelBuilder.Entity<xPermission>().ToTable("xPermission");
-            modelBuilder.Entity<xUserFeature>().ToTable("xUserFeature");
-            modelBuilder.Entity<xLog>().ToTable("xLog");
+            modelBuilder.Entity<eQuyDoiTienTe>().ToTable("eQuyDoiTienTe");          
             modelBuilder.Entity<eDonViTinh>().ToTable("eDonViTinh");
             modelBuilder.Entity<eKhachHang>().ToTable("eKhachHang");
             modelBuilder.Entity<eKho>().ToTable("eKho");
@@ -103,6 +91,16 @@ namespace Server.Model
             modelBuilder.Entity<eNhapHangNhaCungCap>().ToTable("eNhapHangNhaCungCap");
             modelBuilder.Entity<eNhapHangNhaCungCapChiTiet>().ToTable("eNhapHangNhaCungCapChiTiet");
             modelBuilder.Entity<eTonKho>().ToTable("eTonKho");
+            modelBuilder.Entity<xTaiKhoan>().ToTable("xTaiKhoan");
+            modelBuilder.Entity<xChiNhanh>().ToTable("xChiNhanh");
+            modelBuilder.Entity<xNhanVien>().ToTable("xNhanVien");
+            modelBuilder.Entity<xCauHinh>().ToTable("xCauHinh");
+            modelBuilder.Entity<xHienThi>().ToTable("xHienThi");
+            modelBuilder.Entity<xNhomQuyen>().ToTable("xNhomQuyen");
+            modelBuilder.Entity<xNgonNgu>().ToTable("xNgonNgu");
+            modelBuilder.Entity<xQuyen>().ToTable("xQuyen");
+            modelBuilder.Entity<xPhanQuyen>().ToTable("xPhanQuyen");
+            modelBuilder.Entity<xLichSu>().ToTable("xLichSu");
             #endregion
 
             #region Cấu hình
@@ -112,18 +110,17 @@ namespace Server.Model
             #endregion
 
             #region Hệ thống
-            modelBuilder.Entity<xAccount>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xAccount>().Property(x => x.KeyID).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            modelBuilder.Entity<xAgency>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xPersonnel>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xAppConfig>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xDisplay>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xFeature>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xLayoutItemCaption>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xMsgDictionary>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xPermission>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xUserFeature>().HasKey(x => x.KeyID);
-            modelBuilder.Entity<xLog>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xTaiKhoan>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xTaiKhoan>().Property(x => x.KeyID).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            modelBuilder.Entity<xChiNhanh>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xNhanVien>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xCauHinh>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xHienThi>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xNhomQuyen>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xNgonNgu>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xQuyen>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xPhanQuyen>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<xLichSu>().HasKey(x => x.KeyID);
             #endregion
 
             #region Danh mục

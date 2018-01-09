@@ -185,5 +185,24 @@ namespace Server.BLL
                 congNo.GhiChu = item.GhiChu;
             }
         }
+        async Task CapNhatTonKho(eNhapHangNhaCungCap[] Items)
+        {
+            foreach (eNhapHangNhaCungCap item in Items)
+            {
+                foreach (eNhapHangNhaCungCapChiTiet itemDT in item.eNhapHangNhaCungCapChiTiet)
+                {
+                    eTonKho tonKho = await db.eTonKho.FirstOrDefaultAsync(x => x.IDSanPham == itemDT.IDSanPham && (x.HanSuDung.HasValue && itemDT.HanSuDung.HasValue && x.HanSuDung.Value.Date == itemDT.HanSuDung.Value.Date) || (!x.HanSuDung.HasValue && !itemDT.HanSuDung.HasValue) && x.IDKho == itemDT.IDKho);
+                    if (tonKho == null)
+                    {
+                        tonKho = new eTonKho();
+                        tonKho.KeyID = 0;
+                        tonKho.IDSanPham = itemDT.IDSanPham;
+                        tonKho.MaSanPham = itemDT.MaSanPham;
+                        tonKho.TenSanPham = itemDT.TenSanPham;
+                        tonKho.HanSuDung = itemDT.HanSuDung;
+                    }
+                }
+            }
+        }
     }
 }

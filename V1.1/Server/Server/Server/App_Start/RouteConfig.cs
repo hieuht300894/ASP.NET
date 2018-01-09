@@ -40,11 +40,11 @@ namespace Server
             try
             {
                 aModel db = new aModel();
-                IEnumerable<xFeature> features = db.xFeature.Where(x => !x.IsDefault);
-                features = features.Where(x => !string.IsNullOrWhiteSpace(x.Template));
+                IEnumerable<xQuyen> lstQuyens = db.xQuyen.Where(x => !x.MacDinh);
+                lstQuyens = lstQuyens.Where(x => !string.IsNullOrWhiteSpace(x.Template));
 
                 int i = 0;
-                features.ToList().ForEach(x =>
+                lstQuyens.ToList().ForEach(x =>
                 {
                     //string name = $"Route{i++}";
                     //string url = $"{{controller}}/{{action}}/{x.Template}";

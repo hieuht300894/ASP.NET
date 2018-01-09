@@ -11,5 +11,7 @@ namespace EntityModel.DataModel
         public int IDNhomQuyen { get ; set ; }
         public string MaNhomQuyen { get ; set ; }
         public string TenNhomQuyen { get ; set ; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

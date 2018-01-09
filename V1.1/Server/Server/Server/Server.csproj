@@ -112,11 +112,11 @@
     <Compile Include="BLL\clsCongNoNhaCungCap.cs" />
     <Compile Include="BLL\clsNhapHangNhaCungCap.cs" />
     <Compile Include="BLL\clsTinhThanh.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AgencyController.cs" />
+    <Compile Include="Controllers\TaiKhoanController.cs" />
+    <Compile Include="Controllers\ChiNhanhController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DonViTinhController.cs" />
-    <Compile Include="Controllers\FeatureController.cs" />
+    <Compile Include="Controllers\QuyenController.cs" />
     <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\KhoController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
@@ -126,15 +126,15 @@
     <Compile Include="Controllers\NhomKhachHangController.cs" />
     <Compile Include="Controllers\NhomNhaCungCapController.cs" />
     <Compile Include="Controllers\NhomSanPhamController.cs" />
-    <Compile Include="Controllers\PermissionController.cs" />
-    <Compile Include="Controllers\PersonnelController.cs" />
+    <Compile Include="Controllers\NhomQuyenController.cs" />
+    <Compile Include="Controllers\NhanVienController.cs" />
     <Compile Include="Controllers\SanPhamController.cs" />
     <Compile Include="Controllers\SoDuDauKyKhachHangController.cs" />
     <Compile Include="Controllers\SoDuDauKyNhaCungCapController.cs" />
     <Compile Include="Controllers\TienTeController.cs" />
     <Compile Include="Controllers\TinhThanhController.cs" />
     <Compile Include="Controllers\TonKhoDauKyController.cs" />
-    <Compile Include="Controllers\UserFeatureController.cs" />
+    <Compile Include="Controllers\PhanQuyenController.cs" />
     <Compile Include="Extension\clsExtension.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

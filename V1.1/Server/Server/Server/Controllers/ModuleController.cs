@@ -1,5 +1,5 @@
-﻿using EntityModel.DataModel;
-using EntityModel.Model;
+﻿using EntityModel;
+using EntityModel.DataModel;
 using Server.Extension;
 using Server.Model;
 using System;
@@ -35,18 +35,18 @@ namespace Server.Controllers
         {
             aModel db = new aModel();
 
-            if (db.xAgency.Count() == 0)
+            if (db.xChiNhanh.Count() == 0)
             {
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_xAgency.sql");
                     await db.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
-                    return Ok($"Init data {(typeof(xAgency).Name)} success.");
+                    return Ok($"Init data {(typeof(xChiNhanh).Name)} success.");
                 }
-                catch (Exception ex) { return BadRequest($"Init data {(typeof(xAgency).Name)} fail: {ex}"); }
+                catch (Exception ex) { return BadRequest($"Init data {(typeof(xChiNhanh).Name)} fail: {ex}"); }
             }
 
-            return Ok($"No init {(typeof(xAgency).Name)} data");
+            return Ok($"No init {(typeof(xChiNhanh).Name)} data");
         }
         async Task<ActionResult> InitTienTe()
         {
@@ -115,62 +115,65 @@ namespace Server.Controllers
             {
                 db.BeginTransaction();
 
-                xPermission permission = new xPermission()
+                xNhomQuyen nhomQuyen = new xNhomQuyen()
                 {
                     KeyID = 0,
                     Ma = "ADMIN",
                     Ten = "ADMIN",
                     NgayTao = time
                 };
-                db.xPermission.Add(permission);
+                db.xNhomQuyen.Add(nhomQuyen);
                 await db.SaveChangesAsync();
 
-                xPersonnel personnel = new xPersonnel()
+                xNhanVien nhanVien = new xNhanVien()
                 {
                     KeyID = 0,
                     Ma = "NV0001",
                     Ten = "Nhân viên 0001",
                     NgayTao = time
                 };
-                db.xPersonnel.Add(personnel);
+                db.xNhanVien.Add(nhanVien);
                 await db.SaveChangesAsync();
 
-                xAccount account = new xAccount()
+                xTaiKhoan taiKhoan = new xTaiKhoan()
                 {
-                    KeyID = personnel.KeyID,
+                    KeyID = nhanVien.KeyID,
                     NgayTao = time,
-                    PersonelName = personnel.Ten,
-                    UserName = "admin",
+                    MaNhanVien=nhanVien.Ma,
+                    TenNhanVien = nhanVien.Ten,
+                    Username = "admin",
                     Password = "admin",
-                    IDPermission = permission.KeyID,
-                    PermissionName = permission.Ten
+                    IDNhomQuyen = nhomQuyen.KeyID,
+                    MaNhomQuyen=nhomQuyen.Ma,
+                    TenNhomQuyen = nhomQuyen.Ten
                 };
-                db.xAccount.Add(account);
+                db.xTaiKhoan.Add(taiKhoan);
                 await db.SaveChangesAsync();
 
-                List<xFeature> features = await db.xFeature.ToListAsync();
-                List<xUserFeature> userFeatures = new List<xUserFeature>();
-                foreach (xFeature f in features)
+                List<xQuyen> lstQuyens = await db.xQuyen.ToListAsync();
+                List<xPhanQuyen> lstPhanQuyens = new List<xPhanQuyen>();
+                foreach (xQuyen quyen in lstQuyens)
                 {
-                    userFeatures.Add(new xUserFeature()
+                    lstPhanQuyens.Add(new xPhanQuyen()
                     {
                         KeyID = 0,
-                        IDPermission = permission.KeyID,
-                        PermissionName = permission.Ten,
-                        IDFeature = f.KeyID,
-                        Controller = f.Controller,
-                        Action = f.Action,
-                        Method = f.Method,
-                        Template = f.Template,
-                        Path = f.Path,
+                        IDNhomQuyen = nhomQuyen.KeyID,
+                        MaNhomQuyen=nhomQuyen.Ma,
+                        TenNhomQuyen = nhomQuyen.Ten,
+                        IDQuyen = quyen.KeyID, 
+                        Controller = quyen.Controller,
+                        Action = quyen.Action,
+                        Method = quyen.Method,
+                        Template = quyen.Template,
+                        Path = quyen.Path,
                         NgayTao = time
                     });
                 }
-                db.xUserFeature.AddRange(userFeatures.ToArray());
+                db.xPhanQuyen.AddRange(lstPhanQuyens.ToArray());
                 await db.SaveChangesAsync();
 
                 db.CommitTransaction();
-                return Ok(userFeatures);
+                return Ok(lstPhanQuyens);
             }
             catch (Exception ex)
             {
@@ -183,7 +186,7 @@ namespace Server.Controllers
         [HttpPost]
         public async Task<ActionResult> GetController()
         {
-            List<xFeature> lstFeatures = new List<xFeature>();
+            List<xQuyen> lstQuyens = new List<xQuyen>();
 
             Assembly asm = Assembly.GetExecutingAssembly();
 
@@ -219,67 +222,67 @@ namespace Server.Controllers
             {
                 foreach (var action in BaseController.Actions)
                 {
-                    xFeature f = new xFeature();
+                    xQuyen quyen = new xQuyen();
 
                     HttpGetAttribute attr_Get = (HttpGetAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpGetAttribute));
                     RouteAttribute attr_Route = (RouteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(RouteAttribute));
                     if (attr_Get != null && attr_Route != null)
                     {
-                        f.Method = HttpVerbs.Get.ToString().ToLower();
-                        f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Get.ToString().ToLower();
+                        quyen.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
+                        lstQuyens.Add(quyen);
                     }
                     else if (attr_Get != null && attr_Route == null)
                     {
-                        f.Method = HttpVerbs.Get.ToString().ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Get.ToString().ToLower();
+                        lstQuyens.Add(quyen);
                     }
                     else if (attr_Get == null && attr_Route != null)
                     {
-                        f.Method = HttpVerbs.Get.ToString().ToLower();
-                        f.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Get.ToString().ToLower();
+                        quyen.Template = string.IsNullOrWhiteSpace(attr_Route.Template) ? string.Empty : attr_Route.Template.ToLower();
+                        lstQuyens.Add(quyen);
                     }
 
                     HttpPostAttribute attr_Post = (HttpPostAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPostAttribute));
                     if (attr_Post != null)
                     {
-                        f.Method = HttpVerbs.Post.ToString().ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Post.ToString().ToLower();
+                        lstQuyens.Add(quyen);
                     }
 
                     HttpPutAttribute attr_Put = (HttpPutAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpPutAttribute));
                     if (attr_Put != null)
                     {
-                        f.Method = HttpVerbs.Put.ToString().ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Put.ToString().ToLower();
+                        lstQuyens.Add(quyen);
                     }
 
                     HttpDeleteAttribute attr_Delete = (HttpDeleteAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpDeleteAttribute));
                     if (attr_Delete != null)
                     {
-                        f.Method = HttpVerbs.Delete.ToString().ToLower();
-                        lstFeatures.Add(f);
+                        quyen.Method = HttpVerbs.Delete.ToString().ToLower();
+                        lstQuyens.Add(quyen);
                     }
 
 
 
-                    f.KeyID = 0;
-                    f.NgayTao = time;
-                    f.Controller = BaseController.Controller;
-                    f.Action = action.Action;
-                    f.IsDefault = true;
-                    f.Path = string.Join("/", f.Controller, f.Action, f.Template).TrimEnd('/');
+                    quyen.KeyID = 0;
+                    quyen.NgayTao = time;
+                    quyen.Controller = BaseController.Controller;
+                    quyen.Action = action.Action;
+                    quyen.MacDinh = true;
+                    quyen.Path = string.Join("/", quyen.Controller, quyen.Action, quyen.Template).TrimEnd('/');
                 }
             }
 
             foreach (var controller in Controllers)
             {
-                List<xFeature> lstTemps = new List<xFeature>();
+                List<xQuyen> lstTemps = new List<xQuyen>();
 
                 foreach (var action in controller.Actions)
                 {
-                    xFeature f = new xFeature();
+                    xQuyen f = new xQuyen();
 
                     HttpGetAttribute attr_Get = (HttpGetAttribute)action.Attributes.FirstOrDefault(x => x.GetType() == typeof(HttpGetAttribute));
                     if (attr_Get != null)
@@ -328,20 +331,20 @@ namespace Server.Controllers
                     f.Path = string.Join("/", f.Controller, f.Action, f.Template).TrimEnd('/');
                 }
 
-                lstFeatures.AddRange(lstTemps);
+                lstQuyens.AddRange(lstTemps);
             }
 
-            return await SaveData(lstFeatures.ToArray());
+            return await SaveData(lstQuyens.ToArray());
         }
-        async Task<ActionResult> SaveData(xFeature[] features)
+        async Task<ActionResult> SaveData(xQuyen[] features)
         {
             aModel db = new aModel();
             try
             {
                 db.BeginTransaction();
-                IEnumerable<xFeature> lstRemoves = await db.xFeature.ToListAsync();
-                db.xFeature.RemoveRange(lstRemoves.ToArray());
-                db.xFeature.AddRange(features.ToArray());
+                IEnumerable<xQuyen> lstRemoves = await db.xQuyen.ToListAsync();
+                db.xQuyen.RemoveRange(lstRemoves.ToArray());
+                db.xQuyen.AddRange(features.ToArray());
                 await db.SaveChangesAsync();
                 db.CommitTransaction();
                 return Ok(features);
@@ -366,11 +369,11 @@ namespace Server.Controllers
                 if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
                     throw new Exception("Username hoặc Password không hợp lệ");
 
-                xAccount account = await db.xAccount.FirstOrDefaultAsync(x => x.UserName.ToLower().Equals(Username.ToLower()) && x.Password.ToLower().Equals(Password.ToLower()));
+                xTaiKhoan account = await db.xTaiKhoan.FirstOrDefaultAsync(x => x.Username.ToLower().Equals(Username.ToLower()) && x.Password.ToLower().Equals(Password.ToLower()));
                 if (account == null)
                     throw new Exception("Tài khoản không tồn tại");
 
-                xPersonnel personnel = await db.xPersonnel.FindAsync(account.KeyID);
+                xNhanVien personnel = await db.xNhanVien.FindAsync(account.KeyID);
                 if (personnel == null)
                     throw new Exception("Nhân viên không tồn tại");
 

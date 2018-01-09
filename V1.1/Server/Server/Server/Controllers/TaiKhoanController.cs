@@ -4,7 +4,7 @@
 
 namespace Server.Controllers
 {
-    public class FeatureController : BaseController<xFeature>
+    public class TaiKhoanController : BaseController<xTaiKhoan>
     {
     }
 }
