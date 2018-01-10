@@ -8,6 +8,7 @@ using System.Data.Entity;
 using Server.Extension;
 using System.Data.Entity.Migrations;
 using System.Web.Mvc;
+using Server.Model;
 
 namespace Server.BLL
 {
@@ -23,10 +24,9 @@ namespace Server.BLL
 
         public async override Task<ActionResult> GetAll()
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
-
                 List<eNhapHangNhaCungCapChiTiet> lstDetail = await db.eNhapHangNhaCungCapChiTiet.ToListAsync();
                 var qDT =
                     from a in lstDetail
@@ -54,9 +54,9 @@ namespace Server.BLL
 
         public async override Task<ActionResult> GetByID(Object id)
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 eNhapHangNhaCungCap Item = await db.eNhapHangNhaCungCap.FindAsync(id);
                 IEnumerable<eNhapHangNhaCungCapChiTiet> lstItemDetail = await db.eNhapHangNhaCungCapChiTiet.Where(x => x.IDNhapHangNhaCungCap == Item.KeyID).ToListAsync();
                 lstItemDetail.ToList().ForEach(x => Item.eNhapHangNhaCungCapChiTiet.Add(x));
@@ -67,9 +67,9 @@ namespace Server.BLL
 
         public async override Task<ActionResult> AddEntries(eNhapHangNhaCungCap[] Items)
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 db.BeginTransaction();
 
                 Items = Items ?? new eNhapHangNhaCungCap[] { };
@@ -86,7 +86,8 @@ namespace Server.BLL
                     db.eNhapHangNhaCungCapChiTiet.AddOrUpdate(x.eNhapHangNhaCungCapChiTiet.ToArray());
                 });
 
-                await CapNhatCongNo(Items);
+                await CapNhatCongNo(db, Items);
+                await CapNhatTonKho(db, Items);
 
                 await db.SaveChangesAsync();
                 db.CommitTransaction();
@@ -102,9 +103,9 @@ namespace Server.BLL
 
         public async override Task<ActionResult> UpdateEntries(eNhapHangNhaCungCap[] Items)
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 db.BeginTransaction();
 
                 db.eNhapHangNhaCungCap.AddOrUpdate(Items);
@@ -131,7 +132,8 @@ namespace Server.BLL
                     });
                 });
 
-                await CapNhatCongNo(Items);
+                await CapNhatCongNo(db, Items);
+                await CapNhatTonKho(db, Items);
 
                 await db.SaveChangesAsync();
                 db.CommitTransaction();
@@ -145,7 +147,7 @@ namespace Server.BLL
             }
         }
 
-        async Task CapNhatCongNo(eNhapHangNhaCungCap[] Items)
+        async Task CapNhatCongNo(aModel db, eNhapHangNhaCungCap[] Items)
         {
             foreach (eNhapHangNhaCungCap item in Items)
             {
@@ -154,8 +156,6 @@ namespace Server.BLL
                 {
                     congNo = new eCongNoNhaCungCap();
                     congNo.IDNhaCungCap = item.IDNhaCungCap;
-                    congNo.MaNhaCungCap = item.MaNhaCungCap;
-                    congNo.TenNhaCungCap = item.TenNhaCungCap;
                     congNo.IDMaster = item.KeyID;
                     congNo.NguoiTao = item.NguoiTao;
                     congNo.MaNguoiTao = item.MaNguoiTao;
@@ -171,6 +171,8 @@ namespace Server.BLL
                     congNo.TenNguoiCapNhat = item.TenNguoiCapNhat;
                     congNo.NgayCapNhat = item.NgayCapNhat;
                 }
+                congNo.MaNhaCungCap = item.MaNhaCungCap;
+                congNo.TenNhaCungCap = item.TenNhaCungCap;
                 congNo.TrangThai = item.TrangThai;
                 congNo.Ngay = item.NgayNhap;
                 congNo.ThanhTien = item.ThanhTien;
@@ -185,22 +187,47 @@ namespace Server.BLL
                 congNo.GhiChu = item.GhiChu;
             }
         }
-        async Task CapNhatTonKho(eNhapHangNhaCungCap[] Items)
+        async Task CapNhatTonKho(aModel db, eNhapHangNhaCungCap[] Items)
         {
             foreach (eNhapHangNhaCungCap item in Items)
             {
                 foreach (eNhapHangNhaCungCapChiTiet itemDT in item.eNhapHangNhaCungCapChiTiet)
                 {
-                    eTonKho tonKho = await db.eTonKho.FirstOrDefaultAsync(x => x.IDSanPham == itemDT.IDSanPham && (x.HanSuDung.HasValue && itemDT.HanSuDung.HasValue && x.HanSuDung.Value.Date == itemDT.HanSuDung.Value.Date) || (!x.HanSuDung.HasValue && !itemDT.HanSuDung.HasValue) && x.IDKho == itemDT.IDKho);
+                    eTonKho tonKho = await db.eTonKho.FirstOrDefaultAsync(x => x.IsNhapHang && x.IDMaster == item.KeyID && x.IDDetail == itemDT.KeyID);
+
                     if (tonKho == null)
                     {
                         tonKho = new eTonKho();
-                        tonKho.KeyID = 0;
                         tonKho.IDSanPham = itemDT.IDSanPham;
-                        tonKho.MaSanPham = itemDT.MaSanPham;
-                        tonKho.TenSanPham = itemDT.TenSanPham;
-                        tonKho.HanSuDung = itemDT.HanSuDung;
+                        tonKho.IDNhomSanPham = itemDT.IDNhomSanPham;
+                        tonKho.IDDonViTinh = itemDT.IDDonViTinh;
+                        tonKho.IDMaster = item.KeyID;
+                        tonKho.IDDetail = itemDT.KeyID;
+                        tonKho.NguoiTao = item.NguoiTao;
+                        tonKho.MaNguoiTao = item.MaNguoiTao;
+                        tonKho.TenNguoiTao = item.TenNguoiTao;
+                        tonKho.NgayTao = item.NgayTao;
+                        tonKho.IsNhapHang = true;
+                        db.eTonKho.AddOrUpdate(tonKho);
                     }
+                    else
+                    {
+                        tonKho.NguoiCapNhat = item.NguoiCapNhat;
+                        tonKho.MaNguoiCapNhat = item.MaNguoiCapNhat;
+                        tonKho.TenNguoiCapNhat = item.TenNguoiCapNhat;
+                        tonKho.NgayCapNhat = item.NgayCapNhat;
+                    }
+                    tonKho.Ngay = item.NgayNhap;
+                    tonKho.MaSanPham = itemDT.MaSanPham;
+                    tonKho.TenSanPham = itemDT.TenSanPham;
+                    tonKho.MaNhomSanPham = itemDT.MaNhomSanPham;
+                    tonKho.TenNhomSanPham = itemDT.TenNhomSanPham;
+                    tonKho.MaDonViTinh = itemDT.MaDonViTinh;
+                    tonKho.TenDonViTinh = itemDT.TenDonViTinh;
+                    tonKho.HanSuDung = itemDT.HanSuDung;
+                    tonKho.SoLuongSi = itemDT.SoLuongSi;
+                    tonKho.SoLuongLe = itemDT.SoLuongLe;
+                    tonKho.SoLuong = itemDT.SoLuong;
                 }
             }
         }

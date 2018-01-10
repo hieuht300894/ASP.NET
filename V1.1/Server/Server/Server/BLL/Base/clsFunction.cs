@@ -301,10 +301,6 @@ namespace Server.BLL
         }
         #endregion
 
-        #region Variables
-        protected static aModel db;
-        #endregion
-
         #region Contructor
         private static clsFunction<T> _instance;
         protected clsFunction() { }
@@ -322,13 +318,11 @@ namespace Server.BLL
         #region Method
         public virtual async Task<ActionResult> GetCode(String Prefix)
         {
+            aModel db = new aModel();
             String bRe = Prefix.ToUpper() + DateTime.Now.ToString("yyyyMMdd");
-
+            DateTime time = DateTime.Now;
             try
             {
-                DateTime time = DateTime.Now;
-
-                db = new aModel();
                 IEnumerable<T> lstTemp = await db.Set<T>().ToListAsync();
                 T Item = lstTemp.OrderByDescending<T, Int32>("KeyID").FirstOrDefault();
                 if (Item == null)
@@ -357,9 +351,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> GetAll()
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 IEnumerable<T> lstTemp = await db.Set<T>().ToListAsync();
                 //IList<T> lstResult = lstTemp.OrderBy<T, String>("Ten").ToList();
                 List<T> lstResult = lstTemp.ToList();
@@ -373,9 +367,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> GetByID(Object id)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 //T item = await db.Set<T>().FindAsync(id.ConvertType<T>());
                 T Item = await db.Set<T>().FindAsync(id);
                 return Ok(Item ?? new T());
@@ -388,9 +382,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> AddEntry(T Item)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Item);
                 await db.SaveChangesAsync();
@@ -406,9 +400,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> AddEntries(T[] Items)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 Items = Items ?? new T[] { };
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Items);
@@ -425,9 +419,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> UpdateEntry(T Item)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Item);
                 await db.SaveChangesAsync();
@@ -443,9 +437,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> UpdateEntries(T[] Items)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 Items = Items ?? new T[] { };
                 db.BeginTransaction();
                 db.Set<T>().AddOrUpdate(Items);
@@ -462,9 +456,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> DeleteEntry(Object id)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 db.BeginTransaction();
                 T Item = await db.Set<T>().FindAsync(id);
                 db.Set<T>().Remove(Item);
@@ -481,9 +475,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> DeleteEntry(T Item)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 db.BeginTransaction();
                 db.Set<T>().Attach(Item);
                 db.Set<T>().Remove(Item);
@@ -500,9 +494,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> DeleteEntries(Object[] ids)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 ids = ids ?? new object[] { };
                 db.BeginTransaction();
                 foreach (object id in ids)
@@ -523,9 +517,9 @@ namespace Server.BLL
 
         public virtual async Task<ActionResult> DeleteEntries(T[] Items)
         {
+            aModel db = new aModel();
             try
             {
-                db = new aModel();
                 Items = Items ?? new T[] { };
                 db.BeginTransaction();
                 foreach (T Item in Items)

@@ -1,4 +1,5 @@
 ﻿using EntityModel.DataModel;
+using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,9 +22,9 @@ namespace Server.BLL
 
         public async Task<ActionResult> CongNoHienTai(int IDMaster, int IDNhaCungCap, DateTime NgayHienTai)
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 IEnumerable<eCongNoNhaCungCap> lstCongNo = await db.eCongNoNhaCungCap.Where(x => x.IDNhaCungCap == IDNhaCungCap).ToListAsync();
                 lstCongNo = lstCongNo.Where(x => x.Ngay.Date <= NgayHienTai.Date);
 

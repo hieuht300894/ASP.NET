@@ -1,4 +1,5 @@
 ﻿using EntityModel.DataModel;
+using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,9 +21,9 @@ namespace Server.BLL
 
         public async Task<IList<eTinhThanh>> DanhSach63TinhThanh()
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 IList<eTinhThanh> lstResult = await db.eTinhThanh.Where(x => x.IDLoai >= 1 && x.IDLoai <= 2).ToListAsync();
                 return lstResult;
             }
@@ -31,9 +32,9 @@ namespace Server.BLL
 
         public IList<eTinhThanh> DanhSachTinhThanh()
         {
+            aModel db = new aModel();
             try
             {
-                db = new Model.aModel();
                 IList<eTinhThanh> lstResult = db.eTinhThanh.ToList();
                 return lstResult;
             }
