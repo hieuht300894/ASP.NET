@@ -1162,8 +1162,19 @@ namespace Client.Module
         #endregion
 
         #region Format SpinEdit
-        public static void Format(this SpinEdit spnMain, int DecimalScale = 2, bool LeftAlight = false, bool NotNegative = true)
+        public static void Format(this SpinEdit spnMain, int DecimalScale = 2, bool LeftAlight = false, bool NotNegative = false)
         {
+            decimal Value = spnMain.Value;
+
+            spnMain.Properties.MaxValue = decimal.MaxValue;
+            spnMain.Properties.MinValue = decimal.MinValue;
+            if (NotNegative)
+            {
+                spnMain.KeyPress -= NotNegative_KeyPress;
+                spnMain.KeyPress += NotNegative_KeyPress;
+                spnMain.Properties.MinValue = 0;
+            }
+
             spnMain.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             spnMain.Properties.LookAndFeel.Style = LookAndFeelStyle.Office2003;
 
@@ -1173,18 +1184,7 @@ namespace Client.Module
             spnMain.Properties.AppearanceReadOnly.TextOptions.HAlignment = spnMain.Properties.AppearanceFocused.TextOptions.HAlignment = spnMain.Properties.Appearance.TextOptions.HAlignment = LeftAlight ? HorzAlignment.Near : HorzAlignment.Far;
             spnMain.Properties.Mask.EditMask = spnMain.Properties.DisplayFormat.FormatString = spnMain.Properties.EditFormat.FormatString = "N" + DecimalScale.ToString();
 
-            if (NotNegative)
-            {
-                spnMain.KeyPress += NotNegative_KeyPress;
-                if (spnMain.Properties.MinValue == spnMain.Properties.MaxValue)
-                {
-                    spnMain.Properties.MaxValue = decimal.MaxValue;
-                }
-                if (spnMain.Properties.MinValue < 0)
-                    spnMain.Properties.MinValue = 0;
-            }
-            //spnMain.CustomDisplayText -= spnMain_CustomDisplayText;
-            //spnMain.CustomDisplayText += spnMain_CustomDisplayText;
+            spnMain.Value = Value;
         }
 
         static void spnMain_CustomDisplayText(object sender, CustomDisplayTextEventArgs e)
@@ -1214,8 +1214,18 @@ namespace Client.Module
         #endregion
 
         #region Format RepositoryItemSpinEdit
-        public static void Format(this RepositoryItemSpinEdit rspnMain, int DecimalScale = 2, bool LeftAlight = false, bool NotNegative = true)
+        public static void Format(this RepositoryItemSpinEdit rspnMain, int DecimalScale = 2, bool LeftAlight = false, bool NotNegative = false)
         {
+            rspnMain.MaxValue = decimal.MaxValue;
+            rspnMain.MinValue = decimal.MinValue;
+
+            if (NotNegative)
+            {
+                rspnMain.KeyPress -= NotNegative_KeyPress;
+                rspnMain.KeyPress += NotNegative_KeyPress;
+                rspnMain.MinValue = 0;
+            }
+
             rspnMain.LookAndFeel.UseDefaultLookAndFeel = false;
             rspnMain.LookAndFeel.Style = LookAndFeelStyle.Office2003;
 
@@ -1224,16 +1234,8 @@ namespace Client.Module
             rspnMain.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
             rspnMain.AppearanceReadOnly.TextOptions.HAlignment = rspnMain.AppearanceFocused.TextOptions.HAlignment = rspnMain.Appearance.TextOptions.HAlignment = LeftAlight ? HorzAlignment.Near : HorzAlignment.Far;
             rspnMain.Mask.EditMask = rspnMain.DisplayFormat.FormatString = rspnMain.EditFormat.FormatString = "N" + DecimalScale.ToString();
-            if (NotNegative)
-            {
-                rspnMain.KeyPress += NotNegative_KeyPress;
-                if (rspnMain.MinValue == rspnMain.MaxValue)
-                {
-                    rspnMain.MaxValue = decimal.MaxValue;
-                }
-                if (rspnMain.MinValue < 0)
-                    rspnMain.MinValue = 0;
-            }
+
+
             rspnMain.CustomDisplayText -= rspnMain_CustomDisplayText;
             rspnMain.CustomDisplayText += rspnMain_CustomDisplayText;
         }

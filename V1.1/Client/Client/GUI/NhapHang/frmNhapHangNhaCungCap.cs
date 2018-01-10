@@ -31,16 +31,22 @@ namespace Client.GUI.NhapHang
         {
             clsGeneral.CallWaitForm(this);
             base.frmBase_Load(sender, e);
-            LoadDataForm();
             LoadNgayNhap(DateTime.Now.ServerNow());
-            LoadNhomSanPham();
-            LoadSanPham();
-            LoadKho();
-            LoadNhaCungCap(_aEntry.IDNhaCungCap);
+            LoadDataForm();
+            LoadRepository();
             CustomForm();
             clsGeneral.CloseWaitForm();
         }
 
+        async void LoadRepository()
+        {
+            await this.RunMethodAsync(() => { DisableEvents(); });
+            LoadNhomSanPham();
+            LoadSanPham();
+            LoadKho();
+            LoadNhaCungCap(_aEntry.IDNhaCungCap);
+            await this.RunMethodAsync(() => { EnableEvents(); });
+        }
         async void LoadNhomSanPham()
         {
             lstNhomSanPham = await clsFunction.GetItemsAsync<eNhomSanPham>("NhomSanPham/getall");
@@ -365,6 +371,8 @@ namespace Client.GUI.NhapHang
 
                     spnSoLuong.Value += iDT.SoLuong;
                     spnSoTien.Value += iDT.TongTien;
+
+                    grvChiTiet.FocusedRowHandle = grvChiTiet.LocateByValue("KeyID", iDT.KeyID);
                 }
             }
         }
