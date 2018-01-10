@@ -18,10 +18,15 @@ namespace EntityModel.DataModel
         public string MaKho { get; set; }
         public string TenKho { get; set; }
         public System.DateTime? HanSuDung { get; set; }
-        public decimal SoLuongNhap { get; set; }
-        public decimal SoLuongXuat { get; set; }
-        public decimal SoLuongTraNhaCungCap { get; set; }
-        public decimal SoLuongKhachHangTra { get; set; }
-        public decimal SoLuongTon { get; set; }
+        public int IDMaster { get; set; }
+        public int IDDetail { get; set; }
+        public bool IsSoDuDauKy { get; set; }
+        public bool IsNhapHang { get; set; }
+        public bool IsXuatHang { get; set; }
+        public bool IsTraHangNhaCungCap { get; set; }
+        public bool IsKhachHangTra { get; set; }
+        public decimal SoLuongSi { get; set; }
+        public decimal SoLuongLe { get; set; }
+        public decimal SoLuong { get; set; }
     }
 }
