@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{66435289-71D2-4533-903A-EDC2CA007E02}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntityModel</RootNamespace>
+    <AssemblyName>EntityModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataModel\eChuyenKho.cs" />
+    <Compile Include="DataModel\eCongNoNhaCungCap.cs" />
+    <Compile Include="DataModel\eDonViTinh.cs" />
+    <Compile Include="DataModel\eGioiTinh.cs" />
+    <Compile Include="DataModel\eHienThi.cs" />
+    <Compile Include="DataModel\eKhachHang.cs" />
+    <Compile Include="DataModel\eKho.cs" />
+    <Compile Include="DataModel\eLoai.cs" />
+    <Compile Include="DataModel\eNhaCungCap.cs" />
+    <Compile Include="DataModel\eNhapHangNhaCungCap.cs" />
+    <Compile Include="DataModel\eNhapHangNhaCungCapChiTiet.cs" />
+    <Compile Include="DataModel\eNhomDonViTinh.cs" />
+    <Compile Include="DataModel\eNhomKhachHang.cs" />
+    <Compile Include="DataModel\eNhomNhaCungCap.cs" />
+    <Compile Include="DataModel\eNhomSanPham.cs" />
+    <Compile Include="DataModel\eQuyDoiDonVi.cs" />
+    <Compile Include="DataModel\eQuyDoiTienTe.cs" />
+    <Compile Include="DataModel\eSanPham.cs" />
+    <Compile Include="DataModel\eSoDuDauKyKhachHang.cs" />
+    <Compile Include="DataModel\eSoDuDauKyNhaCungCap.cs" />
+    <Compile Include="DataModel\eTienTe.cs" />
+    <Compile Include="DataModel\eTinhThanh.cs" />
+    <Compile Include="DataModel\eTonKho.cs" />
+    <Compile Include="DataModel\eTonKhoDauKy.cs" />
+    <Compile Include="DataModel\eTraHangKhachHang.cs" />
+    <Compile Include="DataModel\eTraHangNhaCungCap.cs" />
+    <Compile Include="DataModel\eXuatHangKhachHang.cs" />
+    <Compile Include="DataModel\xNhomQuyen.cs" />
+    <Compile Include="General\Detail.cs" />
+    <Compile Include="General\Master.cs" />
+    <Compile Include="DataModel\xTaiKhoan.cs" />
+    <Compile Include="DataModel\xChiNhanh.cs" />
+    <Compile Include="DataModel\xCauHinh.cs" />
+    <Compile Include="DataModel\xHienThi.cs" />
+    <Compile Include="DataModel\xNgonNgu.cs" />
+    <Compile Include="DataModel\xLichSu.cs" />
+    <Compile Include="DataModel\xQuyen.cs" />
+    <Compile Include="DataModel\xNhanVien.cs" />
+    <Compile Include="DataModel\xPhanQuyen.cs" />
+    <Compile Include="Interface\IModel.cs" />
+    <Compile Include="Model\ThongTinMayChu.cs" />
+    <Compile Include="Model\ThongTinNguoiDung.cs" />
+    <Compile Include="Model\ThongTinDangNhap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
