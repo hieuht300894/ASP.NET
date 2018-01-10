@@ -15,7 +15,7 @@ namespace QuanLyBanHang_API
 
             var container = new UnityContainer();
             container.RegisterType<aModel>(new HierarchicalLifetimeManager());
-            container.RegisterSingleton(typeof(IRepositoryCollection));
+            container.RegisterType(typeof(IRepositoryCollection), typeof(RepositoryCollection), new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             RegisterRoute();
