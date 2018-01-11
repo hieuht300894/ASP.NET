@@ -1,10 +1,12 @@
 ﻿using EntityModel.DataModel;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using QuanLyBanHang_API;
 
 namespace Server.Controllers
 {
     public class NhanVienController : BaseController<xNhanVien>
     {
+        public NhanVienController(IRepositoryCollection Collection) : base(Collection)
+        {
+        }
     }
 }

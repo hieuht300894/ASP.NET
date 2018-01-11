@@ -13,8 +13,9 @@ using System.Web.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace QuanLyBanHang_API.Controllers
+namespace QuanLyBanHang_API
 {
+    [Route("api/[controller]")]
     public class ModuleController : ApiController
     {
         protected Repository Instance;
@@ -27,16 +28,16 @@ namespace QuanLyBanHang_API.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> DataSeed()
         {
-            IList<IHttpActionResult> lstResult = new List<IHttpActionResult>();
+            await InitAgency();
+            await InitTienTe();
+            await InitTinhThanh();
+            await InitDonViTinh();
 
-            lstResult.Add(await InitAgency());
-            lstResult.Add(await InitTienTe());
-            lstResult.Add(await InitTinhThanh());
-            lstResult.Add(await InitDonViTinh());
-
-            return Ok(lstResult);
+            if (ModelState.Count == 0)
+                return Ok("Success");
+            return BadRequest(ModelState);
         }
-        async Task<IHttpActionResult> InitAgency()
+        async Task InitAgency()
         {
             Instance.Context = new aModel();
             if (Instance.Context.xChiNhanh.Count() == 0)
@@ -45,14 +46,11 @@ namespace QuanLyBanHang_API.Controllers
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_xChiNhanh.sql");
                     await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
-                    return Ok($"Init data {(typeof(xChiNhanh).Name)} success.");
                 }
-                catch (Exception ex) { return BadRequest($"Init data {(typeof(xChiNhanh).Name)} fail: {ex}"); }
+                catch (Exception ex) { ModelState.AddModelError("Exception", ex); }
             }
-
-            return Ok($"No init {(typeof(xChiNhanh).Name)} data");
         }
-        async Task<IHttpActionResult> InitTienTe()
+        async Task InitTienTe()
         {
             Instance.Context = new aModel();
 
@@ -62,13 +60,11 @@ namespace QuanLyBanHang_API.Controllers
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eTienTe.sql");
                     await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
-                    return Ok($"Init data {(typeof(eTienTe).Name)} success.");
                 }
-                catch (Exception ex) { return BadRequest($"Init data {(typeof(eTienTe).Name)} fail: {ex}"); }
+                catch (Exception ex) { ModelState.AddModelError("Exception", ex); }
             }
-            return Ok($"No init {(typeof(eTienTe).Name)} data");
         }
-        async Task<IHttpActionResult> InitTinhThanh()
+        async Task InitTinhThanh()
         {
             Instance.Context = new aModel();
 
@@ -78,13 +74,11 @@ namespace QuanLyBanHang_API.Controllers
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eTinhThanh.sql");
                     await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
-                    return Ok($"Init data {(typeof(eTinhThanh).Name)} success.");
                 }
-                catch (Exception ex) { return BadRequest($"Init data {(typeof(eTinhThanh).Name)} fail: {ex}"); }
+                catch (Exception ex) { ModelState.AddModelError("Exception", ex); }
             }
-            return Ok($"No init {(typeof(eTinhThanh).Name)} data");
         }
-        async Task<IHttpActionResult> InitDonViTinh()
+        async Task InitDonViTinh()
         {
             Instance.Context = new aModel();
 
@@ -94,16 +88,16 @@ namespace QuanLyBanHang_API.Controllers
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eDonViTinh.sql");
                     await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
-                    return Ok($"Init data {(typeof(eDonViTinh).Name)} success.");
                 }
-                catch (Exception ex) { return BadRequest($"Init data {(typeof(eDonViTinh).Name)} fail: {ex}"); }
+                catch (Exception ex) { ModelState.AddModelError("Exception", ex); }
             }
-            return Ok($"No init {(typeof(eDonViTinh).Name)} data");
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> TimeServer()
         {
+            Instance.Context = new aModel();
+
             try { return await Task.Factory.StartNew(() => { return Ok(DateTime.Now); }); }
             catch { return Ok(DateTime.Now); }
 
@@ -182,7 +176,7 @@ namespace QuanLyBanHang_API.Controllers
             catch (Exception ex)
             {
                 Instance.RollbackTransaction();
-                ModelState.AddModelError("Exception_Message", ex.Message);
+                ModelState.AddModelError("Exception", ex.Message);
                 return BadRequest(ModelState);
             }
         }
@@ -356,7 +350,7 @@ namespace QuanLyBanHang_API.Controllers
             catch (Exception ex)
             {
                 Instance.RollbackTransaction();
-                ModelState.AddModelError("Exception_Message", ex.Message);
+                ModelState.AddModelError("Exception", ex.Message);
                 return BadRequest(ModelState);
             }
         }
@@ -391,7 +385,7 @@ namespace QuanLyBanHang_API.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("Exception_Message", ex.Message);
+                ModelState.AddModelError("Exception", ex.Message);
                 return BadRequest(ModelState);
             }
         }

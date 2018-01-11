@@ -1,20 +1,29 @@
 ﻿using EntityModel.DataModel;
-using Server.BLL;
+using QuanLyBanHang_API;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class TinhThanhController : BaseController<eTinhThanh>
     {
-        [HttpGet]
-        public async Task<ActionResult> DanhSach63TinhThanh()
+        public TinhThanhController(IRepositoryCollection Collection) : base(Collection)
         {
-            return Ok(await clsTinhThanh.Instance.DanhSach63TinhThanh());
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> DanhSach63TinhThanh()
+        {
+            Instance.Context = new aModel();
+            try
+            {
+                IList<eTinhThanh> lstResult = await Instance.Context.eTinhThanh.Where(x => x.IDLoai >= 1 && x.IDLoai <= 2).ToListAsync();
+                return Ok(lstResult);
+            }
+            catch { return BadRequest(); }
         }
     }
 }
