@@ -1,82 +1,74 @@
-﻿namespace QuanLyBanHang_API.Middleware
+﻿using System.Net;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
+using System.Web.Http.Results;
+
+namespace QuanLyBanHang_API
 {
-    //public class Filter : ActionFilterAttribute
-    //{
-    //    public override void OnActionExecuting(ActionExecutingContext context)
-    //    {
-    //        if (CheckRole(context) == HttpStatusCode.BadRequest)
-    //        {
-    //            UnauthorizedResult unauthorized = new UnauthorizedResult();
-    //            context.Result = unauthorized;
-    //        }
-    //        else
-    //        {
-    //            base.OnActionExecuting(context);
-    //        }
+    public class Filter : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(HttpActionContext context)
+        {
+            if (CheckRole(context) == HttpStatusCode.OK)
+            {
+                base.OnActionExecuting(context);
+            }
+            else
+            {
+                context.Response = new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized);
+                context.Response.Content.Headers.Add("Exception", "Unauthorized");
+            }
+        }
 
-    //        //// TODO implement some business logic for this...
-    //        //if (context.HttpContext.Request.Method.Equals("GET"))
-    //        //{
-    //        //    context.HttpContext.Response.StatusCode = (Int32)HttpStatusCode.BadRequest;
+        HttpStatusCode CheckRole(HttpActionContext context)
+        {
+            return HttpStatusCode.OK;
 
-    //        //    Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState = new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary();
-    //        //    modelState.AddModelError("Error", "Not Get");
+            //try
+            //{
+            //    ApiController controller = (Controller)context.Controller;
 
-    //        //    Microsoft.AspNetCore.Mvc.BadRequestObjectResult badRequest = new Microsoft.AspNetCore.Mvc.BadRequestObjectResult(modelState);
-    //        //    context.Result = badRequest;
-    //        //}
-    //        //else
-    //        //{
-    //        //    base.OnActionExecuting(context);
-    //        //}
-    //    }
+            //    //IPAddress address = context.HttpContext.Connection.RemoteIpAddress;
 
-    //    HttpStatusCode CheckRole(ActionExecutingContext context)
-    //    {
-    //        try
-    //        {
-    //            Controller controller = (Controller)context.Controller;
+            //    //ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
+            //    //string MethodName = context.HttpContext.Request.Method.ToLower();
+            //    //string ControllerName = descriptor.ControllerName.ToLower();
+            //    //string ActionName = descriptor.ActionName.ToLower();
+            //    //string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
 
-    //            //IPAddress address = context.HttpContext.Connection.RemoteIpAddress;
+            //    ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
+            //    string MethodName = context.HttpContext.Request.Method.ToLower();
+            //    string ControllerName = descriptor.ControllerName.ToLower();
+            //    string ActionName = descriptor.ActionName.ToLower();
+            //    string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
 
-    //            //ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
-    //            //string MethodName = context.HttpContext.Request.Method.ToLower();
-    //            //string ControllerName = descriptor.ControllerName.ToLower();
-    //            //string ActionName = descriptor.ActionName.ToLower();
-    //            //string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
+            //    aModel db = new aModel();
 
-    //            ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
-    //            string MethodName = context.HttpContext.Request.Method.ToLower();
-    //            string ControllerName = descriptor.ControllerName.ToLower();
-    //            string ActionName = descriptor.ActionName.ToLower();
-    //            string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
+            //    xAccount account = db.xAccount.Find(Convert.ToInt32(controller.Request.Headers["IDAccount"].ToList()[0]));
+            //    if (account == null)
+            //        return HttpStatusCode.BadRequest;
 
-    //            aModel db = new aModel();
+            //    xUserFeature userFeature = db.xUserFeature
+            //        .FirstOrDefault(x =>
+            //            x.IDPermission == account.IDPermission &&
+            //            x.Controller.Equals(ControllerName) &&
+            //            x.Action.Equals(ActionName) &&
+            //            x.Method.Equals(MethodName) &&
+            //            x.Path.Equals(TemplateName));
 
-    //            xAccount account = db.xAccount.Find(Convert.ToInt32(controller.Request.Headers["IDAccount"].ToList()[0]));
-    //            if (account == null)
-    //                return HttpStatusCode.BadRequest;
+            //    if (userFeature == null)
+            //        return HttpStatusCode.BadRequest;
 
-    //            xUserFeature userFeature = db.xUserFeature
-    //                .FirstOrDefault(x =>
-    //                    x.IDPermission == account.IDPermission &&
-    //                    x.Controller.Equals(ControllerName) &&
-    //                    x.Action.Equals(ActionName) &&
-    //                    x.Method.Equals(MethodName) &&
-    //                    x.Path.Equals(TemplateName));
+            //    if (userFeature.TrangThai == 3)
+            //        return HttpStatusCode.BadRequest;
 
-    //            if (userFeature == null)
-    //                return HttpStatusCode.BadRequest;
-
-    //            if (userFeature.TrangThai == 3)
-    //                return HttpStatusCode.BadRequest;
-
-    //            return HttpStatusCode.OK;
-    //        }
-    //        catch
-    //        {
-    //            return HttpStatusCode.BadRequest;
-    //        }
-    //    }
-    //}
+            //    return HttpStatusCode.OK;
+            //}
+            //catch
+            //{
+            //    return HttpStatusCode.BadRequest;
+            //}
+        }
+    }
 }

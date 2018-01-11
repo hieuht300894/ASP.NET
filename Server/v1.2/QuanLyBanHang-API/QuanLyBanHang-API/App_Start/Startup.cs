@@ -1,5 +1,6 @@
 ﻿using QuanLyBanHang_API.Utils;
 using System.Data.Entity;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Unity;
 using Unity.Lifetime;
@@ -14,12 +15,13 @@ namespace QuanLyBanHang_API
             ModuleHelper.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["QuanLyBanHangModel"].ConnectionString;
 
             var container = new UnityContainer();
-            container.RegisterType(typeof(aModel), new HierarchicalLifetimeManager());
-            container.RegisterType(typeof(IRepositoryCollection), typeof(RepositoryCollection), new HierarchicalLifetimeManager());
+            //container.RegisterType(typeof(aModel), new HierarchicalLifetimeManager());
+            container.RegisterType(typeof(IRepositoryCollection), typeof(RepositoryCollection));
             config.DependencyResolver = new UnityResolver(container);
 
             RegisterRoute();
             RegisterDatabase();
+            RegisterFormat();
         }
         public static void RegisterRoute()
         {
@@ -28,9 +30,16 @@ namespace QuanLyBanHang_API
         }
         public static void RegisterDatabase()
         {
-            aModel db = (aModel)ModuleHelper.HttpConfiguration.DependencyResolver.GetService(typeof(aModel));
+            //aModel db = (aModel)ModuleHelper.HttpConfiguration.DependencyResolver.GetService(typeof(aModel));
+            aModel db = new aModel();
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<aModel, MyConfiguration>());
             db.Database.Initialize(false);
+        }
+        public static void RegisterFormat()
+        {
+            ModuleHelper.HttpConfiguration.Formatters.Remove(ModuleHelper.HttpConfiguration.Formatters.XmlFormatter);
+            ModuleHelper.HttpConfiguration.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
+            ModuleHelper.HttpConfiguration.Formatters.JsonFormatter.MaxDepth = int.MaxValue;
         }
     }
 }
