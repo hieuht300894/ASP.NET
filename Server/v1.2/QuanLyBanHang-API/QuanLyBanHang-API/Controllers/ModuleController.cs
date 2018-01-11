@@ -120,7 +120,7 @@ namespace QuanLyBanHang_API
                     NgayTao = time
                 };
                 Instance.Context.xNhomQuyen.Add(nhomQuyen);
-                await Instance.Context.SaveChangesAsync();
+                await Instance.SaveChanges();
 
                 xNhanVien nhanVien = new xNhanVien()
                 {
@@ -130,7 +130,7 @@ namespace QuanLyBanHang_API
                     NgayTao = time
                 };
                 Instance.Context.xNhanVien.Add(nhanVien);
-                await Instance.Context.SaveChangesAsync();
+                await Instance.SaveChanges();
 
                 xTaiKhoan taiKhoan = new xTaiKhoan()
                 {
@@ -145,7 +145,7 @@ namespace QuanLyBanHang_API
                     TenNhomQuyen = nhomQuyen.Ten
                 };
                 Instance.Context.xTaiKhoan.Add(taiKhoan);
-                await Instance.Context.SaveChangesAsync();
+                await Instance.SaveChanges();
 
                 List<xQuyen> lstQuyens = await Instance.Context.xQuyen.ToListAsync();
                 List<xPhanQuyen> lstPhanQuyens = new List<xPhanQuyen>();
@@ -163,11 +163,12 @@ namespace QuanLyBanHang_API
                         Method = quyen.Method,
                         Template = quyen.Template,
                         Path = quyen.Path,
-                        NgayTao = time
+                        NgayTao = time,
+                        MacDinh = quyen.MacDinh
                     });
                 }
                 Instance.Context.xPhanQuyen.AddRange(lstPhanQuyens.ToArray());
-                await Instance.Context.SaveChangesAsync();
+                await Instance.SaveChanges();
 
                 Instance.CommitTransaction();
                 return Ok(lstPhanQuyens);
@@ -342,7 +343,7 @@ namespace QuanLyBanHang_API
                 IEnumerable<xQuyen> lstRemoves = await Instance.Context.xQuyen.ToListAsync();
                 Instance.Context.xQuyen.RemoveRange(lstRemoves.ToArray());
                 Instance.Context.xQuyen.AddRange(features.ToArray());
-                await Instance.Context.SaveChangesAsync();
+                await Instance.SaveChanges();
                 Instance.CommitTransaction();
                 return Ok(features);
             }

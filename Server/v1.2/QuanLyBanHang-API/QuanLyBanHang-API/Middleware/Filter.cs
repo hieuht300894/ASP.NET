@@ -1,4 +1,9 @@
-﻿using System.Net;
+﻿using EntityModel.DataModel;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -17,58 +22,67 @@ namespace QuanLyBanHang_API
             else
             {
                 context.Response = new System.Net.Http.HttpResponseMessage(HttpStatusCode.Unauthorized);
-                context.Response.Content.Headers.Add("Exception", "Unauthorized");
             }
         }
 
-        HttpStatusCode CheckRole(HttpActionContext context)
+        HttpStatusCode CheckRole(HttpActionContext actionContext)
         {
-            return HttpStatusCode.OK;
+            try
+            {
+                var address = actionContext.Request.RequestUri;
+                string MethodName = actionContext.Request.Method.Method.ToLower();
+                string ControllerName = actionContext.ControllerContext.ControllerDescriptor.ControllerName.ToLower();
+                string ActionName = actionContext.ActionDescriptor.ActionName.ToLower();
 
-            //try
-            //{
-            //    ApiController controller = (Controller)context.Controller;
+                aModel db = new aModel();
+                xTaiKhoan taiKhoan = db.xTaiKhoan.Find(Convert.ToInt32(actionContext.Request.Headers.GetValues("IDAccount").ToList()[0]));
+                if (taiKhoan == null)
+                    return HttpStatusCode.NotFound;
 
-            //    //IPAddress address = context.HttpContext.Connection.RemoteIpAddress;
+                xPhanQuyen phanQuyen = db.xPhanQuyen.FirstOrDefault(x =>
+                    x.IDNhomQuyen == taiKhoan.IDNhomQuyen &&
+                    ((x.MacDinh && x.Action.Equals(ActionName) && x.Method.Equals(MethodName)) || (!x.MacDinh && x.Controller.Equals(ControllerName) && x.Action.Equals(ActionName) && x.Method.Equals(MethodName))));
+                if (phanQuyen == null)
+                    return HttpStatusCode.NotFound;
 
-            //    //ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
-            //    //string MethodName = context.HttpContext.Request.Method.ToLower();
-            //    //string ControllerName = descriptor.ControllerName.ToLower();
-            //    //string ActionName = descriptor.ActionName.ToLower();
-            //    //string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
 
-            //    ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
-            //    string MethodName = context.HttpContext.Request.Method.ToLower();
-            //    string ControllerName = descriptor.ControllerName.ToLower();
-            //    string ActionName = descriptor.ActionName.ToLower();
-            //    string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
 
-            //    aModel db = new aModel();
 
-            //    xAccount account = db.xAccount.Find(Convert.ToInt32(controller.Request.Headers["IDAccount"].ToList()[0]));
-            //    if (account == null)
-            //        return HttpStatusCode.BadRequest;
 
-            //    xUserFeature userFeature = db.xUserFeature
-            //        .FirstOrDefault(x =>
-            //            x.IDPermission == account.IDPermission &&
-            //            x.Controller.Equals(ControllerName) &&
-            //            x.Action.Equals(ActionName) &&
-            //            x.Method.Equals(MethodName) &&
-            //            x.Path.Equals(TemplateName));
+                ////IPAddress address = context.HttpContext.Connection.RemoteIpAddress;
 
-            //    if (userFeature == null)
-            //        return HttpStatusCode.BadRequest;
+                //ControllerActionDescriptor descriptor = (ControllerActionDescriptor)context.ActionDescriptor;
+                //string MethodName = context.HttpContext.Request.Method.ToLower();
+                //string ControllerName = descriptor.ControllerName.ToLower();
+                //string ActionName = descriptor.ActionName.ToLower();
+                //string TemplateName = descriptor.AttributeRouteInfo.Template.ToLower();
 
-            //    if (userFeature.TrangThai == 3)
-            //        return HttpStatusCode.BadRequest;
+                //aModel db = new aModel();
 
-            //    return HttpStatusCode.OK;
-            //}
-            //catch
-            //{
-            //    return HttpStatusCode.BadRequest;
-            //}
+                //xAccount account = db.xAccount.Find(Convert.ToInt32(controller.Request.Headers["IDAccount"].ToList()[0]));
+                //if (account == null)
+                //    return HttpStatusCode.BadRequest;
+
+                //xUserFeature userFeature = db.xUserFeature
+                //    .FirstOrDefault(x =>
+                //        x.IDPermission == account.IDPermission &&
+                //        x.Controller.Equals(ControllerName) &&
+                //        x.Action.Equals(ActionName) &&
+                //        x.Method.Equals(MethodName) &&
+                //        x.Path.Equals(TemplateName));
+
+                //if (userFeature == null)
+                //    return HttpStatusCode.BadRequest;
+
+                //if (userFeature.TrangThai == 3)
+                //    return HttpStatusCode.BadRequest;
+
+                return HttpStatusCode.OK;
+            }
+            catch
+            {
+                return HttpStatusCode.BadRequest;
+            }
         }
     }
 }
