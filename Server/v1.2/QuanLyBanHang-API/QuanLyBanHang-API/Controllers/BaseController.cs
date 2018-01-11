@@ -6,7 +6,6 @@ using System.Web.Http;
 
 namespace QuanLyBanHang_API
 {
-    [Route("api/[controller]")]
     public class BaseController<T> : ApiController where T : class, new()
     {
         protected Repository<T> Instance;

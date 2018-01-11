@@ -14,6 +14,7 @@ namespace QuanLyBanHang_API
             ModuleHelper.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["QuanLyBanHangModel"].ConnectionString;
 
             var container = new UnityContainer();
+            container.RegisterType(typeof(aModel), new HierarchicalLifetimeManager());
             container.RegisterType(typeof(IRepositoryCollection), typeof(RepositoryCollection), new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
@@ -27,6 +28,9 @@ namespace QuanLyBanHang_API
         }
         public static void RegisterDatabase()
         {
+            aModel db = (aModel)ModuleHelper.HttpConfiguration.DependencyResolver.GetService(typeof(aModel));
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<aModel, MyConfiguration>());
+            db.Database.Initialize(false);
         }
     }
 }

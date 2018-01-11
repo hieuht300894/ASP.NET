@@ -15,7 +15,6 @@ using System.Web.Http;
 
 namespace QuanLyBanHang_API
 {
-    [Route("api/[controller]")]
     public class ModuleController : ApiController
     {
         protected Repository Instance;
