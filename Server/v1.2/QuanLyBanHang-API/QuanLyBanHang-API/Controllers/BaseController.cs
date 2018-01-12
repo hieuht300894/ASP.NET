@@ -95,7 +95,7 @@ namespace QuanLyBanHang_API
         }
 
         [HttpPost]
-        public virtual async Task<IHttpActionResult> AddEntries(T[] Items)
+        public virtual async Task<IHttpActionResult> AddEntries([FromBody] T[] Items)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace QuanLyBanHang_API
         }
 
         [HttpPut]
-        public virtual async Task<IHttpActionResult> UpdateEntries(T[] Items)
+        public virtual async Task<IHttpActionResult> UpdateEntries([FromBody] T[] Items)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace QuanLyBanHang_API
         }
 
         [HttpDelete]
-        public virtual async Task<IHttpActionResult> DeleteEntries(T[] Items)
+        public virtual async Task<IHttpActionResult> DeleteEntries([FromBody] T[] Items)
         {
             try
             {

@@ -25,7 +25,7 @@ namespace QuanLyBanHang_API
         }
         public static void RegisterRoute()
         {
-            ModuleHelper.HttpConfiguration.MapHttpAttributeRoutes();
+            //ModuleHelper.HttpConfiguration.MapHttpAttributeRoutes();
             ModuleHelper.HttpConfiguration.Routes.MapHttpRoute("Default", "{controller}/{action}", new { controller = "Module", action = "TimeServer" });
         }
         public static void RegisterDatabase()

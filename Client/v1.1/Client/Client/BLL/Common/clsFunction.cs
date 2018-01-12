@@ -533,7 +533,7 @@ namespace Client.BLL.Common
                 T Item = response.Content.DeserializeJsonToListObject<T>().FirstOrDefault();
 
                 if (Item == null)
-                    Item = ReflectionPopulator.CreateObject<T>(); ;
+                    Item = ReflectionPopulator.CreateObject<T>();
 
                 return Tuple.Create(Status, Item);
             }

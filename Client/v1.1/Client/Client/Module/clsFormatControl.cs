@@ -2151,7 +2151,8 @@ namespace Client.Module
                 Newtonsoft.Json.Formatting.Indented,
                 new JsonSerializerSettings()
                 {
-                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
                 });
             return serialized;
         }
