@@ -194,6 +194,16 @@ namespace QuanLyBanHang_API
             modelBuilder.Entity<eLoai>().Ignore(x => x.MaNguoiCapNhat);
             modelBuilder.Entity<eLoai>().Ignore(x => x.TenNguoiCapNhat);
             modelBuilder.Entity<eLoai>().Ignore(x => x.GhiChu);
+
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<eTienTe>().Ignore(x => x.GhiChu);
             #endregion
         }
     }
