@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataModel\eCauHinhMa.cs" />
     <Compile Include="DataModel\eChuyenKho.cs" />
     <Compile Include="DataModel\eCongNoNhaCungCap.cs" />
     <Compile Include="DataModel\eDonViTinh.cs" />

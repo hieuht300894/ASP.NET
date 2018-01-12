@@ -31,6 +31,7 @@ namespace QuanLyBanHang_API
             await InitTienTe();
             await InitTinhThanh();
             await InitDonViTinh();
+            await InitLoai();
 
             if (ModelState.Count == 0)
                 return Ok("Success");
@@ -86,6 +87,20 @@ namespace QuanLyBanHang_API
                 try
                 {
                     string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eDonViTinh.sql");
+                    await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
+                }
+                catch (Exception ex) { ModelState.AddModelError("Exception", ex); }
+            }
+        }
+        async Task InitLoai()
+        {
+            Instance.Context = new aModel();
+
+            if (Instance.Context.eLoai.Count() == 0)
+            {
+                try
+                {
+                    string Query = System.IO.File.ReadAllText($@"{HttpRuntime.AppDomainAppPath}\wwwroot\InitData\DATA_eLoai.sql");
                     await Instance.Context.Database.ExecuteSqlCommandAsync(Query, new SqlParameter[] { });
                 }
                 catch (Exception ex) { ModelState.AddModelError("Exception", ex); }

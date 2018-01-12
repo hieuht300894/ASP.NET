@@ -13,13 +13,9 @@ namespace QuanLyBanHang_API
          * Remove-Migration -context zModel
          */
 
-        #region Cấu hình
         public virtual DbSet<eHienThi> eHienThi { get; set; }
         public virtual DbSet<eQuyDoiDonVi> eQuyDoiDonVi { get; set; }
         public virtual DbSet<eQuyDoiTienTe> eQuyDoiTienTe { get; set; }
-        #endregion
-
-        #region Hệ thống
         public virtual DbSet<xTaiKhoan> xTaiKhoan { get; set; }
         public virtual DbSet<xChiNhanh> xChiNhanh { get; set; }
         public virtual DbSet<xNhanVien> xNhanVien { get; set; }
@@ -30,9 +26,6 @@ namespace QuanLyBanHang_API
         public virtual DbSet<xQuyen> xQuyen { get; set; }
         public virtual DbSet<xPhanQuyen> xPhanQuyen { get; set; }
         public virtual DbSet<xLichSu> xLichSu { get; set; }
-        #endregion
-
-        #region Danh mục
         public virtual DbSet<eDonViTinh> eDonViTinh { get; set; }
         public virtual DbSet<eKhachHang> eKhachHang { get; set; }
         public virtual DbSet<eKho> eKho { get; set; }
@@ -44,33 +37,25 @@ namespace QuanLyBanHang_API
         public virtual DbSet<eSanPham> eSanPham { get; set; }
         public virtual DbSet<eTienTe> eTienTe { get; set; }
         public virtual DbSet<eTinhThanh> eTinhThanh { get; set; }
-        #endregion
-
-        #region Khai báo đầu kỳ
         public virtual DbSet<eTonKhoDauKy> eTonKhoDauKy { get; set; }
         public virtual DbSet<eSoDuDauKyKhachHang> eSoDuDauKyKhachHang { get; set; }
         public virtual DbSet<eSoDuDauKyNhaCungCap> eSoDuDauKyNhaCungCap { get; set; }
-        #endregion
-
-        #region Công nợ
         public virtual DbSet<eCongNoNhaCungCap> eCongNoNhaCungCap { get; set; }
-        #endregion
-
-        #region Chức năng
         public virtual DbSet<eNhapHangNhaCungCap> eNhapHangNhaCungCap { get; set; }
         public virtual DbSet<eNhapHangNhaCungCapChiTiet> eNhapHangNhaCungCapChiTiet { get; set; }
         public virtual DbSet<eTonKho> eTonKho { get; set; }
-        #endregion
+        public virtual DbSet<eLoai> eLoai { get; set; }
+        public virtual DbSet<eCauHinhMa> eCauHinhMa { get; set; }
 
         public zModel() : base(ModuleHelper.ConnectionString)
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            #region Table Name
+            #region TableName
             modelBuilder.Entity<eHienThi>().ToTable("eHienThi");
             modelBuilder.Entity<eQuyDoiDonVi>().ToTable("eQuyDoiDonVi");
-            modelBuilder.Entity<eQuyDoiTienTe>().ToTable("eQuyDoiTienTe");          
+            modelBuilder.Entity<eQuyDoiTienTe>().ToTable("eQuyDoiTienTe");
             modelBuilder.Entity<eDonViTinh>().ToTable("eDonViTinh");
             modelBuilder.Entity<eKhachHang>().ToTable("eKhachHang");
             modelBuilder.Entity<eKho>().ToTable("eKho");
@@ -99,15 +84,14 @@ namespace QuanLyBanHang_API
             modelBuilder.Entity<xQuyen>().ToTable("xQuyen");
             modelBuilder.Entity<xPhanQuyen>().ToTable("xPhanQuyen");
             modelBuilder.Entity<xLichSu>().ToTable("xLichSu");
+            modelBuilder.Entity<eCauHinhMa>().ToTable("eCauHinhMa");
+            modelBuilder.Entity<eLoai>().ToTable("eLoai");
             #endregion
 
-            #region Cấu hình
+            #region PrimaryKey
             modelBuilder.Entity<eHienThi>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eQuyDoiDonVi>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eQuyDoiTienTe>().HasKey(x => x.KeyID);
-            #endregion
-
-            #region Hệ thống
             modelBuilder.Entity<xTaiKhoan>().HasKey(x => x.KeyID);
             modelBuilder.Entity<xTaiKhoan>().Property(x => x.KeyID).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             modelBuilder.Entity<xChiNhanh>().HasKey(x => x.KeyID);
@@ -119,9 +103,6 @@ namespace QuanLyBanHang_API
             modelBuilder.Entity<xQuyen>().HasKey(x => x.KeyID);
             modelBuilder.Entity<xPhanQuyen>().HasKey(x => x.KeyID);
             modelBuilder.Entity<xLichSu>().HasKey(x => x.KeyID);
-            #endregion
-
-            #region Danh mục
             modelBuilder.Entity<eDonViTinh>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eKhachHang>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eKho>().HasKey(x => x.KeyID);
@@ -133,23 +114,86 @@ namespace QuanLyBanHang_API
             modelBuilder.Entity<eTienTe>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eTinhThanh>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eSanPham>().HasKey(x => x.KeyID);
-            #endregion
-
-            #region Khai báo đầu kỳ
             modelBuilder.Entity<eTonKhoDauKy>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eSoDuDauKyKhachHang>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eSoDuDauKyNhaCungCap>().HasKey(x => x.KeyID);
-            #endregion
-
-            #region Công nợ
             modelBuilder.Entity<eCongNoNhaCungCap>().HasKey(x => x.KeyID);
-            #endregion
-
-            #region Chức năng
             modelBuilder.Entity<eNhapHangNhaCungCap>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eNhapHangNhaCungCapChiTiet>().HasKey(x => x.KeyID);
             modelBuilder.Entity<eTonKho>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<eCauHinhMa>().HasKey(x => x.KeyID);
+            modelBuilder.Entity<eLoai>().HasKey(x => x.KeyID);
+            #endregion
+
+            #region Ignore
             modelBuilder.Entity<eNhapHangNhaCungCap>().Ignore(x => x.eNhapHangNhaCungCapChiTiet);
+
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.DienGiai);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.PostalCode);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.LocationCode);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.ZipCode);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.MaTinhThanh);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.MaLoai);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.Ma);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<eTinhThanh>().Ignore(x => x.GhiChu);
+
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.Ma);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.Ten);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<xQuyen>().Ignore(x => x.GhiChu);
+
+            modelBuilder.Entity<xTaiKhoan>().Ignore(x => x.Ma);
+            modelBuilder.Entity<xTaiKhoan>().Ignore(x => x.Ten);
+
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.Ma);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.Ten);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<xLichSu>().Ignore(x => x.GhiChu);
+
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.Ma);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.Ten);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<eQuyDoiDonVi>().Ignore(x => x.GhiChu);
+
+            modelBuilder.Entity<eLoai>().Ignore(x => x.Ma);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.NgayTao);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.NguoiTao);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.MaNguoiTao);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.TenNguoiTao);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.NgayCapNhat);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.NguoiCapNhat);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.MaNguoiCapNhat);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.TenNguoiCapNhat);
+            modelBuilder.Entity<eLoai>().Ignore(x => x.GhiChu);
             #endregion
         }
     }

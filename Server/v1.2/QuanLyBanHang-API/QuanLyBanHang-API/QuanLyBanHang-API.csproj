@@ -65,6 +65,7 @@
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="wwwroot\InitData\DATA_eDonViTinh.sql" />
+    <Content Include="wwwroot\InitData\DATA_eLoai.sql" />
     <Content Include="wwwroot\InitData\DATA_eTienTe.sql" />
     <Content Include="wwwroot\InitData\DATA_eTinhThanh.sql" />
     <Content Include="wwwroot\InitData\DATA_xChiNhanh.sql" />
