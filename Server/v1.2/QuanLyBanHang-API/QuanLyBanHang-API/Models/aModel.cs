@@ -104,52 +104,55 @@ namespace QuanLyBanHang_API
 
         private async void SaveLog(List<ObjectBinding> lstObjs)
         {
-            try
+            await Task.Factory.StartNew(async () =>
             {
-                using (zModel db = new zModel())
+                try
                 {
-                    DateTime CurrentDate = DateTime.Now;
-
-                    foreach (var obj in lstObjs)
+                    using (zModel db = new zModel())
                     {
-                        xLichSu log = new xLichSu();
-                        log.KeyID = 0;
-                        log.NguoiTao = 0;
-                        log.NgayTao = CurrentDate;
-                        log.Bang = obj.Entity.Entity.GetType().Name;
-                        log.ThaoTac = obj.State.ToString();
-                        log.TrangThai = (Int32)obj.State;
+                        DateTime CurrentDate = DateTime.Now;
 
-                        if (obj.OriginalValues != null)
+                        foreach (var obj in lstObjs)
                         {
-                            Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
-                            foreach (string prop in obj.OriginalValues.PropertyNames) { ParamsValues.Add(prop, obj.OriginalValues[prop]); }
-                            log.GiaTriCu = ParamsValues.SerializeJSON();
+                            xLichSu log = new xLichSu();
+                            log.KeyID = 0;
+                            log.NguoiTao = 0;
+                            log.NgayTao = CurrentDate;
+                            log.Bang = obj.Entity.Entity.GetType().Name;
+                            log.ThaoTac = obj.State.ToString();
+                            log.TrangThai = (Int32)obj.State;
+
+                            if (obj.OriginalValues != null)
+                            {
+                                Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
+                                foreach (string prop in obj.OriginalValues.PropertyNames) { ParamsValues.Add(prop, obj.OriginalValues[prop]); }
+                                log.GiaTriCu = ParamsValues.SerializeJSON();
+                            }
+                            else
+                            {
+                                Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
+                                log.GiaTriCu = ParamsValues.SerializeJSON();
+                            }
+                            if (obj.CurrentValues != null)
+                            {
+                                Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
+                                foreach (string prop in obj.CurrentValues.PropertyNames) { ParamsValues.Add(prop, obj.CurrentValues[prop]); }
+                                log.GiaTriMoi = ParamsValues.SerializeJSON();
+                            }
+                            else
+                            {
+                                Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
+                                log.GiaTriMoi = ParamsValues.SerializeJSON();
+                            }
+                            db.xLichSu.Add(log);
                         }
-                        else
-                        {
-                            Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
-                            log.GiaTriCu = ParamsValues.SerializeJSON();
-                        }
-                        if (obj.CurrentValues != null)
-                        {
-                            Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
-                            foreach (string prop in obj.CurrentValues.PropertyNames) { ParamsValues.Add(prop, obj.CurrentValues[prop]); }
-                            log.GiaTriMoi = ParamsValues.SerializeJSON();
-                        }
-                        else
-                        {
-                            Dictionary<string, object> ParamsValues = new Dictionary<string, object>();
-                            log.GiaTriMoi = ParamsValues.SerializeJSON();
-                        }
-                        db.xLichSu.Add(log);
+                        await db.SaveChangesAsync();
                     }
-                    await db.SaveChangesAsync();
                 }
-            }
-            catch
-            {
-            }
+                catch
+                {
+                }
+            });
         }
     }
 
