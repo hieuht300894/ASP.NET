@@ -167,11 +167,14 @@ namespace Client.GUI.Common
                 ModuleHelper.Path = string.Empty;
                 ModuleHelper.Url = string.Empty;
 
-                return (Boolean)Invoke(new Func<Boolean>(() =>
+                Boolean Result = (Boolean)Invoke(new Func<Boolean>(() =>
                 {
                     frmServer frm = new frmServer();
                     return frm.ShowDialog(this) == DialogResult.OK;
                 }));
+
+                bhiServer.Caption = $"Server: {  ModuleHelper.Url}";
+                return Result;
             }
         }
         #endregion
