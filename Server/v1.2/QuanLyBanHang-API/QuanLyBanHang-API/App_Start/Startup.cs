@@ -15,13 +15,13 @@ namespace QuanLyBanHang_API
             ModuleHelper.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["QuanLyBanHangModel"].ConnectionString;
 
             var container = new UnityContainer();
-            //container.RegisterType(typeof(aModel), new HierarchicalLifetimeManager());
             container.RegisterType(typeof(IRepositoryCollection), typeof(RepositoryCollection));
             config.DependencyResolver = new UnityResolver(container);
 
             RegisterRoute();
             RegisterDatabase();
             RegisterFormat();
+            RegisterAuthentication();
         }
         public static void RegisterRoute()
         {
@@ -40,6 +40,10 @@ namespace QuanLyBanHang_API
             ModuleHelper.HttpConfiguration.Formatters.Remove(ModuleHelper.HttpConfiguration.Formatters.XmlFormatter);
             ModuleHelper.HttpConfiguration.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
             ModuleHelper.HttpConfiguration.Formatters.JsonFormatter.MaxDepth = int.MaxValue;
+        }
+        public static void RegisterAuthentication()
+        {
+            ModuleHelper.HttpConfiguration.Filters.Add(new CustomAuthorizeAttribute());  
         }
     }
 }

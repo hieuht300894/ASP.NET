@@ -14,7 +14,7 @@ using System.Web.Http.Controllers;
 
 namespace QuanLyBanHang_API
 {
-    [Filter]
+    [CustomAuthorize]
     public class BaseController<T> : ApiController where T : class, new()
     {
         protected Repository Instance;
