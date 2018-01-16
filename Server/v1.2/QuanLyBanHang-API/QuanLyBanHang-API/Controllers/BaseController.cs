@@ -14,7 +14,7 @@ using System.Web.Http.Controllers;
 
 namespace QuanLyBanHang_API
 {
-    [CustomAuthorize]
+    //[CustomAuthorize]
     public class BaseController<T> : ApiController where T : class, new()
     {
         protected Repository Instance;
@@ -99,8 +99,56 @@ namespace QuanLyBanHang_API
         {
             try
             {
+                if (Items == null || Items.Length == 0)
+                    throw new Exception("Items null or empty");
+
                 Instance.Context = new aModel();
-                Items = Items ?? new T[] { };
+                Instance.BeginTransaction();
+                Instance.Context.Set<T>().AddOrUpdate(Items);
+                await Instance.Context.SaveChangesAsync();
+                Instance.CommitTransaction();
+                return Ok(Items);
+            }
+            catch (Exception ex)
+            {
+                Instance.RollbackTransaction();
+                ModelState.AddModelError("Exception", ex);
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpPost]
+        public virtual async Task<IHttpActionResult> AddEntry([FromBody] T Item)
+        {
+            try
+            {
+                if (Item == null)
+                    throw new Exception("Item null");
+
+                Instance.Context = new aModel();
+                Instance.BeginTransaction();
+                Instance.Context.Set<T>().AddOrUpdate(Item);
+                await Instance.Context.SaveChangesAsync();
+                Instance.CommitTransaction();
+                return Ok(Item);
+            }
+            catch (Exception ex)
+            {
+                Instance.RollbackTransaction();
+                ModelState.AddModelError("Exception", ex);
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpPut]
+        public virtual async Task<IHttpActionResult> UpdateEntries([FromBody] T[] Items)
+        {
+            try
+            {
+                if (Items == null || Items.Length == 0)
+                    throw new Exception("Items null or empty");
+
+                Instance.Context = new aModel();
                 Instance.BeginTransaction();
                 Instance.Context.Set<T>().AddOrUpdate(Items);
                 await Instance.Context.SaveChangesAsync();
@@ -116,17 +164,19 @@ namespace QuanLyBanHang_API
         }
 
         [HttpPut]
-        public virtual async Task<IHttpActionResult> UpdateEntries([FromBody] T[] Items)
+        public virtual async Task<IHttpActionResult> UpdateEntry([FromBody] T Item)
         {
             try
             {
+                if (Item == null)
+                    throw new Exception("Item null");
+
                 Instance.Context = new aModel();
-                Items = Items ?? new T[] { };
                 Instance.BeginTransaction();
-                Instance.Context.Set<T>().AddOrUpdate(Items);
+                Instance.Context.Set<T>().AddOrUpdate(Item);
                 await Instance.Context.SaveChangesAsync();
                 Instance.CommitTransaction();
-                return Ok(Items);
+                return Ok(Item);
             }
             catch (Exception ex)
             {
@@ -141,14 +191,37 @@ namespace QuanLyBanHang_API
         {
             try
             {
+                if (Items == null || Items.Length == 0)
+                    throw new Exception("Items null or empty");
+
                 Instance.Context = new aModel();
-                Items = Items ?? new T[] { };
                 Instance.BeginTransaction();
-                foreach (T Item in Items)
-                {
-                    Instance.Context.Set<T>().Attach(Item);
-                    Instance.Context.Set<T>().Remove(Item);
-                }
+                foreach (T Item in Items) { Instance.Context.Set<T>().Attach(Item); }
+                Instance.Context.Set<T>().RemoveRange(Items);
+                await Instance.Context.SaveChangesAsync();
+                Instance.CommitTransaction();
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                Instance.RollbackTransaction();
+                ModelState.AddModelError("Exception", ex);
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpDelete]
+        public virtual async Task<IHttpActionResult> DeleteEntry([FromBody] T Item)
+        {
+            try
+            {
+                if (Item == null)
+                    throw new Exception("Item null");
+
+                Instance.Context = new aModel();
+                Instance.BeginTransaction();
+                Instance.Context.Set<T>().Attach(Item);
+                Instance.Context.Set<T>().Remove(Item);
                 await Instance.Context.SaveChangesAsync();
                 Instance.CommitTransaction();
                 return NotFound();

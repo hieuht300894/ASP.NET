@@ -15,7 +15,7 @@ using System.Web.Http;
 
 namespace QuanLyBanHang_API
 {
-    [CustomAuthorize]
+    //[CustomAuthorize]
     public class ModuleController : ApiController
     {
         protected Repository Instance;
@@ -108,7 +108,6 @@ namespace QuanLyBanHang_API
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IHttpActionResult> TimeServer()
         {

@@ -43,7 +43,7 @@ namespace QuanLyBanHang_API
         }
         public static void RegisterAuthentication()
         {
-            ModuleHelper.HttpConfiguration.Filters.Add(new CustomAuthorizeAttribute());  
+            //ModuleHelper.HttpConfiguration.Filters.Add(new CustomAuthorizeAttribute());  
         }
     }
 }
